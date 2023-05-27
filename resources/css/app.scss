@@ -1,2 +1,10 @@
+$theme-colors: (
+  "primary":    #161149,
+  "light":      #E3EAEB,
+);
+$colors: (
+  "white":      #E3EAEB,
+);
+
 @import '~bootstrap/scss/bootstrap';
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
