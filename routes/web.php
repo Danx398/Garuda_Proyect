@@ -9,4 +9,5 @@ Route::get('/',[AuthLogin::class,'index'])->name('login');
 Route::controller(SuperAdmin::class)->group(function(){
     Route::get('/dashSadm','index')->name('inicio-admin');
     Route::get('/cambiarPass','cambiarPass')->name('cambiarPass-sadmin');
+    Route::get('/nuevoAdmin','crearNuevoAdmin')->name('nuevo-admin');
 });
