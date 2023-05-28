@@ -21,7 +21,10 @@ class SuperAdmin extends Controller
         $titulo= 'Cambiar contraseña';
         return view('SADM/cpass',compact('titulo'));
     }
-
+    public function crearNuevoAdmin(){
+        $titulo = 'Crear nuevo admin';
+        return view('SADM/nadmin',compact('titulo'));
+    }
     /**
      * Show the form for creating a new resource.
      *
