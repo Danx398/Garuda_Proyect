@@ -23,7 +23,7 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-2">
-                        <button class="btn btn-primary container-fluid pt-4 pb-4 rounded-4 fs-3 mt-5">Cambiar</button>
+                        <button class="btn btn-primary container-fluid pt-2 pb-2 rounded-4 fs-4 mt-5">Cambiar</button>
                     </div>
                 </div>
             </div>
