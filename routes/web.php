@@ -15,4 +15,5 @@ Route::controller(SuperAdmin::class)->group(function(){
 
 Route::controller(Admin::class)->group(function(){
     Route::get('/dashAdm','index')->name('admin');
+    Route::get('/creditosLib','creditosLib')->name('creditos-admin');
 });

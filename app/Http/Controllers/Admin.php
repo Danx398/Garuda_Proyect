@@ -16,7 +16,11 @@ class Admin extends Controller
         $titulo = 'Dashboard';
         return view("ADM/dash", compact('titulo'));
     }
-
+    public function creditosLib()
+    {
+        $titulo = 'Creditos liberados';
+        return view('ADM/creditosenL',compact('titulo'));
+    }
     /**
      * Show the form for creating a new resource.
      *
