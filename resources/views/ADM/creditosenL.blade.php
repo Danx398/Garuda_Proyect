@@ -2,7 +2,7 @@
 @section('contenido')
     @include('shared/nav')
     <div class="container">
-        <H1 class="text-center mt-3">Créditos en liberados</H1>
+        <H1 class="text-center mt-3">Créditos liberados</H1>
         <div class="row">
             <div class="col">
                 <table class="table text-light text-center mt-5">

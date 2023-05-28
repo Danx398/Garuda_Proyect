@@ -21,6 +21,11 @@ class Admin extends Controller
         $titulo = 'Creditos liberados';
         return view('ADM/creditosenL',compact('titulo'));
     }
+    public function evidencias()
+    {
+        $titulo = 'Agregar Evidencias';
+        return view('ADM/evidencias',compact('titulo'));
+    }
     /**
      * Show the form for creating a new resource.
      *
