@@ -14,7 +14,12 @@ class SuperAdmin extends Controller
     public function index()
     {
         $titulo = 'Dashboard Admin';
-        return view('SADM/dash',compact('titulo'));
+        return view('SADM/dash', compact('titulo'));
+    }
+    public function cambiarPass()
+    {
+        $titulo= 'Cambiar contraseña';
+        return view('SADM/cpass',compact('titulo'));
     }
 
     /**
