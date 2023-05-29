@@ -14,6 +14,8 @@
                     <a class="nav-link text-light" href="{{route('cambiarPass-sadmin')}}">Cambiar Contraseñas</a>
                 </li>
             </ul>
+            <a href="{{ route('logout') }}" class="btn btn-danger">Cerrar Sesion</a>
         </div>
+
     </div>
 </nav>
