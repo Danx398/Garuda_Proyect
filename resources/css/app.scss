@@ -18,9 +18,16 @@ $colors: (
   "white":      #E3EAEB,
 );
 
-// footer{
-//   position: relative
-// }
+body{
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
+}
+
+.footer{
+  height: 100px;
+  // position: relative
+}
 
 
 @import '~bootstrap/scss/bootstrap';

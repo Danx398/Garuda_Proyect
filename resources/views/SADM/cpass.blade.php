@@ -30,4 +30,5 @@
         </form>
     </div>
     @include('shared/flotanteSadmin')
+    @include('shared/footer')
 @endsection
