@@ -10,7 +10,6 @@
                         <button class="btn btn-primary container-fluid pt-4 pb-4">
                             <div class="row mb-3">
                                 <div class="col">
-                                    {{-- <img src="{{asset('img/usuario1.png')}}" alt="" class="w-25"> --}}
                                     <i class="fa-solid fa-user fa-2xl"></i>
                                 </div>
                             </div>

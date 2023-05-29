@@ -19,12 +19,20 @@ class Admin extends Controller
     public function creditosLib()
     {
         $titulo = 'Creditos liberados';
-        return view('ADM/creditosenL',compact('titulo'));
+        return view('ADM/liberados',compact('titulo'));
     }
     public function evidencias()
     {
         $titulo = 'Agregar Evidencias';
         return view('ADM/evidencias',compact('titulo'));
+    }
+    public function creditosTram(){
+        $titulo = 'Creditos en tramite';
+        return view('ADM/tramite',compact('titulo'));
+    }
+    public function registrarAlum(){
+        $titulo = 'Registrar Alumos';
+        return view('ADM/registrar',compact('titulo'));
     }
     /**
      * Show the form for creating a new resource.
