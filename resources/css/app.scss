@@ -1,10 +1,16 @@
 $theme-colors: (
   "primary":    #161149,
   "light":      #E3EAEB,
+  "danger":     #dc3545,
 );
 $colors: (
   "white":      #E3EAEB,
 );
+
+// footer{
+//   position: relative
+// }
+
 
 @import '~bootstrap/scss/bootstrap';
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
