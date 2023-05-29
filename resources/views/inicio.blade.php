@@ -2,7 +2,7 @@
 @section('contenido')
     <div class="container text-center mt-5">
         <div class="row justify-content-center">
-            <div class="col-5 mt-5">
+            <div class="col-5">
                 <form action="" class="form-control bg-primary py-3 text-center rounded-5 mt-5" method="POST">
                     <div class="row mb-3">
                         <div class="col">
