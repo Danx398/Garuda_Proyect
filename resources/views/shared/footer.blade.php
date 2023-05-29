@@ -10,4 +10,3 @@
         </div>
     </div>
 </footer>
-<button class="btn btn-danger">Hola we</button>
