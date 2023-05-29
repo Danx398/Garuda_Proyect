@@ -1,21 +1,22 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary bg-primary">
-    <div class="container-fluid">
-      <a class="navbar-brand text-light" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link active text-light" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-light" href="#">Features</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-light" href="#">Pricing</a>
-          </li>
-        </ul>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary bg-primary">
+      <div class="container-fluid">
+          <a class="navbar-brand text-light" href="{{route('admin')}}"><img style="width: 60px" src="{{ asset('img/LogoMamalon.webp') }}" alt=""></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                  <li class="nav-item">
+                      <a class="nav-link active text-light" aria-current="page" href="{{ route('registrar-admin') }}">Registrar Alumno</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link text-light" href="{{route('tramite-admin')}}">Creditos en Tramite</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link text-light" href="{{route('liberado-admin')}}">Creditos Liberados</a>
+                  </li>
+              </ul>
+          </div>
       </div>
-    </div>
   </nav>

@@ -5,8 +5,11 @@ use App\Http\Controllers\AuthLogin;
 use App\Http\Controllers\SuperAdmin;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/',[AuthLogin::class,'index'])->name('login');
-
+Route::controller(AuthLogin::class)->group(function(){
+    Route::get('/','index')->name('login');
+    Route::post('/logear','logear')->name('logear');
+    Route::get('/logout','logout')->name('logout');
+}); 
 Route::controller(SuperAdmin::class)->group(function(){
     Route::get('/dashSadm','index')->name('inicio-sadmin');
     Route::get('/cambiarPass','cambiarPass')->name('cambiarPass-sadmin');

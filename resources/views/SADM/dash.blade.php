@@ -1,23 +1,24 @@
 @extends('layouts/main')
 @section('contenido')
-    @include('shared/nav')
+    @include('shared/navSuper')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col">
+            <div class="col-lg col-md-10 col-sm-12">
                 <div class="row justify-content-between">
                     <div class="col-2"></div>
                     <div class="col-2 mt-5">
                         <button class="btn btn-primary container-fluid pt-4 pb-4">
                             <div class="row mb-3">
                                 <div class="col">
-                                    {{-- <img src="{{asset('img/usuario1.png')}}" alt="" class="w-25"> --}}
                                     <i class="fa-solid fa-user fa-2xl"></i>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col">
-                                    Nuevo Admin
-                                </div>
+                                <a href="{{ route('nuevo-sadmin') }}" class="text-decoration-none text-light">
+                                    <div class="col">
+                                        Nuevo <br>Admin
+                                    </div>
+                                </a>
                             </div>
                         </button>
                     </div>
@@ -30,9 +31,11 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col">
-                                    Cambiar contraseña
-                                </div>
+                                <a href="{{route('cambiarPass-sadmin')}}" class="text-decoration-none text-light">
+                                    <div class="col">
+                                        Cambiar contraseña
+                                    </div>
+                                </a>
                             </div>
                         </button>
                     </div>
@@ -42,7 +45,7 @@
         </div>
         <div class="row mt-5">
             <div class="col">
-                <table class="table text-center table-bordered table-striped text-light">
+                <table class="table text-center table-bordered table-striped text-light table-responsive">
                     <thead class="bg-primary">
                         <th>Usuario</th>
                         <th>Nombre</th>

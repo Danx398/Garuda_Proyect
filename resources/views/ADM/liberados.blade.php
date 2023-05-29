@@ -26,4 +26,5 @@
             </div>
         </div>
     </div>
+    @include('shared/flotanteAdmin')
 @endsection
