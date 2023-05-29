@@ -3,7 +3,7 @@
     @include('shared/nav')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col">
+            <div class="col-lg col-md-6 col-sm-12">
                 <div class="row justify-content-between">
                     <div class="col-2"></div>
                     <div class="col-2 mt-5">
@@ -15,7 +15,7 @@
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    Registrar Alumno
+                                    Registrar <br> Alumno
                                 </div>
                             </div>
                         </button>
@@ -43,7 +43,7 @@
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    Creditos liberados
+                                    Creditos <br> liberados
                                 </div>
                             </div>
                         </button>

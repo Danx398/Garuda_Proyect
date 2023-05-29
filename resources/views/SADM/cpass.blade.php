@@ -1,6 +1,6 @@
 @extends('layouts/main')
 @section('contenido')
-    @include('shared/nav')
+    @include('shared/navSuper')
     <div class="container">
         <h1 class="text-center mb-4 mt-3">Cambiar contraseña </h1>
         <div class="row justify-content-center mt-3">
@@ -29,4 +29,5 @@
             </div>
         </form>
     </div>
+    @include('shared/flotanteSadmin')
 @endsection

@@ -15,6 +15,7 @@ class Admin extends Controller
     {
         $titulo = 'Dashboard';
         return view("ADM/dash", compact('titulo'));
+
     }
     public function creditosLib()
     {
