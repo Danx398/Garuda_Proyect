@@ -1,11 +1,21 @@
-<footer class="footer text-center text-lg-start bg-light text-muted">
-    <div class="container text-center">
+<footer class="footer text-center bg-primary text-white">
+    <div class="container">
         <div class="row">
             <div class="col">
-                Desarrollado por <img src="" alt="">
-            </div>
-            <div class="col">
-                Derechos de autor
+                <div class="row">
+                    <div class="col text-end mt-4">
+                        Desarrollado por <br>
+                        Derechos de autor &copy;
+                    </div>
+                    <div class="col text-start mt-3">
+                        <div class="row">
+                            <div class="col">
+                                <img src="{{asset('img/Garuda.webp')}}" alt="" style="width: 65px">
+                            </div>
+                        </div>
+        
+                    </div>
+                </div>
             </div>
         </div>
     </div>
