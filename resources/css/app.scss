@@ -18,18 +18,18 @@ $colors: (
   "white":      #E3EAEB,
 );
 
-// body{
-  // display: grid;
-  // min-height: 100vh;
-  // grid-template-rows: auto 1fr auto;
+body{
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
   // display: flex;
   // flex-direction: column;
   // min-height: 100vh;
-// }
+}
 
 .footer{
   height: 100px;
-  margin-top: auto;
+  // margin-top: auto;
   // position: relative
 }
 
