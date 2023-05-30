@@ -14,6 +14,7 @@ Route::controller(SuperAdmin::class)->group(function(){
     Route::get('/dashSadm','index')->name('inicio-sadmin');
     Route::get('/cambiarPass','cambiarPass')->name('cambiarPass-sadmin');
     Route::get('/nuevoAdmin','crearNuevoAdmin')->name('nuevo-sadmin');
+    Route::get('/cambio','cambiar')->name('cambio-sadmin');
 });
 
 Route::controller(Admin::class)->group(function(){
