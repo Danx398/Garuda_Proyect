@@ -33,7 +33,7 @@
                             <div class="row">
                                 <a href="{{route('cambiarPass-sadmin')}}" class="text-decoration-none text-light">
                                     <div class="col">
-                                        Cambiar contraseña
+                                        Cambiar <br> contraseña
                                     </div>
                                 </a>
                             </div>
