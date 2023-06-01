@@ -12,6 +12,7 @@
 <body>
     @include('sweetalert::alert')
     @yield('contenido')
+    <script src="{{ asset('js/jquery-3.7.0.min.js') }}"></script>
     <script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>
