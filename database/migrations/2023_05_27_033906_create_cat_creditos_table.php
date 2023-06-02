@@ -17,6 +17,8 @@ class CreateCatCreditosTable extends Migration
             $table->id('id_credito');
             $table->string('credito');
             $table->text('descripcion');
+            $table->integer('horas_liberar');
+            $table->integer('valor_credito');
             $table->timestamps();
         });
     }

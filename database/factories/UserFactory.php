@@ -18,6 +18,7 @@ class UserFactory extends Factory
             'name' => 'Super',
             'email' => 'Super@gmail.com',
             'email_verified_at' => now(),
+            'fk_persona' => 1,
             'rol' => 'Sadmin',
             'password' => '$2y$10$gWztJNu9vnSYa76Huv5Qde/s5GJu7I3Vb7tRcwDOARHLtVLSQ.VdS', // password
             'remember_token' => Str::random(10),

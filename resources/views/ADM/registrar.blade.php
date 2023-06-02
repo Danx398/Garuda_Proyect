@@ -6,6 +6,8 @@
         <div class="row justify-content-center text-center mt-4">
             <div class="col-10">
                 <form action="" class="form-control bg-primary text-light">
+                    @method('POST')
+                    @csrf
                     <div class="row justify-content-center text-center mt-5">
                         <div class="col-5">
                             <label for="" class="">Nombre</label>
@@ -13,7 +15,7 @@
                             <label for="" class="mt-2">Apellido paterno</label>
                             <input type="text" class="form-control" name="paterno" id="paterno">
                             <label for="" class="mt-2">Apellido materno</label>
-                            <input type="password" class="form-control" name="materno" id="materno">
+                            <input type="text" class="form-control" name="materno" id="materno">
                             <label for="" class="mt-2">Genero</label>
                             <select name="genero" id="genero" class="form-control">
                                 <option value="" selected>Seleccionar</option>

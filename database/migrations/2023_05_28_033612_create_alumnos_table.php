@@ -17,10 +17,13 @@ class CreateAlumnosTable extends Migration
             $table->id('id_alumno');
             $table->integer('num_control');
             $table->string('carrera');
-            $table->integer('fk_escuela_procedencia');
+            $table->unsignedBigInteger('fk_escuela_procedencia');
             $table->date('fecha_ingreso_tec');
-            $table->integer('fk_persona');
+            $table->unsignedBigInteger('fk_persona');
             $table->timestamps();
+
+            $table->foreign('fk_persona')->references('id_persona')->on('t_personas');
+            $table->foreign('fk_escuela_procedencia')->references('id_escuela_procedencia')->on('t_cat_escuela_procedencias');
         });
     }
 

@@ -12,9 +12,11 @@
                         <th>Cambiar</th>
                     </thead>
                     <tbody>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>Joss</td>
+                        <td>Jose Alberto Velazquez Nava</td>
+                        <td>
+                            <a href="" class="btn btn-primary">Cambiar</a>
+                        </td>
                     </tbody>
                 </table>
             </div>
