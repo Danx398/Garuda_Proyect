@@ -7,6 +7,7 @@ use Database\Factories\personaFactory;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,19 +18,36 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        personaFactory::factoryForModel('Persona')->create();
-        UserFactory::factoryForModel('User')->create();
-        // Cat_estatusFactory::factoryForModel('Cat_estatus')->create();
+        $dPersona = [
+            'nombre' => 'Roldan',
+            'paterno' => 'Aquino',
+            'materno' => 'Segura',
+            'num_celular' => 15120398,
+            'genero' => 'Masculino',
+            'fechaNac' => now()
+        ];
+        DB::table('t_personas')->insert($dPersona);
+
+        $dUser = [
+            'name' => 'Super',
+            'email' => 'Super@gmail.com',
+            'email_verified_at' => now(),
+            'fk_persona' => 1,
+            'rol' => 'Sadmin',
+            'password' => '$2y$10$gWztJNu9vnSYa76Huv5Qde/s5GJu7I3Vb7tRcwDOARHLtVLSQ.VdS', // password
+            'remember_token' => Str::random(10),
+        ];
+        DB::table('users')->insert($dUser);
 
         $dEstatus = [
             [
-                'estatus' => 'proceso',
+                'estatus' => 'Proceso',
                 'descripcion' => 'El estudiante aun no inicia su tramite'
             ],[
-                'estatus' => 'tramite',
+                'estatus' => 'Tramite',
                 'descripcion' => 'El estudiante esta tramitando'
             ],[
-                'estatus' => 'liberado',
+                'estatus' => 'Liberado',
                 'descripcion' => 'El estudiante ya libero sus tramites'
             ]
         ];
