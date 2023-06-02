@@ -18,7 +18,6 @@ class AuthLogin extends Controller
         Auth::logout();
         Session::flush();
         return redirect()->route('login');
-        
     }
     public function logear(Request $request) {
         $credenciales = $request->only("name", "password");
