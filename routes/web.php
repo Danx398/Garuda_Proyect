@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\AuthLogin;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\SuperAdmin;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/generar-pdf',[PdfController::class,'generarPdf']);
 
 Route::controller(AuthLogin::class)->group(function(){
     Route::get('/','index')->name('login');
