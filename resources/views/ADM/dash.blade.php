@@ -7,7 +7,7 @@
                 <div class="row justify-content-between">
                     <div class="col-2"></div>
                     <div class="col-2 mt-5">
-                        <button class="btn btn-primary container-fluid pt-4 pb-4">
+                        <a href="{{route('registrar-admin')}}" class="btn btn-primary container-fluid pt-4 pb-4">
                             <div class="row mb-3">
                                 <div class="col">
                                     <i class="fa-solid fa-user fa-2xl"></i>
@@ -18,10 +18,10 @@
                                     Registrar <br> Alumno
                                 </div>
                             </div>
-                        </button>
+                        </a>
                     </div>
                     <div class="col-2 mt-5">
-                        <button class="btn btn-primary container-fluid pt-4 pb-4">
+                        <a href="{{route('tramite-admin')}}" class="btn btn-primary container-fluid pt-4 pb-4">
                             <div class="row mb-3">
                                 <div class="col">
                                     <i class="fa-solid fa-list-ul fa-2xl"></i>
@@ -29,13 +29,13 @@
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    Creditos en tramite
+                                    Creditos <br> en tramite
                                 </div>
                             </div>
-                        </button>
+                        </a>
                     </div>
                     <div class="col-2 mt-5">
-                        <button class="btn btn-primary container-fluid pt-4 pb-4">
+                        <a href="{{route('liberado-admin')}}" class="btn btn-primary container-fluid pt-4 pb-4">
                             <div class="row mb-3">
                                 <div class="col">
                                     <i class="fa-solid fa-list-check fa-2xl"></i>
@@ -46,7 +46,7 @@
                                     Creditos <br> liberados
                                 </div>
                             </div>
-                        </button>
+                        </a>
                     </div>
                     <div class="col-2"></div>
                 </div>
@@ -60,19 +60,18 @@
                         <th>Numero de control</th>
                         <th>Fecha de nacimiento</th>
                         <th>Carrera</th>
-                        <th>+</th>
-                        <th>Editar</th>
-                        <th>Eliminar</th>
+                        <th>Acciones</th>
                     </thead>
                     <tbody>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>Jose Alberto Velazquez Nava</td>
+                            <td>191190060</td>
+                            <td>17/04/2001</td>
+                            <td>Sistemas</td>
+                            <td>
+                                <a href="" class="btn btn-danger">Eliminar</a>
+                                <a href="" class="btn btn-warning">Editar</a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

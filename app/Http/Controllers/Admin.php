@@ -22,7 +22,7 @@ class Admin extends Controller
         $titulo = 'Creditos liberados';
         return view('ADM/liberados',compact('titulo'));
     }
-    public function evidencias()
+    public function agregarEvidencias()
     {
         $titulo = 'Agregar Evidencias';
         return view('ADM/evidencias',compact('titulo'));
