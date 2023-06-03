@@ -15,29 +15,36 @@ class Admin extends Controller
     {
         $titulo = 'Dashboard';
         return view("ADM/dash", compact('titulo'));
-
     }
     public function creditosLib()
     {
         $titulo = 'Creditos liberados';
-        return view('ADM/liberados',compact('titulo'));
+        return view('ADM/liberados', compact('titulo'));
     }
     public function agregarEvidencias()
     {
         $titulo = 'Agregar Evidencias';
-        return view('ADM/evidencias',compact('titulo'));
+        return view('ADM/agregar_evidencias', compact('titulo'));
     }
-    public function creditosTram(){
+    public function creditosTram()
+    {
         $titulo = 'Creditos en tramite';
-        return view('ADM/tramite',compact('titulo'));
+        return view('ADM/tramite', compact('titulo'));
     }
-    public function registrarAlum(){
+    public function registrarAlum()
+    {
         $titulo = 'Registrar Alumos';
-        return view('ADM/registrar',compact('titulo'));
+        return view('ADM/registrar', compact('titulo'));
     }
-    public function constanciasLib(){
+    public function constanciasLib()
+    {
         $titulo = 'Constancias Liberadas';
-        return view('ADM/constancias',compact('titulo'));
+        return view('ADM/constancias', compact('titulo'));
+    }
+    public function evidencias()
+    {
+        $titulo = 'Evidencias';
+        return view('ADM/evidencias',compact('titulo'));
     }
     /**
      * Show the form for creating a new resource.

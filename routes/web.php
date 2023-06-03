@@ -27,4 +27,5 @@ Route::controller(Admin::class)->group(function(){
     Route::get('/creditosTram','creditosTram')->name('tramite-admin');
     Route::get('/registrarAlum','registrarAlum')->name('registrar-admin');
     Route::get('/constanciasLibe','constanciasLib')->name('constancias-liberadas');
+    Route::get('/evidencias','evidencias')->name('evidencias');
 });

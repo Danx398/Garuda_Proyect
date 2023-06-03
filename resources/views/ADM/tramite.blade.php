@@ -15,14 +15,17 @@
                         <th>Agregar evidencia</th>
                         <th>+</th>
                     </thead>
-                    <tbody>
+                    <tbody class="text-center">
                         <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <button class="btn btn-primary"><i class="fa-solid fa-file-circle-plus"></i></button>
+                            <button class="btn btn-primary"><i class="fa-solid fa-eye"></i></button>
+                        </td>
+                        <td><button class="btn btn-primary"><i class="fa-solid fa-plus"></i></button></td>
                     </tbody>
                 </table>
             </div>

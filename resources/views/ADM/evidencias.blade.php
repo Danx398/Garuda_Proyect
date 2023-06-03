@@ -2,44 +2,32 @@
 @section('contenido')
     @include('shared/nav')
     <div class="container">
-        <h1 class="text-center mt-3">Agregar evidencia</h1>
-        <div class="row justify-content-center mt-5">
-            <div class="col-10">
-                <form action="" class="form-control bg-primary text-light">
-                    <div class="row justify-content-center text-center mt-3">
-                        <div class="col-5 pt-2 pb-2">
-                            <label for="">Seleccionar</label>
-                            <select name="" id="" class="form-control mt-2">
-                                <option value="" selected>Seleccionar</option>
-                                <option value="">Actividad</option>
-                                <option value="">Mooc</option>
-                            </select>
-                            <label for="" class="mt-3">Nombre del evento, actividad o mooc</label>
-                            <input type="text" class="form-control mt-2" disabled>
-                            <label for="" class="mt-3">Subir evidencia</label>
-                            <input type="file" name="" id="" class="form-control mt-2" disabled>
-                        </div>
-                        <div class="col-1"></div>
-                        <div class="col-5">
-                            <div class="row justify-content-center text-center mt-4">
-                                <div class="col-6 fs-5">Nombre estudiante</div>
-                                <div class="col-6 fs-5">Numero de control</div>
-                            </div>
-                            <div class="row mt-5">
-                                <label for="" class="mt-5">Horas realizadas</label>
-                                <input type="text" disabled class="form-control mt-2">
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="col-3">
-                            <button class="btn btn-light container-fluid pt-2 pb-2 rounded-4 mt-5 mb-3">Agregar</button>
-                        </div>
-                    </div>
-                </form>
+        <h1 class="text-center mt-3">{{ $titulo }}</h1>
+        <div class="row">
+            <div class="col">
+                <table class="table table-responsive mt-4">
+                    <thead class="bg-primary text-light text-center">
+                        <th>Nombre</th>
+                        <th>Numero de control</th>
+                        <th>Evento (act o mooc)</th>
+                        <th>Evidencias</th>
+                        <th>Documentos</th>
+                        <th>Fecha de modificación</th>
+                    </thead>
+                    <tbody class="text-center">
+                        <td>D</td>
+                        <td>D</td>
+                        <td>D</td>
+                        <td>D</td>
+                        <td>
+                            <button class="btn btn-primary "><i class="fa-solid fa-eye"></i></button>
+                            <button class="btn btn-primary "><i class="fa-solid fa-download"></i></button>
+                            <button class="btn btn-primary "><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                        <td>D</td>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    @include('shared/footer')
 @endsection
