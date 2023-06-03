@@ -35,6 +35,10 @@ class Admin extends Controller
         $titulo = 'Registrar Alumos';
         return view('ADM/registrar',compact('titulo'));
     }
+    public function constanciasLib(){
+        $titulo = 'Constancias Liberadas';
+        return view('ADM/constancias',compact('titulo'));
+    }
     /**
      * Show the form for creating a new resource.
      *
