@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\Session;
 
 class AuthLogin extends Controller
 {
-    public function __construct()
+    /* public function __construct()
     {
         $this->middleware(['guest'])->only(['index']);
-    }
+    } */
     public function index()
     {
         $titulo = 'Login';
@@ -28,7 +28,7 @@ class AuthLogin extends Controller
         if (Auth::attempt($credenciales)) {
             if ( auth()->user()->rol == 'Sadmin') {
                 return redirect()->route('inicio-sadmin');
-            } else if(auth()->user()->rol == 'admin') {
+            } else if(auth()->user()->rol == 'Admin') {
                 return redirect()->route('admin');
             } else {
                 return $this->logout();
