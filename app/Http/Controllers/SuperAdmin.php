@@ -11,6 +11,10 @@ class SuperAdmin extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware(['auth'])->only(['index','cambiarPass','crearNuevoAdmin','cambiar']);
+    }
     public function index()
     {
         $titulo = 'Dashboard Super Admin';

@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Session;
 
 class AuthLogin extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['guest'])->only(['index']);
+    }
     public function index()
     {
         $titulo = 'Login';

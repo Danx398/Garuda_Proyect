@@ -11,6 +11,10 @@ class Admin extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware(['auth'])->only(['index','creditosLib','agregarEvidencias','creditosTram','registrarAlum','constanciasLib','evidencias']);
+    }
     public function index()
     {
         $titulo = 'Dashboard';
