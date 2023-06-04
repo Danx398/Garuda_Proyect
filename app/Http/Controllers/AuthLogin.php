@@ -10,10 +10,10 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class AuthLogin extends Controller
 {
-    public function __construct()
+    /* public function __construct()
     {
         $this->middleware(['guest'])->only(['index']);
-    }
+    } */
     public function index()
     {
         $titulo = 'Login';
@@ -39,8 +39,7 @@ class AuthLogin extends Controller
             if ( auth()->user()->rol == 'Sadmin') {
                 Alert::success('Ah iniciado sesion!','Bienvenido');
                 return redirect()->route('inicio-sadmin');
-            } else if(auth()->user()->rol == 'admin') {
-                Alert::success('Ah iniciado sesion!','Bienvenido');
+            } else if(auth()->user()->rol == 'Admin') {
                 return redirect()->route('admin');
                 // ->withSuccess('Ah iniciado sesion!','Bienvenido');
             } else {
