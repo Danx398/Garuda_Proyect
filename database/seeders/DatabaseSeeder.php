@@ -7,6 +7,7 @@ use Database\Factories\personaFactory;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
@@ -22,7 +23,7 @@ class DatabaseSeeder extends Seeder
             'nombre' => 'Roldan',
             'paterno' => 'Aquino',
             'materno' => 'Segura',
-            'num_celular' => 15120398,
+            'num_celular' => '5520807656',
             'genero' => 'Masculino',
             'fechaNac' => now()
         ];
@@ -34,7 +35,7 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
             'fk_persona' => 1,
             'rol' => 'Sadmin',
-            'password' => '$2y$10$gWztJNu9vnSYa76Huv5Qde/s5GJu7I3Vb7tRcwDOARHLtVLSQ.VdS', // password
+            'password' => Hash::make(12345678), // password
             'remember_token' => Str::random(10),
         ];
         DB::table('users')->insert($dUser);

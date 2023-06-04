@@ -7,37 +7,35 @@
                 <div class="row justify-content-between">
                     <div class="col-2"></div>
                     <div class="col-2 mt-5">
-                        <button class="btn btn-primary container-fluid pt-4 pb-4">
+                        <a href="{{ route('nuevo-sadmin') }}"
+                            class="btn btn-primary container-fluid pt-4 pb-4 text-decoration-none text-light">
                             <div class="row mb-3">
                                 <div class="col">
                                     <i class="fa-solid fa-user fa-2xl"></i>
                                 </div>
                             </div>
                             <div class="row">
-                                <a href="{{ route('nuevo-sadmin') }}" class="text-decoration-none text-light">
-                                    <div class="col">
-                                        Nuevo <br>Admin
-                                    </div>
-                                </a>
+                                <div class="col">
+                                    Nuevo <br>Admin
+                                </div>
                             </div>
-                        </button>
+                        </a>
                     </div>
                     <div class="col-4"></div>
                     <div class="col-2 mt-5">
-                        <button class="btn btn-primary container-fluid pt-4 pb-4">
+                        <a href="{{ route('cambio-sadmin') }}"
+                            class="btn btn-primary container-fluid text-decoration-none text-light pt-4 pb-4">
                             <div class="row mb-3">
                                 <div class="col">
                                     <i class="fa-solid fa-key fa-2xl"></i>
                                 </div>
                             </div>
                             <div class="row">
-                                <a href="{{route('cambiarPass-sadmin')}}" class="text-decoration-none text-light">
-                                    <div class="col">
-                                        Cambiar <br> contraseña
-                                    </div>
-                                </a>
+                                <div class="col">
+                                    Cambiar <br> contraseña
+                                </div>
                             </div>
-                        </button>
+                        </a>
                     </div>
                     <div class="col-2"></div>
                 </div>
@@ -45,8 +43,8 @@
         </div>
         <div class="row mt-5">
             <div class="col">
-                <table class="table text-center table-bordered table-striped text-light table-responsive">
-                    <thead class="bg-primary">
+                <table class="table text-center table-bordered table-striped table-responsive">
+                    <thead class="bg-primary text-light">
                         <th>Usuario</th>
                         <th>Nombre</th>
                         <th>Email</th>
@@ -54,15 +52,30 @@
                         <th>Editar</th>
                         <th>Eliminar</th>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                    <tbody class="text-primary">
+                        @foreach ($datos as $dato)
+                            <tr>
+                                <td>{{ $dato->name }}</td>
+                                <td>{{ $dato->nombre }} {{ $dato->paterno }} {{ $dato->materno }}</td>
+                                <td>{{ $dato->email }}</td>
+                                <td>
+                                    <a href="" class="btn btn-primary">
+                                        <i class="fa-solid fa-square-plus"></i>
+                                        {{-- aqui la modal --}}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="" class="btn btn-primary">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="" class="btn btn-primary">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

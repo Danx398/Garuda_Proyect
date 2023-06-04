@@ -11,7 +11,7 @@
                     <a class="nav-link active text-light" aria-current="page" href="{{route('nuevo-sadmin')}}">Nuevo Administrador</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="{{route('cambiarPass-sadmin')}}">Cambiar Contraseñas</a>
+                    <a class="nav-link text-light" href="{{route('cambio-sadmin')}}">Cambiar Contraseñas</a>
                 </li>
             </ul>
             <a href="{{ route('logout') }}" class="btn btn-danger">Cerrar Sesion</a>
