@@ -21,13 +21,19 @@ class SuperAdmin extends Controller
     {
         $this->middleware(['auth'])->only(['index', 'cambiarPass', 'crearNuevoAdmin', 'cambiar']);
     }
+    public function modal($id)
+    {
+        $modal = User::select()
+            ->join('t_personas', 't_personas.id', 'users.fk_persona')
+            ->where('rol', 'admin')->where('id',$id)->get();
+        return view('shared/modal',compact('modal'));
+    }
     public function index()
     {
         $datos = User::select()
             ->join('t_personas', 't_personas.id', 'users.fk_persona')
             ->where('rol', 'admin')->get();
         $titulo = 'Dashboard Super Admin';
-
         $title = 'Cuidado!';
         $text = "Ya no se podra recuperar la informacion, ¿esta seguro?";
         confirmDelete($title, $text);
@@ -148,7 +154,7 @@ class SuperAdmin extends Controller
 
         // $json = json_encode($user);
 
-        return view('SADM/cpass', compact('titulo', 'datos','edad'));
+        return view('SADM/cpass', compact('titulo', 'datos', 'edad'));
     }
 
     public function editAdmin($id)
@@ -214,11 +220,11 @@ class SuperAdmin extends Controller
         $usuario = User::find($id);
         $persona = Persona::find($usuario->fk_persona);
 
-        if($usuario->delete() && $persona->delete()){
-            Alert::success('Se elimino con exito','Se ha eliminado el usuario');
+        if ($usuario->delete() && $persona->delete()) {
+            Alert::success('Se elimino con exito', 'Se ha eliminado el usuario');
             return redirect()->route('inicio-sadmin');
-        }else{
-            Alert::danger('Error','No se pudo eliminar el usuario');
+        } else {
+            Alert::danger('Error', 'No se pudo eliminar el usuario');
             return back();
         }
     }
