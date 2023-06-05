@@ -14,7 +14,7 @@ class CreateAlumnosTable extends Migration
     public function up()
     {
         Schema::create('t_alumnos', function (Blueprint $table) {
-            $table->id('id_alumno');
+            $table->id('id');
             $table->integer('num_control');
             $table->string('carrera');
             $table->unsignedBigInteger('fk_escuela_procedencia');
@@ -22,8 +22,8 @@ class CreateAlumnosTable extends Migration
             $table->unsignedBigInteger('fk_persona');
             $table->timestamps();
 
-            $table->foreign('fk_persona')->references('id_persona')->on('t_personas');
-            $table->foreign('fk_escuela_procedencia')->references('id_escuela_procedencia')->on('t_cat_escuela_procedencias');
+            $table->foreign('fk_persona')->references('id')->on('t_personas');
+            $table->foreign('fk_escuela_procedencia')->references('id')->on('t_cat_escuela_procedencias');
         });
     }
 

@@ -14,7 +14,7 @@ class CreateCatEstatusesTable extends Migration
     public function up()
     {
         Schema::create('t_cat_estatus', function (Blueprint $table) {
-            $table->id('id_estatus');
+            $table->id('id');
             $table->string('estatus');
             $table->text('descripcion');
             $table->timestamps();

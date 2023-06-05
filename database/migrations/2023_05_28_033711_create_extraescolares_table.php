@@ -14,7 +14,7 @@ class CreateExtraescolaresTable extends Migration
     public function up()
     {
         Schema::create('t_extraescolares', function (Blueprint $table) {
-            $table->id('id_extraescolares');
+            $table->id('id');
             $table->unsignedBigInteger('fk_alumno');
             $table->unsignedBigInteger('fk_estatus');
             $table->string('evidencias');
@@ -23,9 +23,9 @@ class CreateExtraescolaresTable extends Migration
             $table->string('constancia_liberada');
             $table->timestamps();
 
-            $table->foreign('fk_alumno')->references('id_alumno')->on('t_alumnos');
-            $table->foreign('fk_estatus')->references('id_estatus')->on('t_cat_estatus');
-            $table->foreign('fk_credito')->references('id_credito')->on('t_cat_creditos');
+            $table->foreign('fk_alumno')->references('id')->on('t_alumnos');
+            $table->foreign('fk_estatus')->references('id')->on('t_cat_estatus');
+            $table->foreign('fk_credito')->references('id')->on('t_cat_creditos');
         });
     }
 

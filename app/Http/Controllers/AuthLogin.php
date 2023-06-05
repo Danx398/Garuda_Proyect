@@ -46,8 +46,9 @@ class AuthLogin extends Controller
                 return $this->logout();
             }
         } else {
-            // Alert::error('No existe este usuario');
-            return back()->withInput($credenciales)->with('errors','No existe este usuario');
+            Alert::error('No existe este usuario');
+            return back()->withInput($credenciales);
+            // ->with('errors','No existe este usuario');
         }
     }
 

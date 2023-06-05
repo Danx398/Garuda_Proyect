@@ -22,9 +22,9 @@ class CreateUsersTable extends Migration
             $table->string('rol');
             $table->string('password');
             $table->rememberToken();
-            $table->timestamps();  
+            $table->timestamps();
 
-            $table->foreign('fk_persona')->references('id_persona')->on('t_personas');
+            $table->foreign('fk_persona')->references('id')->on('t_personas');
         });
     }
 

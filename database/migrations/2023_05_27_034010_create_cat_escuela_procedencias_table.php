@@ -14,7 +14,7 @@ class CreateCatEscuelaProcedenciasTable extends Migration
     public function up()
     {
         Schema::create('t_cat_escuela_procedencias', function (Blueprint $table) {
-            $table->id('id_escuela_procedencia');
+            $table->id('id');
             $table->string('escuela');
             $table->text('descripcion');
             $table->timestamps();

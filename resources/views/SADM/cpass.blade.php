@@ -1,13 +1,26 @@
 @extends('layouts/main')
 @section('contenido')
     @include('shared/navSuper')
-    {{ $datos }}
     <div class="container">
         <h1 class="text-center mb-4 mt-3">Cambiar contraseña </h1>
         <div class="row justify-content-center mt-3">
             <div class="col-2"></div>
             <div class="col-8">
-                <div class="bg-primary pt-5 pb-5 text-light text-center fs-1 rounded-5">Datos del usuario</div>
+                <div class="bg-primary p-5 text-light fs-4 rounded-5">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-8">
+                                <div>Usuario: {{ $datos->name }}</div>
+                                <div>Correo electronico: {{ $datos->email }}</div>
+                                <div>Nombre: {{ $datos->nombre }} {{ $datos->paterno }} {{ $datos->materno }}</div>
+                                <div>Edad: {{ $edad }}</div>
+                            </div>
+                            <div class="col-4">
+                                <img src="{{asset('img/llave.png')}}" class="w-75" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-2"></div>
         </div>
@@ -27,12 +40,13 @@
                         <button class="btn btn-primary container-fluid pt-2 pb-2 rounded-4 fs-4 mt-5">Cambiar</button>
                     </div>
                     <div class="col-2">
-                        <a href="{{route('cambio-sadmin')}}" class="btn btn-primary container-fluid pt-2 pb-2 rounded-4 fs-4 mt-5">Cancelar</a>
+                        <a href="{{ route('cambio-sadmin') }}"
+                            class="btn btn-primary container-fluid pt-2 pb-2 rounded-4 fs-4 mt-5">Cancelar</a>
                     </div>
                 </div>
             </div>
         </form>
     </div>
-    @include('shared/flotanteSadmin')
+    {{-- @include('shared/flotanteSadmin') --}}
     @include('shared/footer')
 @endsection

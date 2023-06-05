@@ -14,11 +14,11 @@ class CreatePersonasTable extends Migration
     public function up()
     {
         Schema::create('t_personas', function (Blueprint $table) {
-            $table->id('id_persona');
+            $table->id('id');
             $table->string('nombre');
             $table->string('paterno');
             $table->string('materno');
-            $table->string('num_celular',11);
+            $table->string('num_celular', 11);
             $table->string('genero');
             $table->date('fechaNac');
             $table->timestamps();

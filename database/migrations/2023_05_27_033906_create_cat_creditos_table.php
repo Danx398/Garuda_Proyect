@@ -14,7 +14,7 @@ class CreateCatCreditosTable extends Migration
     public function up()
     {
         Schema::create('t_cat_creditos', function (Blueprint $table) {
-            $table->id('id_credito');
+            $table->id('id');
             $table->string('credito');
             $table->text('descripcion');
             $table->integer('horas_liberar');

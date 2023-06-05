@@ -65,14 +65,23 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="" class="btn btn-primary">
+                                    <a href="{{ route('editar-sadmin', $dato->id) }}" class="btn btn-primary">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="" class="btn btn-primary">
+                                    <form action="{{ route('destroy-sadmin', $dato->id) }}" method="POST" data-confirm-delete="true">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="btn btn-primary">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
+                                    {{-- <a href="{{ route('destroy-sadmin', $dato->id) }}" class="btn btn-primary" data-confirm-delete="true">
+                                        @csrf
+                                        @method('DELETE')
                                         <i class="fa-solid fa-trash"></i>
-                                    </a>
+                                    </a> --}}
                                 </td>
                             </tr>
                         @endforeach
