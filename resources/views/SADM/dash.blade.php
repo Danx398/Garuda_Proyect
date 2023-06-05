@@ -82,10 +82,14 @@
                                                                     </div>
                                                                     <div class=""><b>Nombre: </b>{{ $dato->nombre }}
                                                                         {{ $dato->paterno }} {{ $dato->materno }} </div>
-                                                                    <div class=""><b>Email: </b>{{ $dato->email }}</div>
-                                                                    <div class=""><b>Num. Celular: </b>{{$dato->num_celular}}</div>
-                                                                    <div class=""><b>Genero: </b>{{$dato->genero}}</div>
-                                                                    <div class=""><b>Fecha Nacimiento: </b>{{$dato->fechaNac}}</div>
+                                                                    <div class=""><b>Email: </b>{{ $dato->email }}
+                                                                    </div>
+                                                                    <div class=""><b>Num. Celular:
+                                                                        </b>{{ $dato->num_celular }}</div>
+                                                                    <div class=""><b>Genero: </b>{{ $dato->genero }}
+                                                                    </div>
+                                                                    <div class=""><b>Fecha Nacimiento:
+                                                                        </b>{{ $dato->fechaNac }}</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -101,27 +105,49 @@
                                     </a>
                                 </td>
                                 <td>
-                                    {{-- <a href="{{ route('eliminar-sadmin', $dato->id) }}" class="btn btn-primary" >
-                                        <i class="fa fa-trash"></i>
-                                    </a> --}}
                                     <div class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#eliminarModal{{ $dato->id }}">
-                                        <i class="fa-solid fa-pen-to-square"></i>
+                                        <i class="fa-solid fa-trash"></i>
                                         <div class="modal fade" id="eliminarModal{{ $dato->id }}" tabindex="-1"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
+                                            <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content bg-primary">
                                                     <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">¿ Eliminar usuario ?</h1>
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Cuidado !!</h1>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        Eliminar {{$dato->id}}
-                                                        es el usuario {{$dato->name}}
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    ¿Estas seguro de que deseas eliminar a este usuario?
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col display-5">
+                                                                    {{ $dato->name }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    Recuerda que ya no se podra recuperar la informacion
+                                                                    despues de eliminarlo
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                     <div class="modal-footer">
-
+                                                        <button type="button" class="btn btn-light"
+                                                            data-bs-dismiss="modal">No, Cancelar</button>
+                                                        <form action="{{ route('destroy-sadmin', $dato->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger">Si,
+                                                                Eliminar</button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -135,8 +161,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal -->
 
     @include('shared/footer')
 @endsection

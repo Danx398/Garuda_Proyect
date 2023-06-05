@@ -16,7 +16,7 @@
                                 <div>Edad: {{ $edad }}</div>
                             </div>
                             <div class="col-4">
-                                <img src="{{asset('img/llave.png')}}" class="w-75" alt="">
+                                <img src="{{ asset('img/llave.png') }}" class="w-75" alt="">
                             </div>
                         </div>
                     </div>

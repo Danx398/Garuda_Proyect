@@ -21,19 +21,13 @@ class SuperAdmin extends Controller
     {
         $this->middleware(['auth'])->only(['index', 'cambiarPass', 'crearNuevoAdmin', 'cambiar']);
     }
-    public function modal($id)
-    {
-        $modal = User::select()
-            ->join('t_personas', 't_personas.id', 'users.fk_persona')
-            ->where('rol', 'admin')->where('id',$id)->get();
-        return view('shared/modal',compact('modal'));
-    }
     public function index()
     {
         $datos = User::select()
             ->join('t_personas', 't_personas.id', 'users.fk_persona')
             ->where('rol', 'admin')->get();
         $titulo = 'Dashboard Super Admin';
+
         $title = 'Cuidado!';
         $text = "Ya no se podra recuperar la informacion, ¿esta seguro?";
         confirmDelete($title, $text);
@@ -66,7 +60,6 @@ class SuperAdmin extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->request);
         $persona = new Persona();
         $usuario = new User();
         $this->validate($request, [
@@ -116,11 +109,7 @@ class SuperAdmin extends Controller
      */
     public function show($id)
     {
-        $datos = User::select()
-            ->join('t_personas', 't_personas.id', 'users.fk_persona')
-            ->where('rol', 'admin')->where('users.id',$id)->first();
-        $titulo = "Eliminar administrador";
-        return view('SADM/eliminar',compact('titulo','datos'));
+        //    
     }
 
     /**
@@ -136,23 +125,6 @@ class SuperAdmin extends Controller
             ->where('rol', 'admin')->where('users.id', $id)->first();
         $titulo = 'Cambiar contraseña';
         $edad = Carbon::createFromDate($datos->fechaNac)->age;
-
-        // $dato = array(
-        //     'usuario' => $datos->name,
-        //     'email' => $datos->email,
-        //     'nombre' => $datos->nombre.' '.$datos->paterno.' '.$datos->materno,
-        //     'fechaNac' => $datos->fechaNac,
-        //     'edad' => $edad
-        // );
-        // $user = [
-        //     'usuario' => $datos->name,
-        //     'email' => $datos->email,
-        //     'nombre' => $datos->nombre.' '.$datos->paterno.' '.$datos->materno,
-        //     'fechaNac' => $datos->fechaNac,
-        //     'edad' => $edad
-        // ];
-
-        // $json = json_encode($user);
 
         return view('SADM/cpass', compact('titulo', 'datos', 'edad'));
     }
