@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use RealRashid\SweetAlert\Facades\Alert;
 use Carbon\Carbon;
-use stdClass;
 
 class SuperAdmin extends Controller
 {
@@ -111,7 +110,11 @@ class SuperAdmin extends Controller
      */
     public function show($id)
     {
-        //
+        $datos = User::select()
+            ->join('t_personas', 't_personas.id', 'users.fk_persona')
+            ->where('rol', 'admin')->where('users.id',$id)->first();
+        $titulo = "Eliminar administrador";
+        return view('SADM/eliminar',compact('titulo','datos'));
     }
 
     /**

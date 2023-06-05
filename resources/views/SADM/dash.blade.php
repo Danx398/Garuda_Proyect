@@ -70,18 +70,32 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <form action="{{ route('destroy-sadmin', $dato->id) }}" method="POST" data-confirm-delete="true">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button" class="btn btn-primary">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
-                                    </form>
-                                    {{-- <a href="{{ route('destroy-sadmin', $dato->id) }}" class="btn btn-primary" data-confirm-delete="true">
-                                        @csrf
-                                        @method('DELETE')
-                                        <i class="fa-solid fa-trash"></i>
+                                    {{-- <a href="{{ route('eliminar-sadmin', $dato->id) }}" class="btn btn-primary" >
+                                        <i class="fa fa-trash"></i>
                                     </a> --}}
+                                    <div class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#eliminarModal{{ $dato->id }}">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                        <div class="modal fade" id="eliminarModal{{ $dato->id }}" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content bg-primary">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">¿ Eliminar usuario ?</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Eliminar {{$dato->id}}
+                                                        es el usuario {{$dato->name}}
+                                                    </div>
+                                                    <div class="modal-footer">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
