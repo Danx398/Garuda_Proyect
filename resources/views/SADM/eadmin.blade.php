@@ -5,14 +5,15 @@
         <h1 class="text-center mt-3">Editar Informacion</h1>
         <div class="row justify-content-center text-center mt-4">
             <div class="col-10">
-                <form action="{{route('actualizar-sadmin',$datos->id)}}" class="form-control bg-primary text-light" method="POST">
+                <form action="{{ route('actualizar-sadmin', $datos->id) }}" class="form-control bg-primary text-light"
+                    method="POST">
                     @csrf
                     @method('PUT')
                     <div class="row justify-content-center text-center mt-5">
                         <div class="col-5">
                             <label for="" class="mt-2 mb-2">Nombre</label>
                             <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre"
-                                id="nombre" value="{{$datos->nombre}}{{old('nombre')}}">
+                                id="nombre" value="{{ $datos->nombre }}{{ old('nombre') }}">
                             @error('nombre')
                                 @php
                                     Alert::error($message);
@@ -20,7 +21,7 @@
                             @enderror
                             <label for="" class="mt-2 mb-2">Apellido Paterno</label>
                             <input type="text" class="form-control @error('paterno') is-invalid @enderror"
-                                value="{{$datos->paterno}}{{ old('paterno') }}" name="paterno" id="paterno">
+                                value="{{ $datos->paterno }}{{ old('paterno') }}" name="paterno" id="paterno">
                             @error('paterno')
                                 @php
                                     Alert::error($message);
@@ -28,7 +29,7 @@
                             @enderror
                             <label for="" class="mt-2 mb-2">Apellido materno</label>
                             <input type="text" class="form-control @error('materno') is-invalid @enderror"
-                                value="{{$datos->materno}}{{ old('materno') }}" name="materno" id="materno">
+                                value="{{ $datos->materno }}{{ old('materno') }}" name="materno" id="materno">
                             @error('materno')
                                 @php
                                     Alert::error($message);
@@ -36,7 +37,7 @@
                             @enderror
                             <label for="" class="mt-4 mb-2">Fecha de nacimiento</label>
                             <input type="date" class="form-control @error('fechaNacimiento') is-invalid @enderror"
-                                value="{{$datos->fechaNac}}" name="fechaNacimiento" id="fechaNacimiento">
+                                value="{{ $datos->fechaNac }}" name="fechaNacimiento" id="fechaNacimiento">
                             @error('fechaNacimiento')
                                 @php
                                     Alert::error($message);
@@ -47,7 +48,7 @@
                         <div class="col-5 mt-5">
                             <label for="" class="mt-2 mb-2">Email</label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                value="{{$datos->email}}" name="email" id="email">
+                                value="{{ $datos->email }}" name="email" id="email">
                             @error('email')
                                 @php
                                     Alert::error($message);
@@ -55,7 +56,8 @@
                             @enderror
                             <label for="" class="mt-2 mb-2">Genero</label>
                             <select name="genero" id="genero" class="form-select @error('genero') is-invalid @enderror">
-                                <option value="Masculino" @if ($datos->genero == 'Masculino') selected @endif>Masculino</option>
+                                <option value="Masculino" @if ($datos->genero == 'Masculino') selected @endif>Masculino
+                                </option>
                                 <option value="Femenino" @if ($datos->genero == 'Femenino') selected @endif>Femenino</option>
                             </select>
                             @error('genero')
@@ -65,7 +67,7 @@
                             @enderror
                             <label for="" class="mb-2 mt-2">Numero de Celular</label>
                             <input type="number" class="form-control @error('numeroCelular') is-invalid @enderror"
-                                value="{{$datos->num_celular}}" name="numeroCelular" id="numeroCelular">
+                                value="{{ $datos->num_celular }}" name="numeroCelular" id="numeroCelular">
                             @error('numeroCelular')
                                 @php
                                     Alert::error($message);
