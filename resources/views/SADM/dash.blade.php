@@ -1,6 +1,7 @@
 @extends('layouts/main')
 @section('contenido')
     @include('shared/navSuper')
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg col-md-10 col-sm-12">
@@ -59,10 +60,40 @@
                                 <td>{{ $dato->nombre }} {{ $dato->paterno }} {{ $dato->materno }}</td>
                                 <td>{{ $dato->email }}</td>
                                 <td>
-                                    <a href="" class="btn btn-primary">
+                                    <div class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal{{ $dato->id }}">
                                         <i class="fa-solid fa-square-plus"></i>
                                         {{-- aqui la modal --}}
-                                    </a>
+                                        <div class="modal fade" id="exampleModal{{ $dato->id }}" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content bg-primary text-light">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Información de
+                                                            Usuario</h1>
+                                                        <button type="button" class="btn-close btn btn-light bg-light"
+                                                            data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class=""><b>Usuario: </b>{{ $dato->name }}
+                                                                    </div>
+                                                                    <div class=""><b>Nombre: </b>{{ $dato->nombre }}
+                                                                        {{ $dato->paterno }} {{ $dato->materno }} </div>
+                                                                    <div class=""><b>Email: </b>{{ $dato->email }}</div>
+                                                                    <div class=""><b>Num. Celular: </b>{{$dato->num_celular}}</div>
+                                                                    <div class=""><b>Genero: </b>{{$dato->genero}}</div>
+                                                                    <div class=""><b>Fecha Nacimiento: </b>{{$dato->fechaNac}}</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td>
                                     <a href="{{ route('editar-sadmin', $dato->id) }}" class="btn btn-primary">
@@ -70,7 +101,8 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <form action="{{ route('destroy-sadmin', $dato->id) }}" method="POST" data-confirm-delete="true">
+                                    <form action="{{ route('destroy-sadmin', $dato->id) }}" method="POST"
+                                        data-confirm-delete="true">
                                         @csrf
                                         @method('DELETE')
                                         <button type="button" class="btn btn-primary">
@@ -90,5 +122,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+
     @include('shared/footer')
 @endsection
