@@ -126,6 +126,21 @@ class SuperAdmin extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function cambioContrasenia(Request $request, $id){
+        $this->validate($request,[
+            'ContraseniaNueva' => ['required',Password::min(8)],
+            'ContraseniaConfirmar' => ['required',Password::min(8),'same:ContraseniaNueva'],
+        ]);
+        $user = User::find($id);
+        $user ->password = Hash::make($request->ContraseniaConfirmar);
+        if($user -> save()){
+            Alert::success('Cambio exitoso!!!', 'Se cambio la contraseña');
+            return redirect()->route('cambio-sadmin');
+        }else{
+            Alert::error('Error!!','No se ha cambiado la contraseña');
+            return back();
+        }
+    }
     public function cambiarPass($id)
     {
         $datos = User::select()

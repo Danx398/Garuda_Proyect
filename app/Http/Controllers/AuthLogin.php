@@ -39,7 +39,7 @@ class AuthLogin extends Controller
             if ( auth()->user()->rol == 'Sadmin') {
                 Alert::success('Ah iniciado sesion!','Bienvenido');
                 return redirect()->route('inicio-sadmin');
-            } else if(auth()->user()->rol == 'Admin') {
+            } else if(auth()->user()->rol == 'admin') {
                 return redirect()->route('admin');
                 // ->withSuccess('Ah iniciado sesion!','Bienvenido');
             } else {

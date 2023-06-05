@@ -6,7 +6,7 @@
         <div class="row justify-content-center mt-3">
             <div class="col-2"></div>
             <div class="col-8">
-                <div class="bg-primary p-5 text-light fs-4 rounded-5">
+                <div class="bg-primary p-5 text-light fs-5 rounded-5">
                     <div class="container">
                         <div class="row">
                             <div class="col-8">
@@ -16,7 +16,7 @@
                                 <div>Edad: {{ $edad }}</div>
                             </div>
                             <div class="col-4">
-                                <img src="{{asset('img/llave.png')}}" class="w-75" alt="">
+                                <img src="{{ asset('img/llave.png') }}" class="w-75" alt="">
                             </div>
                         </div>
                     </div>
@@ -24,17 +24,30 @@
             </div>
             <div class="col-2"></div>
         </div>
-        <form action="">
+        <form action="{{ route('cambiar-contrasenia', $datos->id) }}" method="POST">
+            @csrf
+            @method('POST')
             <div class="row justify-content-between text-center mt-5">
                 <div class="col-4">
-                    <label for="" class="fs-4">Contraseña Nueva</label>
-                    <input type="text" class="form-control">
+                    <label for="" class="fs-5">Contraseña Nueva</label>
+                    <input type="texto" class="form-control @error('ContraseniaNueva') is-invalid @enderror"
+                        name="ContraseniaNueva" value="{{old('ContraseniaNueva')}}">
+                    @error('ContraseniaNueva')
+                        @php
+                            Alert::error($message);
+                        @endphp
+                    @enderror
                 </div>
                 <div class="col-4"></div>
                 <div class="col-4">
-                    <label for="" class="fs-4">Confirmar Contraseña</label>
-                    <input type="text" class="form-control">
+                    <label for="" class="fs-5">Confirmar Contraseña</label>
+                    <input type="password" class="form-control @error('ContraseniaConfirmar') is-invalid @enderror" name="ContraseniaConfirmar" value="{{old('ContraseniaConfirmar')}}">
                 </div>
+                @error('ContraseniaConfirmar')
+                        @php
+                            Alert::error($message);
+                        @endphp
+                    @enderror
                 <div class="row justify-content-center">
                     <div class="col-2">
                         <button class="btn btn-primary container-fluid pt-2 pb-2 rounded-4 fs-4 mt-5">Cambiar</button>

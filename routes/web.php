@@ -22,6 +22,7 @@ Route::controller(SuperAdmin::class)->group(function () {
     Route::get('/editarAdmin/{id}', 'editAdmin')->name('editar-sadmin');
     Route::put('/updateAdmin/{id}', 'updateAdmin')->name('actualizar-sadmin');
     Route::delete('/eliminar/{id}', 'destroy')->name('destroy-sadmin');
+    Route::post('/cambiarContrasenia/{id}','cambioContrasenia')->name('cambiar-contrasenia');
 });
 
 Route::controller(Admin::class)->group(function () {
