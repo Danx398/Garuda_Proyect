@@ -18,6 +18,23 @@ body {
   height: 100px;
 }
 
+.pagination .page-item.active .page-link {
+  background-color: #161149;
+  border-color: #161149;
+}
+
+div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item.active .page-link:focus {
+  border-color: #E3EAEB;
+  color: #161149;
+  background-color: #E3EAEB;
+}
+
+.pagination .page-item.active .page-link:hover {
+  border-color: #E3EAEB;
+  color: #161149;
+  background-color: #E3EAEB;
+}
+
 /*!
  * Bootstrap  v5.2.3 (https://getbootstrap.com/)
  * Copyright 2011-2022 The Bootstrap Authors

@@ -1,4 +1,8 @@
 @extends('layouts/main')
+@section('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+@endsection
 @section('contenido')
     @include('shared/navSuper')
 
@@ -44,12 +48,12 @@
         </div>
         <div class="row mt-5">
             <div class="col">
-                <table class="table text-center table-bordered table-striped table-responsive">
+                <table class="table text-center table-bordered table-striped table-responsive" id="sadmn">
                     <thead class="bg-primary text-light">
                         <th>Usuario</th>
                         <th>Nombre</th>
                         <th>Email</th>
-                        <th>+</th>
+                        <th>Ver mas</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
                     </thead>
@@ -63,7 +67,6 @@
                                     <div class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#exampleModal{{ $dato->id }}">
                                         <i class="fa-solid fa-square-plus"></i>
-                                        {{-- aqui la modal --}}
                                         <div class="modal fade" id="exampleModal{{ $dato->id }}" tabindex="-1"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered">
@@ -163,4 +166,38 @@
     </div>
 
     @include('shared/footer')
+@endsection
+@section('js')
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#sadmn').DataTable({
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+            });
+        });
+    </script>
 @endsection
