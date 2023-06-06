@@ -13,6 +13,7 @@ Route::controller(AuthLogin::class)->group(function () {
     Route::post('/logear', 'logear')->name('logear');
     Route::get('/logout', 'logout')->name('logout');
 });
+Route::get('/dashSadm',[SuperAdmin::class,'index'])->name('inicio-sadmin');
 Route::controller(SuperAdmin::class)->group(function () {
     Route::get('/dashSadm', 'index')->name('inicio-sadmin');
     Route::get('/nuevoAdmin', 'crearNuevoAdmin')->name('nuevo-sadmin')->middleware('RolValido:Sadm');
@@ -24,7 +25,7 @@ Route::controller(SuperAdmin::class)->group(function () {
     Route::delete('/eliminar/{id}', 'destroy')->name('destroy-sadmin')->middleware('RolValido:Sadm');
     Route::post('/cambiarContrasenia/{id}','cambioContrasenia')->name('cambiar-contrasenia')->middleware('RolValido:Sadm');
 });
-
+Route::get('/dashAdm',[Admin::class,'index'])->name('admin');
 Route::controller(Admin::class)->group(function () {
     Route::get('/dashAdm', 'index')->name('admin');
     // ->middleware('RolValido');
