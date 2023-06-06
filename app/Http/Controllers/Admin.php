@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alumno;
+use App\Models\Cat_escuela_procedencia;
 use App\Models\Persona;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -21,8 +22,9 @@ class Admin extends Controller
     }
     public function index()
     {
+        $datos = Alumno::select()->join('t_personas','t_personas.id','t_alumnos.fk_persona')->get();
         $titulo = 'Dashboard';
-        return view("ADM/index", compact('titulo'));
+        return view("ADM/index", compact('titulo','datos'));
     }
     public function creditosLib()
     {
@@ -42,7 +44,8 @@ class Admin extends Controller
     public function registrarAlum()
     {
         $titulo = 'Registrar Alumos';
-        return view('ADM/registrar', compact('titulo'));
+        $items = Cat_escuela_procedencia::all();
+        return view('ADM/registrar', compact('titulo','items'));
     }
     
     public function crearCarpeta($nombreCarpeta){
@@ -60,12 +63,12 @@ class Admin extends Controller
         $persona->num_celular = $request->celular;
         $persona->fechaNac = $request->fechaNac;
         if($persona->save()){
-            $escuelaP = 1;
             $id = $persona->id;
             $alumno->num_control = $request->numControl;
             $alumno->carrera = $request->carrera;
             $alumno->fk_persona = $id;
-            $alumno->fk_escuela_procedencia=$escuelaP;
+            // $alumno->fk_escuela_procedencia=$escuelaP;
+            $alumno->fk_escuela_procedencia = $request->procedencia ;
             $alumno->fecha_ingreso_tec = $request->fechaTec;
             if ($alumno->save()) {
                 $this-> crearCarpeta($request->numControl);

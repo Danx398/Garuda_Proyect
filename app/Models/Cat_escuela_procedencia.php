@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Cat_escuela_procedencia extends Model
 {
     use HasFactory;
-    protected $table = "t_cat_escuela_procedencia";
+    protected $table = "t_cat_escuela_procedencias";
 }
