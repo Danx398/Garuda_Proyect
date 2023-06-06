@@ -10,10 +10,10 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class AuthLogin extends Controller
 {
-    /* public function __construct()
+    public function __construct()
     {
-        $this->middleware(['guest'])->only(['index']);
-    } */
+        $this->middleware(['guest'])->only(['index','loguear']);
+    }
     public function index()
     {
         $titulo = 'Login';

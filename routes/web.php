@@ -27,6 +27,7 @@ Route::controller(SuperAdmin::class)->group(function () {
 
 Route::controller(Admin::class)->group(function () {
     Route::get('/dashAdm', 'index')->name('admin');
+    // ->middleware('RolValido');
     Route::get('/creditosLib', 'creditosLib')->name('liberado-admin');
     Route::get('/agregarEvidencias', 'agregarEvidencias')->name('evidencias-admin');
     Route::get('/creditosTram', 'creditosTram')->name('tramite-admin');

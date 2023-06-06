@@ -19,7 +19,7 @@ class SuperAdmin extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth'])->only(['index', 'cambiarPass', 'crearNuevoAdmin', 'cambiar']);
+        $this->middleware(['auth','sAdmin'])->only(['index', 'cambiarPass', 'crearNuevoAdmin', 'cambiar']);
     }
     public function index()
     {
