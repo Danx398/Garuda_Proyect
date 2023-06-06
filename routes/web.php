@@ -9,12 +9,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/generar-pdf', [PdfController::class, 'generarPdf']);
 
 Route::get('/',[AuthLogin::class,'index'])->name('login');
-
 Route::controller(AuthLogin::class)->group(function () {
     Route::post('/logear', 'logear')->name('logear');
     Route::get('/logout', 'logout')->name('logout');
 });
-Route::get('/dashSadm',[SuperAdmin::class,'index'])->name('inicio-sadmin');
+
 Route::controller(SuperAdmin::class)->group(function () {
     Route::get('/dashSadm', 'index')->name('inicio-sadmin');
     Route::get('/nuevoAdmin', 'crearNuevoAdmin')->name('nuevo-sadmin');
@@ -26,7 +25,7 @@ Route::controller(SuperAdmin::class)->group(function () {
     Route::delete('/eliminar/{id}', 'destroy')->name('destroy-sadmin');
     Route::post('/cambiarContrasenia/{id}','cambioContrasenia')->name('cambiar-contrasenia');
 });
-Route::get('/dashAdm',[Admin::class,'index'])->name('admin');
+
 Route::controller(Admin::class)->group(function () {
     Route::get('/dashAdm', 'index')->name('admin');
     Route::get('/creditosLib', 'creditosLib')->name('liberado-admin');

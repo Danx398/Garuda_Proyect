@@ -1,7 +1,7 @@
 @extends('layouts/main')
 @section('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="{{ asset('css/b5Datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}">
 @endsection
 @section('contenido')
     @include('shared/nav')
@@ -9,7 +9,7 @@
         <H1 class="text-center mt-3">Créditos en tramite</H1>
         <div class="row">
             <div class="col">
-                <table class="table text-light text-center mt-5 table-striped" id="Ctramite">
+                <table class="table text-light text-center mt-5 table-striped" id="tramite">
                     <thead class="bg-primary">
                         <th>Nombre</th>
                         <th>Numero de control</th>
@@ -39,12 +39,12 @@
     </div>
     @include('shared/flotanteAdmin')
     @include('shared/footer')
+@endsection
 @section('js')
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="{{ asset('js/bootstrapDT.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $('#Ctramite').DataTable({
+            $('#tramite').DataTable({
                 "language": {
                     "sProcessing": "Procesando...",
                     "sLengthMenu": "Mostrar _MENU_ registros",
@@ -72,5 +72,4 @@
             });
         });
     </script>
-@endsection
 @endsection

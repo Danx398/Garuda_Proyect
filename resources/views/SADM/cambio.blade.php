@@ -1,7 +1,7 @@
 @extends('layouts/main')
 @section('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="{{ asset('css/b5Datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}">
 @endsection
 @section('contenido')
     @include('shared/nav')
@@ -36,8 +36,7 @@
     @include('shared/footer')
 @endsection
 @section('js')
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="{{ asset('js/bootstrapDT.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#cambioUser').DataTable({
