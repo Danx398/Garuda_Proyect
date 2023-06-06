@@ -80,7 +80,7 @@
                                 <td>{{$item->fechaNac}}</td>
                                 <td>{{$item->carrera}}</td>
                                 <td>
-                                    <a href="" class="btn btn-primary"><i class="fa-solid fa-users-gear"></i></a>
+                                    <a href="{{route('evidencias-admin')}}" class="btn btn-primary"><i class="fa-solid fa-users-gear"></i></a>
                                     <a href="" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
                                     <a href="" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
                                 </td>
