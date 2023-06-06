@@ -4,10 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
-class Admin_middleware
+class nocache
 {
     /**
      * Handle an incoming request.
@@ -17,13 +15,15 @@ class Admin_middleware
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
-    {
-        if (Auth::check() &&  auth()->user()->rol == 'admin') {
-            return $next($request);
-        } else {
-            // Auth::logout();
-            // Session::flush();
-            return redirect()->route('admin');
+    { {
+        $response = $next($request);
+
+        // Desactivar la caché
+        $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
+
+        return $response;
         }
     }
 }

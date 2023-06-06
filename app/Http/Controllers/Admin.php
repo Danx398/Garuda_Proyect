@@ -19,7 +19,7 @@ class Admin extends Controller
     public function index()
     {
         $titulo = 'Dashboard';
-        return view("ADM/dash", compact('titulo'));
+        return view("ADM/index", compact('titulo'));
     }
     public function creditosLib()
     {

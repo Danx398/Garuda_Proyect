@@ -21,9 +21,9 @@ class sAdmin_middleware
         if (Auth::check() &&  auth()->user()->rol == 'Sadmin') {
             return $next($request);
         } else {
-            Auth::logout();
-            Session::flush();
-            return redirect()->route('login');
+            // Auth::logout();
+            // Session::flush();
+            return redirect()->route('inicio-sadmin');
         }
     }
 }

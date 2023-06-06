@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
-class Admin_middleware
+class RolValido
 {
     /**
      * Handle an incoming request.
@@ -18,12 +18,13 @@ class Admin_middleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() &&  auth()->user()->rol == 'admin') {
+        if (Auth::check() &&  auth()->user()->rol == 'admin' || auth()->user()->rol == 'Sadmin') {
             return $next($request);
         } else {
-            // Auth::logout();
-            // Session::flush();
-            return redirect()->route('admin');
-        }
+            Auth::logout();
+            Session::flush();
+            return redirect()->route('login');
+  }
+
     }
 }

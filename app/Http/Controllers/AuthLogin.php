@@ -12,7 +12,7 @@ class AuthLogin extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['guest'])->only(['index','loguear']);
+        $this->middleware(['nocache'])->only(['index','loguear']);
     }
     public function index()
     {

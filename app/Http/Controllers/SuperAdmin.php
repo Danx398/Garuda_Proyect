@@ -31,7 +31,7 @@ class SuperAdmin extends Controller
         $title = 'Cuidado!';
         $text = "Ya no se podra recuperar la informacion, ¿esta seguro?";
         confirmDelete($title, $text);
-        return view('SADM/dash', compact('titulo', 'datos'));
+        return view('SADM/index', compact('titulo', 'datos'));
     }
     public function cambiar()
     {
