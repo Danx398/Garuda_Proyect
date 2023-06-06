@@ -12,7 +12,8 @@ class AuthLogin extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['nocache'])->only(['index','loguear']);
+        // $this->middleware(['guest'])->only(['index','loguear']);
+        $this->middleware(['guest','nocache'])->only(['index']);
     }
     public function index()
     {

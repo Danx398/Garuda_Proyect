@@ -8,27 +8,27 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/generar-pdf', [PdfController::class, 'generarPdf']);
 
+Route::get('/',[AuthLogin::class,'index'])->name('login');
+
 Route::controller(AuthLogin::class)->group(function () {
-    Route::get('/', 'index')->name('login');
     Route::post('/logear', 'logear')->name('logear');
     Route::get('/logout', 'logout')->name('logout');
 });
 Route::get('/dashSadm',[SuperAdmin::class,'index'])->name('inicio-sadmin');
 Route::controller(SuperAdmin::class)->group(function () {
     Route::get('/dashSadm', 'index')->name('inicio-sadmin');
-    Route::get('/nuevoAdmin', 'crearNuevoAdmin')->name('nuevo-sadmin')->middleware('RolValido:Sadm');
-    Route::post('/store', 'store')->name('guardar-sadmin')->middleware('RolValido:Sadm');
-    Route::get('/cambio', 'cambiar')->name('cambio-sadmin')->middleware('RolValido:Sadm');
-    Route::get('/cambiarPass/{id}', 'cambiarPass')->name('cambiarPass-sadmin')->middleware('RolValido:Sadm');
-    Route::get('/editarAdmin/{id}', 'editAdmin')->name('editar-sadmin')->middleware('RolValido:Sadm');
-    Route::put('/updateAdmin/{id}', 'updateAdmin')->name('actualizar-sadmin')->middleware('RolValido:Sadm');
-    Route::delete('/eliminar/{id}', 'destroy')->name('destroy-sadmin')->middleware('RolValido:Sadm');
-    Route::post('/cambiarContrasenia/{id}','cambioContrasenia')->name('cambiar-contrasenia')->middleware('RolValido:Sadm');
+    Route::get('/nuevoAdmin', 'crearNuevoAdmin')->name('nuevo-sadmin');
+    Route::post('/store', 'store')->name('guardar-sadmin');
+    Route::get('/cambio', 'cambiar')->name('cambio-sadmin');
+    Route::get('/cambiarPass/{id}', 'cambiarPass')->name('cambiarPass-sadmin');
+    Route::get('/editarAdmin/{id}', 'editAdmin')->name('editar-sadmin');
+    Route::put('/updateAdmin/{id}', 'updateAdmin')->name('actualizar-sadmin');
+    Route::delete('/eliminar/{id}', 'destroy')->name('destroy-sadmin');
+    Route::post('/cambiarContrasenia/{id}','cambioContrasenia')->name('cambiar-contrasenia');
 });
 Route::get('/dashAdm',[Admin::class,'index'])->name('admin');
 Route::controller(Admin::class)->group(function () {
     Route::get('/dashAdm', 'index')->name('admin');
-    // ->middleware('RolValido');
     Route::get('/creditosLib', 'creditosLib')->name('liberado-admin');
     Route::get('/agregarEvidencias', 'agregarEvidencias')->name('evidencias-admin');
     Route::get('/creditosTram', 'creditosTram')->name('tramite-admin');

@@ -23,7 +23,7 @@ class Admin_middleware
         } else {
             // Auth::logout();
             // Session::flush();
-            return redirect()->route('admin');
+            return redirect()->route('inicio-sadmin');
         }
     }
 }

@@ -13,7 +13,7 @@ class Admin extends Controller
      */
     public function __construct()
     {
-        // $this->middleware(['guest'])->only(['index']);
+        $this->middleware(['auth','nocache'])->only(['index']);
         $this->middleware(['auth','Admin'])->only(['index','creditosLib','agregarEvidencias','creditosTram','registrarAlum','constanciasLib','evidencias']);
     }
     public function index()
