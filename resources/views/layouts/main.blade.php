@@ -14,7 +14,8 @@
     @include('sweetalert::alert')
     @yield('contenido')
     <script src="{{ asset('js/jquery-3.7.0.min.js') }}"></script>
-    @yield('js')
     <script src="{{ mix('js/app.js') }}"></script>
+    <script src="{{ asset('js/limitaciones.js') }}"></script>
+    @yield('js')
 </body>
 </html>

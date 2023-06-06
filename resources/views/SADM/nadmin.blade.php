@@ -83,7 +83,7 @@
                                 @endphp
                             @enderror
                             <label for="" class="mb-2 mt-2">Numero de Celular</label>
-                            <input type="number" class="form-control @error('numeroCelular') is-invalid @enderror"
+                            <input type="text" class="form-control @error('numeroCelular') is-invalid @enderror"
                                 value="{{ old('numeroCelular') }}" name="numeroCelular" id="numeroCelular">
                             @error('numeroCelular')
                                 @php
