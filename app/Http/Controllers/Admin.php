@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Admin extends Controller
 {
@@ -13,12 +14,17 @@ class Admin extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth'])->only(['index','creditosLib','agregarEvidencias','creditosTram','registrarAlum','constanciasLib','evidencias']);
+        $this->middleware(['auth','RolValido:admin'])->only(['index','creditosLib','agregarEvidencias','creditosTram','registrarAlum','constanciasLib','evidencias']);
     }
     public function index()
     {
-        $titulo = 'Dashboard';
-        return view("ADM/dash", compact('titulo'));
+        // dd(Auth::user()->rol);
+        if(Auth::user()->rol== 'admin'){
+            $titulo = 'Dashboard';
+            return view("ADM/index", compact('titulo'));
+        }else{
+            return redirect()->route('admin');
+        }
     }
     public function creditosLib()
     {

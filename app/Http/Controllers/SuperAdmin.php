@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use RealRashid\SweetAlert\Facades\Alert;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class SuperAdmin extends Controller
 {
@@ -19,19 +20,25 @@ class SuperAdmin extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth'])->only(['index', 'cambiarPass', 'crearNuevoAdmin', 'cambiar']);
+        $this->middleware(['auth', 'RolValido:Sadmin'])->only(['index', 'cambiarPass', 'crearNuevoAdmin', 'cambiar']);
     }
     public function index()
     {
+        // dd(Auth::user()->rol);
         $datos = User::select()
             ->join('t_personas', 't_personas.id', 'users.fk_persona')
             ->where('rol', 'admin')->get();
-        $titulo = 'Dashboard Super Admin';
 
         $title = 'Cuidado!';
         $text = "Ya no se podra recuperar la informacion, ¿esta seguro?";
         confirmDelete($title, $text);
-        return view('SADM/dash', compact('titulo', 'datos'));
+
+        if (Auth::user()->rol == 'Sadmin') {
+            $titulo = 'Dashboard Super Admin';
+            return view('SADM/index', compact('titulo', 'datos'));
+        } else {
+            return redirect()->route('inicio-Sadmin');
+        }
     }
     public function cambiar()
     {
@@ -118,18 +125,19 @@ class SuperAdmin extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function cambioContrasenia(Request $request, $id){
-        $this->validate($request,[
-            'ContraseniaNueva' => ['required',Password::min(8)],
-            'ContraseniaConfirmar' => ['required',Password::min(8),'same:ContraseniaNueva'],
+    public function cambioContrasenia(Request $request, $id)
+    {
+        $this->validate($request, [
+            'ContraseniaNueva' => ['required', Password::min(8)],
+            'ContraseniaConfirmar' => ['required', Password::min(8), 'same:ContraseniaNueva'],
         ]);
         $user = User::find($id);
-        $user ->password = Hash::make($request->ContraseniaConfirmar);
-        if($user -> save()){
+        $user->password = Hash::make($request->ContraseniaConfirmar);
+        if ($user->save()) {
             Alert::success('Cambio exitoso!!!', 'Se cambio la contraseña');
             return redirect()->route('cambio-sadmin');
-        }else{
-            Alert::error('Error!!','No se ha cambiado la contraseña');
+        } else {
+            Alert::error('Error!!', 'No se ha cambiado la contraseña');
             return back();
         }
     }
