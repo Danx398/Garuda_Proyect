@@ -33,10 +33,13 @@
                             <input type="date" class="form-control" name="fechaNac" id="fechaNac">
                             <label for="" class="mt-2">Carrera</label>
                             <input type="text" class="form-control" name="carrera" id="carrera">
-                            {{-- <label for="" class="mt-2">Escuela de procedencia</label>
+                            <label for="" class="mt-2">Escuela de procedencia</label>
                             <select class="form-control" name="procedencia" id="procedencia">
                                 <option value="">Seleccionar</option>
-                            </select> --}}
+                                @foreach ($items as $item)
+                                <option value="{{$item->id}}">{{$item->escuela}}</option>
+                                @endforeach
+                            </select>
                             <label for="" class="mt-2">Fecha de ingreso al tec</label>
                             <input type="date" class="form-control" name="fechaTec" id="fechaTec">
                         </div>

@@ -62,8 +62,8 @@
                         <th>Carrera</th>
                         <th>Acciones</th>
                     </thead>
-                    <tbody>
-                        <tr>
+                    <tbody class="text-primary">
+                        {{-- <tr>
                             <td>Jose Alberto Velazquez Nava</td>
                             <td>191190060</td>
                             <td>17/04/2001</td>
@@ -72,7 +72,20 @@
                                 <a href="" class="btn btn-danger">Eliminar</a>
                                 <a href="" class="btn btn-warning">Editar</a>
                             </td>
-                        </tr>
+                        </tr> --}}
+                        @foreach ($datos as $item)
+                            <tr>
+                                <td>{{$item->nombre}}     {{$item->paterno}} {{$item->materno}}</td>
+                                <td>{{$item->num_control}}</td>
+                                <td>{{$item->fechaNac}}</td>
+                                <td>{{$item->carrera}}</td>
+                                <td>
+                                    <a href="" class="btn btn-primary"><i class="fa-solid fa-users-gear"></i></a>
+                                    <a href="" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a href="" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
