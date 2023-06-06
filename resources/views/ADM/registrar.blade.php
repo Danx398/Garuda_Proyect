@@ -5,7 +5,7 @@
         <h1 class="text-center mt-3">Registrar Alumno</h1>
         <div class="row justify-content-center text-center mt-4">
             <div class="col-10">
-                <form action="" class="form-control bg-primary text-light">
+                <form action="{{route('darAlta')}}" class="form-control bg-primary text-light" method="POST">
                     @method('POST')
                     @csrf
                     <div class="row justify-content-center text-center mt-5">
@@ -33,10 +33,10 @@
                             <input type="date" class="form-control" name="fechaNac" id="fechaNac">
                             <label for="" class="mt-2">Carrera</label>
                             <input type="text" class="form-control" name="carrera" id="carrera">
-                            <label for="" class="mt-2">Escuela de procedencia</label>
+                            {{-- <label for="" class="mt-2">Escuela de procedencia</label>
                             <select class="form-control" name="procedencia" id="procedencia">
                                 <option value="">Seleccionar</option>
-                            </select>
+                            </select> --}}
                             <label for="" class="mt-2">Fecha de ingreso al tec</label>
                             <input type="date" class="form-control" name="fechaTec" id="fechaTec">
                         </div>

@@ -41,6 +41,7 @@ class AuthLogin extends Controller
                 Alert::success('Ah iniciado sesion!','Bienvenido');
                 return redirect()->route('inicio-sadmin');
             } else if(auth()->user()->rol == 'admin') {
+                Alert::success('Ah iniciado sesion!','Bienvenido');
                 return redirect()->route('admin');
                 // ->withSuccess('Ah iniciado sesion!','Bienvenido');
             } else {

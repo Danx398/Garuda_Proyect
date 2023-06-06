@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alumno;
+use App\Models\Persona;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class Admin extends Controller
 {
@@ -40,6 +43,42 @@ class Admin extends Controller
     {
         $titulo = 'Registrar Alumos';
         return view('ADM/registrar', compact('titulo'));
+    }
+    
+    public function crearCarpeta($nombreCarpeta){
+        if(!file_exists(public_path('Personas/'.$nombreCarpeta))){
+            mkdir(public_path('Personas/'.$nombreCarpeta),0777,true);
+        }
+    }
+    public function darAlta(Request $request){
+        $persona = new Persona();
+        $alumno = new Alumno();
+        $persona->nombre = $request->nombre;
+        $persona->paterno = $request->paterno;
+        $persona->materno = $request->materno;
+        $persona->genero = $request->genero;
+        $persona->num_celular = $request->celular;
+        $persona->fechaNac = $request->fechaNac;
+        if($persona->save()){
+            $escuelaP = 1;
+            $id = $persona->id;
+            $alumno->num_control = $request->numControl;
+            $alumno->carrera = $request->carrera;
+            $alumno->fk_persona = $id;
+            $alumno->fk_escuela_procedencia=$escuelaP;
+            $alumno->fecha_ingreso_tec = $request->fechaTec;
+            if ($alumno->save()) {
+                $this-> crearCarpeta($request->numControl);
+                Alert::success('Se ha creado el Alumno!', 'Registro exitoso');
+                return redirect()->route('admin');
+            } else {
+                Alert::error('No se pudo realizar el registro!', 'Vuelva a intentarlo');
+                return back();
+            }
+        } else {
+            Alert::error('No se pudo realizar el registro!', 'Vuelva a intentarlo');
+            return back();
+        }
     }
     public function constanciasLib()
     {
