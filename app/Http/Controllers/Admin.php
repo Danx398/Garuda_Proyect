@@ -14,16 +14,16 @@ class Admin extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth','RolValido:admin'])->only(['index','creditosLib','agregarEvidencias','creditosTram','registrarAlum','constanciasLib','evidencias']);
+        $this->middleware(['auth'])->only(['index','creditosLib','agregarEvidencias','creditosTram','registrarAlum','constanciasLib','evidencias']);
     }
     public function index()
     {
         // dd(Auth::user()->rol);
-        if(Auth::user()->rol== 'admin'){
+        if(Auth::user()->rol != 'admin'){
+            return redirect()->route('inicio-sadmin');
+        }else{
             $titulo = 'Dashboard';
             return view("ADM/index", compact('titulo'));
-        }else{
-            return redirect()->route('admin');
         }
     }
     public function creditosLib()

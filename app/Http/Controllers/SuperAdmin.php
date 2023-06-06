@@ -20,7 +20,7 @@ class SuperAdmin extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'RolValido:Sadmin'])->only(['index', 'cambiarPass', 'crearNuevoAdmin', 'cambiar']);
+        $this->middleware(['auth'])->only(['index', 'cambiarPass', 'crearNuevoAdmin', 'cambiar']);
     }
     public function index()
     {
@@ -28,16 +28,11 @@ class SuperAdmin extends Controller
         $datos = User::select()
             ->join('t_personas', 't_personas.id', 'users.fk_persona')
             ->where('rol', 'admin')->get();
-
-        $title = 'Cuidado!';
-        $text = "Ya no se podra recuperar la informacion, ¿esta seguro?";
-        confirmDelete($title, $text);
-
-        if (Auth::user()->rol == 'Sadmin') {
+        if (Auth::user()->rol != "Sadmin") {
+            return redirect()->route('admin');
+        } else {
             $titulo = 'Dashboard Super Admin';
             return view('SADM/index', compact('titulo', 'datos'));
-        } else {
-            return redirect()->route('inicio-Sadmin');
         }
     }
     public function cambiar()

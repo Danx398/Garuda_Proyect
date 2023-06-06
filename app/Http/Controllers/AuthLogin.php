@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Validation\Rules\Password;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class AuthLogin extends Controller
@@ -22,12 +23,14 @@ class AuthLogin extends Controller
     public function logout()
     {
         Auth::logout();
-        Session::flush();
-        Alert::success('Ah cerrado su sesion!','Hasta luego');
+        // Session::flush();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
         return redirect()->route('login');
+        Alert::success('Ah cerrado su sesion!','Hasta luego');
         // ->with('success','Ah cerrado su sesion!','Hasta luego');
     }
-    public function logear(Request $request) {
+    /*public function logear(Request $request) {
         $credenciales = $request->only("name", "password");
 
         $this->validate($request,[
@@ -49,6 +52,16 @@ class AuthLogin extends Controller
             Alert::error('No existe este usuario');
             return back()->withInput($credenciales);
             // ->with('errors','No existe este usuario');
+        }
+    }*/
+    public function logear(Request $request){
+        $user = User::where('name',$request->name)->first();
+        if($user){
+            if(Hash::check($request->password,$user->password)){
+                Auth::login($user);
+                request()->session()->regenerate();
+                return redirect()->route($user->rol == 'Sadmin' ? 'inicio-sadmin':'admin');
+            }
         }
     }
 
