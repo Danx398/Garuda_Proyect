@@ -13,8 +13,9 @@ Route::controller(AuthLogin::class)->group(function () {
     Route::post('/logear', 'logear')->name('logear');
     Route::get('/logout', 'logout')->name('logout');
 });
+Route::get('/dashSadm',[SuperAdmin::class,'index'])->name('inicio-sadmin');
 Route::controller(SuperAdmin::class)->group(function () {
-    Route::get('/dashSadm', 'index')->name('inicio-Sadmin')->middleware('RolValido:Sadm');
+    // Route::get('/dashSadm', 'index')->name('inicio-Sadmin')->middleware('RolValido:Sadm');
     Route::get('/nuevoAdmin', 'crearNuevoAdmin')->name('nuevo-sadmin')->middleware('RolValido:Sadm');
     Route::post('/store', 'store')->name('guardar-sadmin')->middleware('RolValido:Sadm');
     Route::get('/cambio', 'cambiar')->name('cambio-sadmin')->middleware('RolValido:Sadm');
@@ -24,9 +25,9 @@ Route::controller(SuperAdmin::class)->group(function () {
     Route::delete('/eliminar/{id}', 'destroy')->name('destroy-sadmin')->middleware('RolValido:Sadm');
     Route::post('/cambiarContrasenia/{id}','cambioContrasenia')->name('cambiar-contrasenia')->middleware('RolValido:Sadm');
 });
-
+Route::get('/dashAdm',[Admin::class,'index'])->name('admin');
 Route::controller(Admin::class)->group(function () {
-    Route::get('/dashAdm', 'index')->name('admin')->middleware('RolValido:admin');
+    // Route::get('/dashAdm', 'index')->name('admin')->middleware('RolValido:admin');
     Route::get('/creditosLib', 'creditosLib')->name('liberado-admin')->middleware('RolValido:admin');
     Route::get('/agregarEvidencias', 'agregarEvidencias')->name('evidencias-admin')->middleware('RolValido:admin');
     Route::get('/creditosTram', 'creditosTram')->name('tramite-admin')->middleware('RolValido:admin');
