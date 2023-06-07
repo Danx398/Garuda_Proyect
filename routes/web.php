@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/generar-pdf', [PdfController::class, 'generarPdf']);
 
-Route::get('/',[AuthLogin::class,'index'])->name('login');
+// Route::get('/', [AuthLogin::class, 'index'])->name('login');
 Route::controller(AuthLogin::class)->group(function () {
+    Route::get('/','index')->name('login');
     Route::post('/logear', 'logear')->name('logear');
     Route::get('/logout', 'logout')->name('logout');
 });
@@ -22,8 +23,8 @@ Route::controller(SuperAdmin::class)->group(function () {
     Route::get('/cambiarPass/{id}', 'cambiarPass')->name('cambiarPass-sadmin');
     Route::get('/editarAdmin/{id}', 'editAdmin')->name('editar-sadmin');
     Route::put('/updateAdmin/{id}', 'updateAdmin')->name('actualizar-sadmin');
-    Route::delete('/eliminar/{id}', 'destroy')->name('destroy-sadmin');
-    Route::post('/cambiarContrasenia/{id}','cambioContrasenia')->name('cambiar-contrasenia');
+    Route::delete('/eliminarSadmin/{id}', 'destroy')->name('destroy-sadmin');
+    Route::post('/cambiarContrasenia/{id}', 'cambioContrasenia')->name('cambiar-contrasenia');
 });
 
 Route::controller(Admin::class)->group(function () {
@@ -34,5 +35,6 @@ Route::controller(Admin::class)->group(function () {
     Route::get('/registrarAlum', 'registrarAlum')->name('registrar-admin');
     Route::get('/constanciasLibe', 'constanciasLib')->name('constancias-liberadas');
     Route::get('/evidencias', 'evidencias')->name('evidencias');
-    Route::post('/darAlta','darAlta')->name('darAlta');
+    Route::post('/darAlta', 'darAlta')->name('darAlta');
+    Route::delete('/eliminarAdmin/{id}', 'destroy')->name('destroy-admin');
 });

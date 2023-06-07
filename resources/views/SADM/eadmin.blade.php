@@ -5,7 +5,7 @@
         <h1 class="text-center mt-3">Editar Informacion</h1>
         <div class="row justify-content-center text-center mt-4">
             <div class="col-10">
-                <form action="{{ route('actualizar-sadmin', $datos->id) }}" class="form-control bg-primary text-light"
+                <form action="{{ route('actualizar-sadmin', $datos->id_user) }}" class="form-control bg-primary text-light"
                     method="POST">
                     @csrf
                     @method('PUT')

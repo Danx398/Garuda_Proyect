@@ -5,7 +5,7 @@
 @endsection
 @section('contenido')
     @include('shared/navSuper')
-
+    {{ $datos }}
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg col-md-10 col-sm-12">
@@ -65,9 +65,9 @@
                                 <td>{{ $dato->email }}</td>
                                 <td>
                                     <div class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal{{ $dato->id }}">
+                                        data-bs-target="#exampleModal{{ $dato->id_user }}">
                                         <i class="fa-solid fa-square-plus"></i>
-                                        <div class="modal fade" id="exampleModal{{ $dato->id }}" tabindex="-1"
+                                        <div class="modal fade" id="exampleModal{{ $dato->id_user }}" tabindex="-1"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content bg-primary text-light">
@@ -103,7 +103,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="{{ route('editar-sadmin', $dato->id) }}" class="btn btn-primary">
+                                    <a href="{{ route('editar-sadmin', $dato->id_user) }}" class="btn btn-primary">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                 </td>
@@ -144,12 +144,13 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-light"
                                                             data-bs-dismiss="modal">No, Cancelar</button>
-                                                        <form action="{{ route('destroy-sadmin', $dato->id) }}"
+                                                        <form action="{{ route('destroy-sadmin', $dato->id_user) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger">Si,
-                                                                Eliminar</button>
+                                                            <button type="submit" class="btn btn-danger">
+                                                                Si, Eliminar
+                                                            </button>
                                                         </form>
                                                     </div>
                                                 </div>

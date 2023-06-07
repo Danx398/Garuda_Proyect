@@ -5,6 +5,7 @@
 @endsection
 @section('contenido')
     @include('shared/nav')
+    {{ $datos }}
     <div class="container">
         <H1 class="text-center mt-3">Actualizar contraseña</H1>
         <div class="row">
@@ -21,7 +22,7 @@
                                 <td>{{ $dato->name }}</td>
                                 <td>{{ $dato->nombre }} {{ $dato->paterno }} {{ $dato->materno }}</td>
                                 <td>
-                                    <a href="{{ route('cambiarPass-sadmin', $dato->id) }}" class="btn btn-primary">
+                                    <a href="{{ route('cambiarPass-sadmin', $dato->id_user) }}" class="btn btn-primary">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                 </td>

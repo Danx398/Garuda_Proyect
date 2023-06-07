@@ -1,6 +1,7 @@
 @extends('layouts/main')
 @section('contenido')
     @include('shared/navSuper')
+    {{ $datos }}
     <div class="container">
         <h1 class="text-center mb-4 mt-3">Cambiar contraseña </h1>
         <div class="row justify-content-center mt-3">
@@ -24,7 +25,7 @@
             </div>
             <div class="col-2"></div>
         </div>
-        <form action="{{ route('cambiar-contrasenia', $datos->id) }}" method="POST">
+        <form action="{{ route('cambiar-contrasenia', $datos->id_user) }}" method="POST">
             @csrf
             @method('POST')
             <div class="row justify-content-between text-center mt-5">
