@@ -1,10 +1,13 @@
+window.addEventListener("load", function() {
+    document.getElementById("container_carga").classList.toggle('loader2');
+});
+
 const caracter_mayus = (input) => {
     $(`#${input}`).on('input', () => {
         // $(`[name=${input}]`).val();
 		$(`#${input}`).val().toUpperCase()
     });
 }
-
 
 const caracter_minus = (input) => {
     $(`#${input}`).on('input', () => {

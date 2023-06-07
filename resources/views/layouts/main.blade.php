@@ -11,6 +11,7 @@
     <link rel="icon" href="{{ asset('img/usuario.png') }}" type="x-icon">
 </head>
 <body>
+    @include('carga')
     @include('sweetalert::alert')
     @yield('contenido')
     <script src="{{ asset('js/jquery-3.7.0.min.js') }}"></script>

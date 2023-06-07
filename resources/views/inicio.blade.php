@@ -36,5 +36,5 @@
             </div>
         </div>
     </div>
-    @include('shared/carga')
+    
 @endsection
