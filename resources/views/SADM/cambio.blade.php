@@ -1,10 +1,11 @@
 @extends('layouts/main')
 @section('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="{{ asset('css/b5Datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}">
 @endsection
 @section('contenido')
     @include('shared/nav')
+    {{ $datos }}
     <div class="container">
         <H1 class="text-center mt-3">Actualizar contraseña</H1>
         <div class="row">
@@ -21,7 +22,7 @@
                                 <td>{{ $dato->name }}</td>
                                 <td>{{ $dato->nombre }} {{ $dato->paterno }} {{ $dato->materno }}</td>
                                 <td>
-                                    <a href="{{ route('cambiarPass-sadmin', $dato->id) }}" class="btn btn-primary">
+                                    <a href="{{ route('cambiarPass-sadmin', $dato->id_user) }}" class="btn btn-primary">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                 </td>
@@ -36,8 +37,7 @@
     @include('shared/footer')
 @endsection
 @section('js')
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="{{ asset('js/bootstrapDT.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#cambioUser').DataTable({

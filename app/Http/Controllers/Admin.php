@@ -17,14 +17,14 @@ class Admin extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth','nocache'])->only(['index']);
-        $this->middleware(['auth','Admin'])->only(['index','creditosLib','agregarEvidencias','creditosTram','registrarAlum','constanciasLib','evidencias']);
+        $this->middleware(['auth', 'nocache'])->only(['index']);
+        $this->middleware(['auth', 'Admin'])->only(['index', 'creditosLib', 'agregarEvidencias', 'creditosTram', 'registrarAlum', 'constanciasLib', 'evidencias']);
     }
     public function index()
     {
-        $datos = Alumno::select()->join('t_personas','t_personas.id','t_alumnos.fk_persona')->get();
+        $datos = Alumno::select('t_alumnos.id as id_alumno','t_alumnos.*','t_personas.*')->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')->get();
         $titulo = 'Dashboard';
-        return view("ADM/index", compact('titulo','datos'));
+        return view("ADM/index", compact('titulo', 'datos'));
     }
     public function editAlumno(){
         $titulo = 'Editar Alumno';
@@ -49,15 +49,17 @@ class Admin extends Controller
     {
         $titulo = 'Registrar Alumos';
         $items = Cat_escuela_procedencia::all();
-        return view('ADM/registrar', compact('titulo','items'));
+        return view('ADM/registrar', compact('titulo', 'items'));
     }
-    
-    public function crearCarpeta($nombreCarpeta){
-        if(!file_exists(public_path('Personas/'.$nombreCarpeta))){
-            mkdir(public_path('Personas/'.$nombreCarpeta),0777,true);
+
+    public function crearCarpeta($nombreCarpeta)
+    {
+        if (!file_exists(public_path('Personas/' . $nombreCarpeta))) {
+            mkdir(public_path('Personas/' . $nombreCarpeta), 0777, true);
         }
     }
-    public function darAlta(Request $request){
+    public function darAlta(Request $request)
+    {
         $persona = new Persona();
         $alumno = new Alumno();
         $persona->nombre = $request->nombre;
@@ -66,16 +68,16 @@ class Admin extends Controller
         $persona->genero = $request->genero;
         $persona->num_celular = $request->celular;
         $persona->fechaNac = $request->fechaNac;
-        if($persona->save()){
+        if ($persona->save()) {
             $id = $persona->id;
             $alumno->num_control = $request->numControl;
             $alumno->carrera = $request->carrera;
             $alumno->fk_persona = $id;
             // $alumno->fk_escuela_procedencia=$escuelaP;
-            $alumno->fk_escuela_procedencia = $request->procedencia ;
+            $alumno->fk_escuela_procedencia = $request->procedencia;
             $alumno->fecha_ingreso_tec = $request->fechaTec;
             if ($alumno->save()) {
-                $this-> crearCarpeta($request->numControl);
+                $this->crearCarpeta($request->numControl);
                 Alert::success('Se ha creado el Alumno!', 'Registro exitoso');
                 return redirect()->route('admin');
             } else {
@@ -95,7 +97,7 @@ class Admin extends Controller
     public function evidencias()
     {
         $titulo = 'Evidencias';
-        return view('ADM/evidencias',compact('titulo'));
+        return view('ADM/evidencias', compact('titulo'));
     }
     /**
      * Show the form for creating a new resource.
@@ -160,6 +162,15 @@ class Admin extends Controller
      */
     public function destroy($id)
     {
-        //
+        $alumno = Alumno::find($id);
+        $persona = Persona::find($alumno->fk_persona);
+        // falta para eliminar los creditos de los alumnos
+        if ($alumno->delete() && $persona->delete()) {
+            Alert::success('Se elimino con exito', 'Se elimino al estudiante');
+            return redirect()->route('admin');
+        } else {
+            Alert::danger('Error', 'No se pudo eliminar al estudiante');
+            return back();
+        }
     }
 }

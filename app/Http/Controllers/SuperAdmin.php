@@ -20,11 +20,11 @@ class SuperAdmin extends Controller
     public function __construct()
     {
         $this->middleware(['auth','nocache'])->only(['index']);
-        $this->middleware(['auth','sAdmin'])->only(['index', 'cambiarPass', 'crearNuevoAdmin', 'cambiar']);
+        $this->middleware(['auth','sAdmin'])->only(['index', 'cambiarPass', 'crearNuevoAdmin', 'cambiar','destroy']);
     }
     public function index()
     {
-        $datos = User::select()
+        $datos = User::select('users.id as id_user','users.*','t_personas.*')
             ->join('t_personas', 't_personas.id', 'users.fk_persona')
             ->where('rol', 'admin')->get();
         $titulo = 'Dashboard Super Admin';
@@ -36,7 +36,7 @@ class SuperAdmin extends Controller
     }
     public function cambiar()
     {
-        $datos = User::select()
+        $datos = User::select('users.id as id_user','users.*','t_personas.*')
             ->join('t_personas', 't_personas.id', 'users.fk_persona')
             ->where('rol', 'admin')->get();
         $titulo = 'cambiar';
@@ -136,7 +136,7 @@ class SuperAdmin extends Controller
     }
     public function cambiarPass($id)
     {
-        $datos = User::select()
+        $datos = User::select('users.id as id_user','users.*','t_personas.*')
             ->join('t_personas', 't_personas.id', 'users.fk_persona')
             ->where('rol', 'admin')->where('users.id', $id)->first();
         $titulo = 'Cambiar contraseña';
@@ -147,7 +147,7 @@ class SuperAdmin extends Controller
 
     public function editAdmin($id)
     {
-        $datos = User::select()
+        $datos = User::select('users.id as id_user','users.*','t_personas.*')
             ->join('t_personas', 't_personas.id', 'users.fk_persona')
             ->where('rol', 'admin')->where('users.id', $id)->first();
         $titulo = 'Editar admin';
