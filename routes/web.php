@@ -36,4 +36,5 @@ Route::controller(Admin::class)->group(function () {
     Route::get('/constanciasLibe', 'constanciasLib')->name('constancias-liberadas');
     Route::get('/evidencias', 'evidencias')->name('evidencias');
     Route::post('/darAlta','darAlta')->name('darAlta');
+    Route::get('/editarAlumno/{id}','editAlumno')->name('editar-admin');
 });

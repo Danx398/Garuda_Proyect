@@ -26,6 +26,10 @@ class Admin extends Controller
         $titulo = 'Dashboard';
         return view("ADM/index", compact('titulo','datos'));
     }
+    public function editAlumno(){
+        $titulo = 'Editar Alumno';
+        return view('ADM/editaralumno');
+    }
     public function creditosLib()
     {
         $titulo = 'Creditos liberados';
