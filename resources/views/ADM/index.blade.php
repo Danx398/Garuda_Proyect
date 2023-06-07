@@ -76,7 +76,7 @@
                             <td>
                                 <a href="{{ route('evidencias-admin') }}" class="btn btn-primary"><i
                                         class="fa-solid fa-users-gear"></i></a>
-                                <a href="" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="{{ route('editar-admin', $item->id) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
                                 <div class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#eliminarModal{{ $item->id_alumno }}">
                                     <i class="fa-solid fa-trash"></i>
@@ -118,7 +118,8 @@
                                                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">
                                                         No, Cancelar
                                                     </button>
-                                                    <form action="{{ route('destroy-admin', $item->id_alumno) }}" method="POST">
+                                                    <form action="{{ route('destroy-admin', $item->id_alumno) }}"
+                                                        method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger">
