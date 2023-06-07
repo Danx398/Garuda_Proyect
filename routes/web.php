@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/generar-pdf', [PdfController::class, 'generarPdf']);
 
-// Route::get('/', [AuthLogin::class, 'index'])->name('login');
 Route::controller(AuthLogin::class)->group(function () {
     Route::get('/','index')->name('login');
     Route::post('/logear', 'logear')->name('logear');
