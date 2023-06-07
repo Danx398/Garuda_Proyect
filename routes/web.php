@@ -34,6 +34,8 @@ Route::controller(Admin::class)->group(function () {
     Route::get('/registrarAlum', 'registrarAlum')->name('registrar-admin');
     Route::get('/constanciasLibe', 'constanciasLib')->name('constancias-liberadas');
     Route::get('/evidencias', 'evidencias')->name('evidencias');
+    Route::post('/darAlta','darAlta')->name('darAlta');
+    Route::get('/editarAlumno/{id}','editAlumno')->name('editar-admin');
     Route::post('/darAlta', 'darAlta')->name('darAlta');
     Route::delete('/eliminarAdmin/{id}', 'destroy')->name('destroy-admin');
 });
