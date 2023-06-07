@@ -74,9 +74,9 @@
                             <td>{{ $item->fechaNac }}</td>
                             <td>{{ $item->carrera }}</td>
                             <td>
-                                <a href="{{ route('evidencias-admin') }}" class="btn btn-primary"><i
+                                <a href="{{ route('evidencias-admin', $item->id_alumno) }}" class="btn btn-primary"><i
                                         class="fa-solid fa-users-gear"></i></a>
-                                <a href="{{ route('editar-admin', $item->id) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="{{ route('editar-admin', $item->id_alumno) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
                                 <div class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#eliminarModal{{ $item->id_alumno }}">
                                     <i class="fa-solid fa-trash"></i>

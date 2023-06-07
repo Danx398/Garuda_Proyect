@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Alumno;
 use App\Models\Cat_escuela_procedencia;
+use App\Models\Extraescolares;
 use App\Models\Persona;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -28,20 +29,22 @@ class Admin extends Controller
     }
     public function editAlumno($id){
 
-        $datos = Alumno::select('t_alumnos.id as id_alumnos','t_alumnos.*','t_personas.*')->join('t_personas','t_personas.id','t_alumnos.fk_persona')->where('t_alumnos.id',$id)->first();
-        echo($datos);
+        $datos = Alumno::select('t_alumnos.id as id_alumno','t_alumnos.*','t_personas.*')->join('t_personas','t_personas.id','t_alumnos.fk_persona')->where('t_alumnos.id',$id)->first();
+        // echo($datos);
+        $items = Cat_escuela_procedencia::all();
         $titulo = 'Editar Alumno';
-        return view('ADM/editalumno',compact('titulo'));
+        return view('ADM/editalumno',compact('titulo','items','datos'));
     }
     public function creditosLib()
     {
         $titulo = 'Creditos liberados';
         return view('ADM/liberados', compact('titulo'));
     }
-    public function agregarEvidencias()
+    public function agregarEvidencias($id)
     {
+        $datos = Alumno::select('t_alumnos.id as id_alumno','t_alumnos.*','t_personas.*')->join('t_personas','t_personas.id','t_alumnos.fk_persona')->where('t_alumnos.id',$id)->first();
         $titulo = 'Agregar Evidencias';
-        return view('ADM/agregar_evidencias', compact('titulo'));
+        return view('ADM/agregar_evidencias', compact('titulo','datos'));
     }
     public function creditosTram()
     {
@@ -102,6 +105,32 @@ class Admin extends Controller
         $titulo = 'Evidencias';
         return view('ADM/evidencias', compact('titulo'));
     }
+    public function guardarFile($nombreGeneral,$nombreActividad,$numControl,$archivo,$nombreCredito){
+        $ruta = public_path('Personas/'.$numControl.'/'.$nombreActividad);
+        $formato = strtolower(pathinfo($archivo->getClientOriginalName(),PATHINFO_EXTENSION));
+        // $nombreGeneral.=$nombreCredito.'.'.$formato;
+        $nombreCredito.='_'.$nombreGeneral.'.'.$formato;
+        $archivo->move($ruta,$nombreCredito);
+    }
+    public function agregarEvidencia(Request $request,$id){
+        $extra = new Extraescolares();
+        $extra->fk_alumno = $id;
+        $extra->fk_estatus = 2;
+        $fecha = date('Y-m-d');
+        $archivoG = $request->nombre_evento.'_'.$fecha;
+        // $extra->evidencia = $request->nombre_evento;
+        $extra->evidencias = $request->nombre_evento;
+        $extra->fk_credito = 1;
+        $extra->horas_liberadas = $request->horas;
+        $extra->constancia_liberada = 1;
+        $numeroControl = $request->num_control;
+        // dd($archivoG);
+        if($extra->save()){
+            $this->guardarFile($archivoG,$request->actividad,$numeroControl,$request->file('archivo'),$request->credito);
+        }else{
+
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -133,18 +162,6 @@ class Admin extends Controller
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -154,7 +171,31 @@ class Admin extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $alumno = Alumno::find($id);
+        echo $alumno;
+        $persona = Persona::find($alumno->fk_persona);
+        echo $persona;
+        $alumno->num_control = $request->numControl;
+        $alumno->carrera = $request->carrera;
+        $alumno->fk_escuela_procedencia = $request->procedencia;
+        $alumno->fecha_ingreso_tec = $request->fechaTec;
+        if($alumno->save()){
+            $persona->nombre = $request->nombre;
+            $persona->paterno = $request->paterno;
+            $persona->materno = $request->materno;
+            $persona->num_celular = $request->celular;
+            $persona->genero = $request->genero;
+            if($persona->save()){
+                Alert::success('Se ha actualizado el Alumno!', 'Registro exitoso');
+                return redirect()->route('admin');
+            }else{
+                Alert::error('No se pudo Actualizar el registro!', 'Vuelva a intentarlo');
+                return back();
+            }
+        }else{
+            Alert::error('No se pudo Actualizar el registro!', 'Vuelva a intentarlo');
+            return back();
+        }
     }
 
     /**
