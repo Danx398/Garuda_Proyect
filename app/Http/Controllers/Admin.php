@@ -26,9 +26,12 @@ class Admin extends Controller
         $titulo = 'Dashboard';
         return view("ADM/index", compact('titulo', 'datos'));
     }
-    public function editAlumno(){
+    public function editAlumno($id){
+
+        $datos = Alumno::select('t_alumnos.id as id_alumnos','t_alumnos.*','t_personas.*')->join('t_personas','t_personas.id','t_alumnos.fk_persona')->where('t_alumnos.id',$id)->first();
+        echo($datos);
         $titulo = 'Editar Alumno';
-        return view('ADM/editaralumno');
+        return view('ADM/editalumno',compact('titulo'));
     }
     public function creditosLib()
     {
