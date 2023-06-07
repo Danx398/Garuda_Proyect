@@ -5,7 +5,6 @@
 @endsection
 @section('contenido')
     @include('shared/navSuper')
-    {{ $datos }}
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg col-md-10 col-sm-12">

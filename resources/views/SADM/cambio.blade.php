@@ -5,7 +5,6 @@
 @endsection
 @section('contenido')
     @include('shared/nav')
-    {{ $datos }}
     <div class="container">
         <H1 class="text-center mt-3">Actualizar contraseña</H1>
         <div class="row">

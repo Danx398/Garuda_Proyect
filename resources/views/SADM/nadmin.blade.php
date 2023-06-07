@@ -1,7 +1,6 @@
 @extends('layouts/main')
 @section('contenido')
     @include('shared/navSuper')
-    {{-- {{ $errors }} --}}
     <div class="container">
         <h1 class="text-center mt-3">Registrar Administrador</h1>
         <div class="row justify-content-center text-center mt-4">
