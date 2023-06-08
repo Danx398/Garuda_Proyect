@@ -17,7 +17,10 @@ class CreateExtraescolaresTable extends Migration
             $table->id('id');
             $table->unsignedBigInteger('fk_alumno');
             $table->unsignedBigInteger('fk_estatus');
-            $table->string('evidencias');
+            $table->string('evento_mooc_act');
+            $table->string('evidencia');
+            $table->string('ruta');
+            $table->string('ruta_fisica');
             $table->unsignedBigInteger('fk_credito');
             $table->integer('horas_liberadas');
             $table->string('constancia_liberada');
