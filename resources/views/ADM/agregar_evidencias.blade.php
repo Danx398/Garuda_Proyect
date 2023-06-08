@@ -32,10 +32,10 @@
                         is-invalid 
                         @enderror">
                                 <option selected value="">Seleccionar Crédito</option>
-                                <option value="Academico">Academico</option>
-                                <option value="Civico">Civico</option>
-                                <option value="Cultural">Cultural</option>
-                                <option value="Deportivo">Deportivo</option>
+                               @foreach ($items as $item)
+                                   <option value="{{$item->id}}">{{$item->credito}}</option>
+                               @endforeach
+                                
                             </select>
                             @error('credito')
                                 @php
@@ -70,8 +70,17 @@
                                 <div class="col-6 fs-5">{{ $datos->num_control }}</div>
                             </div>
                             <div class="row mt-5">
+                               <div class="col">
                                 <label for="" class="mt-5">Horas realizadas</label>
-                                <input type="text" class="form-control mt-2" name="horas">
+                                <input type="text" name="horas" class="form-control mt-2 @error('horas')
+                                    is-invalid
+                                @enderror">
+                                @error('horas')
+                                    @php
+                                        Alert::error($message)
+                                    @endphp
+                                @enderror
+                               </div>
                             </div>
 
                         </div>

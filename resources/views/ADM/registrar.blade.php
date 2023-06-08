@@ -28,7 +28,7 @@
                         <div class="col-1"></div> 
                         <div class="col-5">
                             <label for="" class="">Numero celular</label>
-                            <input type="text" class="form-control" name="celular" id="celular">
+                            <input type="text" class="form-control" name="numeroCelular" id="numeroCelular">
                             <label for="" class="mt-2">Fecha de nacimiento</label>
                             <input type="date" class="form-control" name="fechaNac" id="fechaNac">
                             <label for="" class="mt-2">Carrera</label>

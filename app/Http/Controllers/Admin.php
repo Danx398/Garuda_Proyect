@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alumno;
+use App\Models\Cat_credito;
 use App\Models\Cat_escuela_procedencia;
 use App\Models\Extraescolares;
 use App\Models\Persona;
@@ -43,9 +44,10 @@ class Admin extends Controller
     }
     public function agregarEvidencias($id)
     {
+        $items = Cat_credito::all();
         $datos = Alumno::select('t_alumnos.id as id_alumno', 't_alumnos.*', 't_personas.*')->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')->where('t_alumnos.id', $id)->first();
         $titulo = 'Agregar Evidencias';
-        return view('ADM/agregar_evidencias', compact('titulo', 'datos'));
+        return view('ADM/agregar_evidencias', compact('titulo', 'datos','items'));
     }
     public function creditosTram()
     {
@@ -85,7 +87,7 @@ class Admin extends Controller
         $persona->paterno = $request->paterno;
         $persona->materno = $request->materno;
         $persona->genero = $request->genero;
-        $persona->num_celular = $request->celular;
+        $persona->num_celular = $request->numeroCelular;
         $persona->fechaNac = $request->fechaNac;
         if ($persona->save()) {
             $id = $persona->id;
@@ -133,17 +135,22 @@ class Admin extends Controller
             'actividad'=>'required',
             'credito'=>'required',
             'nombre_evento' => 'required|string|max:15',
-            'archivo'=>'required|file:600'
+            'archivo'=>'required|file:600',
+            'horas'=>'required'
         ]);
         $extra->fk_alumno = $id;
         $extra->fk_estatus = 2;
         $fecha = date('Y-m-d');
         $archivoG = $request->nombre_evento . '_' . $fecha;
+        $formato = strtolower(pathinfo($request->file('archivo')->getClientOriginalName(), PATHINFO_EXTENSION));
         // $extra->evidencia = $request->nombre_evento;
-        $extra->evidencias = $request->nombre_evento;
-        $extra->fk_credito = 1;
+        $extra->evidencia = $request->nombre_evento;
+        $ruta = 'Personas/' . $request->num_control . '/' . $request->actividad.'/'.$request->credito.'_'.$archivoG.'.'.$formato;
+        $extra->ruta = $ruta;
+        $extra->fk_credito = $request->credito;
         $extra->horas_liberadas = $request->horas;
-        $extra->constancia_liberada = 1;
+        $extra->ruta_fisica = 'Cajon derecho';
+        $extra->constancia_liberada = 0;
         $numeroControl = $request->num_control;
         // dd($archivoG);
         if ($extra->save()) {
