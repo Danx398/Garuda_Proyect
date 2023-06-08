@@ -45,3 +45,43 @@ primer_mayuscula('paterno');
 caracter_letras('paterno');
 primer_mayuscula('materno');
 caracter_letras('materno');
+
+// $('.disabledCheckboxes').removeAttr("disabled");
+$('#actividad').on('change',()=>{
+    $('#credito').removeAttr("disabled");
+})
+$('#credito').on('change',()=>{
+    $('#nombre_evento').removeAttr("disabled");
+    $('#archivo').removeAttr("disabled");
+    $('#horas').removeAttr("disabled")
+    let credito = $('#credito').val()
+    if (credito == 1) {
+        $('#civicos').removeAttr('hidden');
+        $('#deportivos').prop('hidden',true);
+        $('#culturales').prop('hidden',true);
+        let horasE = $('#horasCivicas').val()
+        console.log(horasE);
+        if( horasE == 0){
+            $('#horas').prop('disabled',true)
+        }
+    }else if(credito == 2){ 
+        let horasEs = $('#horasDeportivas').val()
+        console.log(horasEs);
+        $('#civicos').prop('hidden',true);
+        $('#deportivos').removeAttr('hidden');
+        $('#culturales').prop('hidden',true);
+        if( horasEs == 0){
+            $('#horas').prop('disabled',true)
+        }
+    }else{
+        let horasEsa = $('#horasCulturales').val()
+        console.log(horasEsa);
+        $('#civicos').prop('hidden',true);
+        $('#deportivos').prop('hidden',true);
+        $('#culturales').removeAttr('hidden');
+        if( horasEsa == 0){
+            $('#horas').prop('disabled',true)
+        }
+    }
+   ;
+});
