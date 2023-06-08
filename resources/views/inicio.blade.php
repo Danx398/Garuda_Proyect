@@ -13,7 +13,7 @@
                         </div>
                     </div>
                     <label for="name" class="text-light fs-3 mb-3">Usuario</label>
-                    <input type="text" class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}" name="name" id="name" autofocus>
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}" name="name" id="name">
                     @error('name')
                         @php
                             Alert::error('El campo usuario es obligatorio');
