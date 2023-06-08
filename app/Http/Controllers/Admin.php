@@ -23,17 +23,18 @@ class Admin extends Controller
     }
     public function index()
     {
-        $datos = Alumno::select('t_alumnos.id as id_alumno','t_alumnos.*','t_personas.*')->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')->get();
+        $datos = Alumno::select('t_alumnos.id as id_alumno', 't_alumnos.*', 't_personas.*')->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')->get();
         $titulo = 'Dashboard';
         return view("ADM/index", compact('titulo', 'datos'));
     }
-    public function editAlumno($id){
+    public function editAlumno($id)
+    {
 
-        $datos = Alumno::select('t_alumnos.id as id_alumno','t_alumnos.*','t_personas.*')->join('t_personas','t_personas.id','t_alumnos.fk_persona')->where('t_alumnos.id',$id)->first();
+        $datos = Alumno::select('t_alumnos.id as id_alumno', 't_alumnos.*', 't_personas.*')->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')->where('t_alumnos.id', $id)->first();
         // echo($datos);
         $items = Cat_escuela_procedencia::all();
         $titulo = 'Editar Alumno';
-        return view('ADM/editalumno',compact('titulo','items','datos'));
+        return view('ADM/editalumno', compact('titulo', 'items', 'datos'));
     }
     public function creditosLib()
     {
@@ -42,9 +43,9 @@ class Admin extends Controller
     }
     public function agregarEvidencias($id)
     {
-        $datos = Alumno::select('t_alumnos.id as id_alumno','t_alumnos.*','t_personas.*')->join('t_personas','t_personas.id','t_alumnos.fk_persona')->where('t_alumnos.id',$id)->first();
+        $datos = Alumno::select('t_alumnos.id as id_alumno', 't_alumnos.*', 't_personas.*')->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')->where('t_alumnos.id', $id)->first();
         $titulo = 'Agregar Evidencias';
-        return view('ADM/agregar_evidencias', compact('titulo','datos'));
+        return view('ADM/agregar_evidencias', compact('titulo', 'datos'));
     }
     public function creditosTram()
     {
@@ -68,6 +69,18 @@ class Admin extends Controller
     {
         $persona = new Persona();
         $alumno = new Alumno();
+        $this->validate($request, [
+            'nombre'=>'required|max:50|string',
+            'paterno' => ['required', 'max:50', 'string'],
+            'materno' => 'required|max:50|string',
+            'genero' => 'required',
+            'numeroCelular' => 'required|min:10',
+            'fechaNac' => 'required|date',
+            'numControl'=>'required|string|min:9',
+            'carrera'=>'required',
+            'procedencia'=>'required',
+            'fechaTec'=>'required|date'
+        ]);
         $persona->nombre = $request->nombre;
         $persona->paterno = $request->paterno;
         $persona->materno = $request->materno;
@@ -105,19 +118,27 @@ class Admin extends Controller
         $titulo = 'Evidencias';
         return view('ADM/evidencias', compact('titulo'));
     }
-    public function guardarFile($nombreGeneral,$nombreActividad,$numControl,$archivo,$nombreCredito){
-        $ruta = public_path('Personas/'.$numControl.'/'.$nombreActividad);
-        $formato = strtolower(pathinfo($archivo->getClientOriginalName(),PATHINFO_EXTENSION));
+    public function guardarFile($nombreGeneral, $nombreActividad, $numControl, $archivo, $nombreCredito)
+    {
+        $ruta = public_path('Personas/' . $numControl . '/' . $nombreActividad);
+        $formato = strtolower(pathinfo($archivo->getClientOriginalName(), PATHINFO_EXTENSION));
         // $nombreGeneral.=$nombreCredito.'.'.$formato;
-        $nombreCredito.='_'.$nombreGeneral.'.'.$formato;
-        $archivo->move($ruta,$nombreCredito);
+        $nombreCredito .= '_' . $nombreGeneral . '.' . $formato;
+        $archivo->move($ruta, $nombreCredito);
     }
-    public function agregarEvidencia(Request $request,$id){
+    public function agregarEvidencia(Request $request, $id)
+    {
         $extra = new Extraescolares();
+        $this->validate($request,[
+            'actividad'=>'required',
+            'credito'=>'required',
+            'nombre_evento' => 'required|string|max:15',
+            'archivo'=>'required|file:600'
+        ]);
         $extra->fk_alumno = $id;
         $extra->fk_estatus = 2;
         $fecha = date('Y-m-d');
-        $archivoG = $request->nombre_evento.'_'.$fecha;
+        $archivoG = $request->nombre_evento . '_' . $fecha;
         // $extra->evidencia = $request->nombre_evento;
         $extra->evidencias = $request->nombre_evento;
         $extra->fk_credito = 1;
@@ -125,10 +146,13 @@ class Admin extends Controller
         $extra->constancia_liberada = 1;
         $numeroControl = $request->num_control;
         // dd($archivoG);
-        if($extra->save()){
-            $this->guardarFile($archivoG,$request->actividad,$numeroControl,$request->file('archivo'),$request->credito);
-        }else{
-
+        if ($extra->save()) {
+            $this->guardarFile($archivoG, $request->actividad, $numeroControl, $request->file('archivo'), $request->credito);
+            Alert::success('Se ha creado guardado el archivo', 'Registro exitoso');
+            return redirect()->route('admin');
+        } else {
+            Alert::error('No se pudo realizar el registro!', 'Vuelva a intentarlo');
+            return back();
         }
     }
     /**
@@ -171,6 +195,18 @@ class Admin extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'nombre'=>'required|max:50|string',
+            'paterno' => ['required', 'max:50', 'string'],
+            'materno' => 'required|max:50|string',
+            'genero' => 'required',
+            'numeroCelular' => 'required|min:10|numeric',
+            'fechaNac' => 'required|date',
+            'numControl'=>'required|string1|min:9',
+            'carrera'=>'required',
+            'procedencia'=>'required',
+            'fechaTec'=>'required|date'
+        ]);
         $alumno = Alumno::find($id);
         echo $alumno;
         $persona = Persona::find($alumno->fk_persona);
@@ -179,20 +215,20 @@ class Admin extends Controller
         $alumno->carrera = $request->carrera;
         $alumno->fk_escuela_procedencia = $request->procedencia;
         $alumno->fecha_ingreso_tec = $request->fechaTec;
-        if($alumno->save()){
+        if ($alumno->save()) {
             $persona->nombre = $request->nombre;
             $persona->paterno = $request->paterno;
             $persona->materno = $request->materno;
             $persona->num_celular = $request->celular;
             $persona->genero = $request->genero;
-            if($persona->save()){
+            if ($persona->save()) {
                 Alert::success('Se ha actualizado el Alumno!', 'Registro exitoso');
                 return redirect()->route('admin');
-            }else{
+            } else {
                 Alert::error('No se pudo Actualizar el registro!', 'Vuelva a intentarlo');
                 return back();
             }
-        }else{
+        } else {
             Alert::error('No se pudo Actualizar el registro!', 'Vuelva a intentarlo');
             return back();
         }
