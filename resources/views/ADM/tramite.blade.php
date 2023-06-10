@@ -15,6 +15,7 @@
                         <th>Numero de control</th>
                         <th>Carrera</th>
                         <th>Evidencias</th>
+                        <th>Constancias</th>
                         <th>ver mas</th>
                     </thead>
                     <tbody>
@@ -26,6 +27,11 @@
                                 <td>
                                     <a href="{{ route('evidencias', $dato->id_alumno) }}" class="btn btn-primary"><i
                                             class="fa-solid fa-eye"></i></a>
+                                </td>
+                                <td>
+                                    <a href="{{route('constancias-liberadas')}}" class="btn btn-primary">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
                                 </td>
                                 <td>
                                     <button class="btn btn-primary" data-bs-toggle="modal"
