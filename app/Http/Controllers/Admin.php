@@ -47,14 +47,14 @@ class Admin extends Controller
     }
     public function agregarEvidencias($id)
     {
-        
+
         $items = Cat_credito::all();
         //civicas
-        $horasCivicas = Extraescolares::where('fk_alumno',$id)->where('fk_credito',1)->sum('horas_liberadas');
+        $horasCivicas = Extraescolares::where('fk_alumno', $id)->where('fk_credito', 1)->sum('horas_liberadas');
         //deportivas
-        $horasDeportivas = Extraescolares::where('fk_alumno',$id)->where('fk_credito',2)->sum('horas_liberadas');
+        $horasDeportivas = Extraescolares::where('fk_alumno', $id)->where('fk_credito', 2)->sum('horas_liberadas');
         //culturales
-        $horasCulturales = Extraescolares::where('fk_alumno',$id)->where('fk_credito',3)->sum('horas_liberadas');
+        $horasCulturales = Extraescolares::where('fk_alumno', $id)->where('fk_credito', 3)->sum('horas_liberadas');
         $datos = Alumno::select('t_alumnos.id as id_alumno', 't_alumnos.*', 't_personas.*')->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')->where('t_alumnos.id', $id)->first();
         $titulo = 'Agregar Evidencias';
         $ruta = 'admin';
@@ -265,6 +265,39 @@ class Admin extends Controller
             'archivo' => 'required|file:600',
             'horas' => 'required'
         ]);
+        // dd('credito: ' . $request->credito, 'civicas' . $request->horasCivicas, 'deportivas' . $request->horasDeportivas, 'culturales' . $request->horasCulturales, 'horas' . $request->horas);
+        if ($request->credito == 1) {
+            if (!$request->horas < $request->horasCivicas) {
+                echo ('civicas');
+                Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
+                return back();
+            }
+        } else if ($request->credito == 2) {
+            if (!$request->horas < $request->horasDeportivas) {
+                echo ('deportivas');
+                Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
+                return back();
+            }
+        } else if ($request->credito == 3) {
+            if (!$request->horas < $request->horasCulturales) {
+                echo ('culturales');
+                Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
+                return back();
+            }
+        }
+        if (!$request->horas < $request->horasCivicas) {
+            echo ('civicas');
+            Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
+            return back();
+        } else if (!$request->horas < $request->horasDeportivas) {
+            echo ('deporivas');
+            Alert::error('El numero de horas Deportivas es mayor al maximo de horas', 'Vuelva a intentarlo');
+            return back();
+        } else if (!$request->horas < $request->horasCulturales) {
+            echo ('culturales');
+            Alert::error('El numero de horas Culturales es mayor al maximo de horas', 'Vuelva a intentarlo');
+            return back();
+        }
         $extra->fk_alumno = $id;
         $extra->fk_estatus = 2;
         $fecha = date('Y-m-d');
