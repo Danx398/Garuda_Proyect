@@ -265,39 +265,39 @@ class Admin extends Controller
             'archivo' => 'required|file:600',
             'horas' => 'required'
         ]);
-        // dd('credito: ' . $request->credito, 'civicas' . $request->horasCivicas, 'deportivas' . $request->horasDeportivas, 'culturales' . $request->horasCulturales, 'horas' . $request->horas);
+       // dd('credito: ' . $request->credito, 'civicas' . $request->horasCivicas, 'deportivas' . $request->horasDeportivas, 'culturales' . $request->horasCulturales, 'horas' . $request->horas);
         if ($request->credito == 1) {
-            if (!$request->horas < $request->horasCivicas) {
+            if ($request->horas > $request->horasCivicas) {
                 echo ('civicas');
                 Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
-                return back();
+                return back()->withInput();
             }
         } else if ($request->credito == 2) {
-            if (!$request->horas < $request->horasDeportivas) {
+            if ($request->horas > $request->horasDeportivas) {
                 echo ('deportivas');
                 Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
-                return back();
+                return back()->withInput();
             }
         } else if ($request->credito == 3) {
-            if (!$request->horas < $request->horasCulturales) {
+            if ($request->horas > $request->horasCulturales) {
                 echo ('culturales');
                 Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
-                return back();
+                return back()->withInput();
             }
         }
-        if (!$request->horas < $request->horasCivicas) {
-            echo ('civicas');
-            Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
-            return back();
-        } else if (!$request->horas < $request->horasDeportivas) {
-            echo ('deporivas');
-            Alert::error('El numero de horas Deportivas es mayor al maximo de horas', 'Vuelva a intentarlo');
-            return back();
-        } else if (!$request->horas < $request->horasCulturales) {
-            echo ('culturales');
-            Alert::error('El numero de horas Culturales es mayor al maximo de horas', 'Vuelva a intentarlo');
-            return back();
-        }
+        // if (!$request->horas < $request->horasCivicas) {
+        //     echo ('civicas');
+        //     Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
+        //     return back();
+        // } else if (!$request->horas < $request->horasDeportivas) {
+        //     echo ('deporivas');
+        //     Alert::error('El numero de horas Deportivas es mayor al maximo de horas', 'Vuelva a intentarlo');
+        //     return back();
+        // } else if (!$request->horas < $request->horasCulturales) {
+        //     echo ('culturales');
+        //     Alert::error('El numero de horas Culturales es mayor al maximo de horas', 'Vuelva a intentarlo');
+        //     return back();
+        // }
         $extra->fk_alumno = $id;
         $extra->fk_estatus = 2;
         $fecha = date('Y-m-d');
