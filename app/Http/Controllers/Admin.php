@@ -37,7 +37,8 @@ class Admin extends Controller
         // echo($datos);
         $items = Cat_escuela_procedencia::all();
         $titulo = 'Editar Alumno';
-        return view('ADM/editalumno', compact('titulo', 'items', 'datos'));
+        $ruta = 'admin';
+        return view('ADM/editalumno', compact('titulo', 'items', 'datos','ruta'));
     }
     public function creditosLib()
     {
@@ -62,19 +63,6 @@ class Admin extends Controller
     }
     public function creditosTram()
     {
-        // $datos = Alumno::select(
-        //     't_extraescolares.id as id_extraescolares',
-        //     't_alumnos.id as id_alumno',
-        //     't_extraescolares.*',
-        //     't_alumnos.*',
-        //     't_personas.*',
-        //     't_cat_creditos.*',
-        //     't_cat_estatus.*'
-        // )->join('t_extraescolares', 't_extraescolares.fk_alumno', 't_alumnos.id')
-        //     ->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')
-        //     ->join('t_cat_creditos', 't_cat_creditos.id', 't_extraescolares.fk_credito')
-        //     ->join('t_cat_estatus', 't_cat_estatus.id', 't_extraescolares.fk_estatus')->orderBy('t_extraescolares.fk_alumno', 'asc')->get();
-
         $datos = Alumno::select(
             't_alumnos.id as id_alumno',
             't_alumnos.*',
@@ -88,93 +76,6 @@ class Admin extends Controller
         )->join('t_cat_creditos', 't_cat_creditos.id', 't_extraescolares.fk_credito')
             ->join('t_cat_estatus', 't_cat_estatus.id', 't_extraescolares.fk_estatus')->orderBy('t_extraescolares.fk_alumno', 'asc')->where('t_extraescolares.fk_estatus',2)->get();
 
-        // $nuevoDato[] = [];
-        // $i = 0;
-        // foreach ($datos as $dato) {
-        //     if ($dato->id_alumno == $dato->fk_alumno) {
-        //         $nuevoDato[$i]['id_alumno'] = $dato['id_alumno'];
-        //         $nuevoDato[$i]['nombre'] = $dato['nombre'] . ' ' . $dato['paterno'] . ' ' . $dato['materno'];
-        //         $nuevoDato[$i]['num_control'] = $dato['num_control'];
-        //         $nuevoDato[$i]['carrera'] = $dato['carrera'];
-        //         // foreach ($datosExtra as $extra) {
-        //         $nuevoDato[$i]['estatus'] = $dato['estatus'];
-        //         $nuevoDato[$i]['id_extraescolares'] = $dato['id_extraescolares'];
-        //         if ($dato['id_alumno'] == $dato['fk_alumno']) {
-        //             if ($dato['credito'] == 'Civico') {
-        //                 $nuevoDato[$i]['credito_civico'] = $dato['credito'];
-        //                 $nuevoDato[$i]['evidencia_civico'] = $dato['evidencia'];
-        //                 $nuevoDato[$i]['tramitadas_civico'] = $dato['horas_liberadas'];
-        //             } else if ($dato['credito'] == 'Deportivo') {
-        //                 $nuevoDato[$i]['credito_deportivo'] = $dato['credito'];
-        //                 $nuevoDato[$i]['evidencia_deportivo'] = $dato['evidencia'];
-        //                 $nuevoDato[$i]['tramitadas_deportivo'] = $dato['horas_liberadas'];
-        //             } else if ($dato['credito'] == 'Cultural') {
-        //                 $nuevoDato[$i]['credito_cultural'] = $dato['credito'];
-        //                 $nuevoDato[$i]['evidencia_cultural'] = $dato['evidencia'];
-        //                 $nuevoDato[$i]['tramitadas_cultural'] = $dato['horas_liberadas'];
-        //             }
-        //         } else {
-        //             $i++;
-        //         }
-        //         // }
-        //         // $nuevoDato[$i]['id_extraescolares'] = $extra['id_extraescolares'];
-        //         // $nuevoDato[$i]['evidencia'] = $extra['evidencia'];
-        //         // $nuevoDato[$i]['credito'] = $extra['credito'];
-        //         // $nuevoDato[$i]['horas_tramitadas'] = $extra['horas_liberadas'];
-        //         // if ($nuevoDato[$i]['id_alumno'] == $dato['fk_alumno']) {
-        //         //     $nuevoDato[$i]['evidencia'] = $extra['evidencia'];
-        //         //     $nuevoDato[$i]['credito'] = $extra['credito'];
-        //         //     $nuevoDato[$i]['horas_tramitadas'] = $extra['horas_liberadas'];
-        //         // $i++;
-        //         // }
-        //     }
-        // }
-        // foreach ($datosExtra as $extra) {
-        //     foreach ($datos as $dato) {
-        //         if ($dato->id_alumno == $extra->fk_alumno) {
-        //         $nuevoDato[$i]['id_alumno'] = $dato->id_alumno;
-        //         $nuevoDato[$i]['nombre'] = $dato->nombre . ' ' . $dato->paterno . ' ' . $dato->materno;
-        //         $nuevoDato[$i]['num_control'] = $dato['num_control'];
-        //         $nuevoDato[$i]['carrera'] = $dato['carrera'];
-        //         echo $nuevoDato[$i]['id_alumno'];
-        //         // echo $extra->fk_alumno;
-        //         if ($dato->fk_alumno == $nuevoDato[$i]['id_alumno']) {
-        //             // echo 'entrando';
-        //             $nuevoDato[$i]['estatus'] = $extra['estatus'];
-        //             $nuevoDato[$i]['id_extraescolares'] = $extra['id_extraescolares'];
-        //             if ($extra->credito == 'Civico') {
-        //                 $nuevoDato[$i]['credito_civico'] = $extra['credito'];
-        //                 $nuevoDato[$i]['evidencia_civico'] = $extra['evidencia'];
-        //                 $nuevoDato[$i]['tramitadas_civico'] = $extra['horas_liberadas'];
-        //             } else if ($extra->credito == 'Deportivo') {
-        //                 $nuevoDato[$i]['credito_deportivo'] = $extra['credito'];
-        //                 $nuevoDato[$i]['evidencia_deportivo'] = $extra['evidencia'];
-        //                 $nuevoDato[$i]['tramitadas_deportivo'] = $extra['horas_liberadas'];
-        //             } else if ($extra->credito == 'Cultural') {
-        //                 $nuevoDato[$i]['credito_cultural'] = $extra['credito'];
-        //                 $nuevoDato[$i]['evidencia_cultural'] = $extra['evidencia'];
-        //                 $nuevoDato[$i]['tramitadas_cultural'] = $extra['horas_liberadas'];
-        //             }
-        //         } else {
-        //         //     $i++;
-        //         }
-        //         // }
-        //         // $nuevoDato[$i]['id_extraescolares'] = $extra['id_extraescolares'];
-        //         // $nuevoDato[$i]['evidencia'] = $extra['evidencia'];
-        //         // $nuevoDato[$i]['credito'] = $extra['credito'];
-        //         // $nuevoDato[$i]['horas_tramitadas'] = $extra['horas_liberadas'];
-        //         // if ($nuevoDato[$i]['id_alumno'] == $dato['fk_alumno']) {
-        //         //     $nuevoDato[$i]['evidencia'] = $extra['evidencia'];
-        //         //     $nuevoDato[$i]['credito'] = $extra['credito'];
-        //         //     $nuevoDato[$i]['horas_tramitadas'] = $extra['horas_liberadas'];
-        //         // $i++;
-        //         // }
-        //         // }else{
-
-        //         }
-        //     }
-        // }
-        // echo json_encode($nuevoDato);
         $titulo = 'Creditos en tramite';
         $ruta = 'admin';
         return view('ADM/tramite', compact('ruta','titulo', 'datos', 'datos','datosExtra'));
@@ -265,26 +166,39 @@ class Admin extends Controller
             'archivo' => 'required|file:600',
             'horas' => 'required'
         ]);
-        // dd('credito: ' . $request->credito, 'civicas' . $request->horasCivicas, 'deportivas' . $request->horasDeportivas, 'culturales' . $request->horasCulturales, 'horas' . $request->horas);
+       // dd('credito: ' . $request->credito, 'civicas' . $request->horasCivicas, 'deportivas' . $request->horasDeportivas, 'culturales' . $request->horasCulturales, 'horas' . $request->horas);
         if ($request->credito == 1) {
-            if (!$request->horas < $request->horasCivicas) {
+            if ($request->horas > $request->horasCivicas) {
                 echo ('civicas');
                 Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
-                return back();
+                return back()->withInput();
             }
         } else if ($request->credito == 2) {
-            if (!$request->horas < $request->horasDeportivas) {
+            if ($request->horas > $request->horasDeportivas) {
                 echo ('deportivas');
                 Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
-                return back();
+                return back()->withInput();
             }
         } else if ($request->credito == 3) {
-            if (!$request->horas < $request->horasCulturales) {
+            if ($request->horas > $request->horasCulturales) {
                 echo ('culturales');
                 Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
-                return back();
+                return back()->withInput();
             }
         }
+        // if (!$request->horas < $request->horasCivicas) {
+        //     echo ('civicas');
+        //     Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
+        //     return back();
+        // } else if (!$request->horas < $request->horasDeportivas) {
+        //     echo ('deporivas');
+        //     Alert::error('El numero de horas Deportivas es mayor al maximo de horas', 'Vuelva a intentarlo');
+        //     return back();
+        // } else if (!$request->horas < $request->horasCulturales) {
+        //     echo ('culturales');
+        //     Alert::error('El numero de horas Culturales es mayor al maximo de horas', 'Vuelva a intentarlo');
+        //     return back();
+        // }
         $extra->fk_alumno = $id;
         $extra->fk_estatus = 2;
         $fecha = date('Y-m-d');
@@ -356,15 +270,14 @@ class Admin extends Controller
             'paterno' => ['required', 'max:50', 'string'],
             'materno' => 'required|max:50|string',
             'genero' => 'required',
-            'numeroCelular' => 'required|min:10|numeric',
+            'numeroCelular' => 'required|min:10|string',
             'fechaNac' => 'required|date',
-            'numControl' => 'required|string1|min:9',
+            'numControl' => 'required|string|min:9',
             'carrera' => 'required',
             'procedencia' => 'required',
             'fechaTec' => 'required|date'
         ]);
         $alumno = Alumno::find($id);
-        echo $alumno;
         $persona = Persona::find($alumno->fk_persona);
         echo $persona;
         $alumno->num_control = $request->numControl;
@@ -375,7 +288,7 @@ class Admin extends Controller
             $persona->nombre = $request->nombre;
             $persona->paterno = $request->paterno;
             $persona->materno = $request->materno;
-            $persona->num_celular = $request->celular;
+            $persona->num_celular = $request->numeroCelular;
             $persona->genero = $request->genero;
             if ($persona->save()) {
                 Alert::success('Se ha actualizado el Alumno!', 'Registro exitoso');
