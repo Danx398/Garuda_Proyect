@@ -42,7 +42,8 @@ class Admin extends Controller
     public function creditosLib()
     {
         $titulo = 'Creditos liberados';
-        return view('ADM/liberados', compact('titulo'));
+        $ruta = 'admin';
+        return view('ADM/liberados', compact('titulo','ruta'));
     }
     public function agregarEvidencias($id)
     {
@@ -56,38 +57,39 @@ class Admin extends Controller
         $horasCulturales = Extraescolares::where('fk_alumno',$id)->where('fk_credito',3)->sum('horas_liberadas');
         $datos = Alumno::select('t_alumnos.id as id_alumno', 't_alumnos.*', 't_personas.*')->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')->where('t_alumnos.id', $id)->first();
         $titulo = 'Agregar Evidencias';
-        return view('ADM/agregar_evidencias', compact('titulo', 'datos','items','horasCivicas','horasDeportivas','horasCulturales'));
+        $ruta = 'admin';
+        return view('ADM/agregar_evidencias', compact('ruta','titulo', 'datos','items','horasCivicas','horasDeportivas','horasCulturales'));
     }
     public function creditosTram()
     {
-        $datos = Alumno::select(
-            't_extraescolares.id as id_extraescolares',
-            't_alumnos.id as id_alumno',
-            't_extraescolares.*',
-            't_alumnos.*',
-            't_personas.*',
-            't_cat_creditos.*',
-            't_cat_estatus.*'
-        )->join('t_extraescolares', 't_extraescolares.fk_alumno', 't_alumnos.id')
-            ->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')
-            ->join('t_cat_creditos', 't_cat_creditos.id', 't_extraescolares.fk_credito')
-            ->join('t_cat_estatus', 't_cat_estatus.id', 't_extraescolares.fk_estatus')->orderBy('t_extraescolares.fk_alumno', 'asc')->get();
-
         // $datos = Alumno::select(
+        //     't_extraescolares.id as id_extraescolares',
         //     't_alumnos.id as id_alumno',
+        //     't_extraescolares.*',
         //     't_alumnos.*',
         //     't_personas.*',
-        // )->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')->orderBy('id_alumno', 'desc')->get();
+        //     't_cat_creditos.*',
+        //     't_cat_estatus.*'
+        // )->join('t_extraescolares', 't_extraescolares.fk_alumno', 't_alumnos.id')
+        //     ->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')
+        //     ->join('t_cat_creditos', 't_cat_creditos.id', 't_extraescolares.fk_credito')
+        //     ->join('t_cat_estatus', 't_cat_estatus.id', 't_extraescolares.fk_estatus')->orderBy('t_extraescolares.fk_alumno', 'asc')->get();
+
+        $datos = Alumno::select(
+            't_alumnos.id as id_alumno',
+            't_alumnos.*',
+            't_personas.*',
+        )->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')->get();
         $datosExtra = Extraescolares::select(
             't_extraescolares.id as id_extraescolares',
             't_extraescolares.*',
             't_cat_creditos.*',
             't_cat_estatus.*'
         )->join('t_cat_creditos', 't_cat_creditos.id', 't_extraescolares.fk_credito')
-            ->join('t_cat_estatus', 't_cat_estatus.id', 't_extraescolares.fk_estatus')->orderBy('t_extraescolares.fk_alumno', 'asc')->get();
+            ->join('t_cat_estatus', 't_cat_estatus.id', 't_extraescolares.fk_estatus')->orderBy('t_extraescolares.fk_alumno', 'asc')->where('t_extraescolares.fk_estatus',2)->get();
 
-        $nuevoDato[] = [];
-        $i = 0;
+        // $nuevoDato[] = [];
+        // $i = 0;
         // foreach ($datos as $dato) {
         //     if ($dato->id_alumno == $dato->fk_alumno) {
         //         $nuevoDato[$i]['id_alumno'] = $dato['id_alumno'];
@@ -174,13 +176,15 @@ class Admin extends Controller
         // }
         // echo json_encode($nuevoDato);
         $titulo = 'Creditos en tramite';
-        return view('ADM/tramite', compact('titulo', 'datos', 'datosExtra'));
+        $ruta = 'admin';
+        return view('ADM/tramite', compact('ruta','titulo', 'datos', 'datos','datosExtra'));
     }
     public function registrarAlum()
     {
         $titulo = 'Registrar Alumos';
         $items = Cat_escuela_procedencia::all();
-        return view('ADM/registrar', compact('titulo', 'items'));
+        $ruta = 'admin';
+        return view('ADM/registrar', compact('titulo', 'items','ruta'));
     }
 
     public function crearCarpeta($nombreCarpeta)
@@ -237,10 +241,11 @@ class Admin extends Controller
         $titulo = 'Constancias Liberadas';
         return view('ADM/constancias', compact('titulo'));
     }
-    public function evidencias()
+    public function evidencias($id)
     {
         $titulo = 'Evidencias';
-        return view('ADM/evidencias', compact('titulo'));
+        $ruta = 'tramite-admin';
+        return view('ADM/evidencias', compact('titulo','ruta'));
     }
     public function guardarFile($nombreGeneral, $nombreActividad, $numControl, $archivo, $nombreCredito)
     {
@@ -256,7 +261,7 @@ class Admin extends Controller
         $this->validate($request, [
             'actividad' => 'required',
             'credito' => 'required',
-            'nombre_evento' => 'required|string|max:15',
+            'nombre_evento' => 'required|string',
             'archivo' => 'required|file:600',
             'horas' => 'required'
         ]);
@@ -267,6 +272,7 @@ class Admin extends Controller
         $formato = strtolower(pathinfo($request->file('archivo')->getClientOriginalName(), PATHINFO_EXTENSION));
         // $extra->evidencia = $request->nombre_evento;
         $extra->evidencia = $request->nombre_evento;
+        $extra->tipo_evidencia = $request->actividad;
         $ruta = 'Personas/' . $request->num_control . '/' . $request->actividad . '/' . $request->credito . '_' . $archivoG . '.' . $formato;
         $extra->ruta = $ruta;
         $extra->fk_credito = $request->credito;
@@ -311,7 +317,7 @@ class Admin extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function liberar($id,)
     {
         //
     }

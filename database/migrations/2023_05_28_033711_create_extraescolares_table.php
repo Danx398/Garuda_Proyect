@@ -18,6 +18,7 @@ class CreateExtraescolaresTable extends Migration
             $table->unsignedBigInteger('fk_alumno');
             $table->unsignedBigInteger('fk_estatus');
             $table->string('evidencia');
+            $table->string('tipo_evidencia');
             $table->string('ruta');
             $table->string('ruta_fisica');
             $table->unsignedBigInteger('fk_credito');
