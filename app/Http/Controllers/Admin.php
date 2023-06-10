@@ -366,10 +366,7 @@ class Admin extends Controller
         $alumno = Alumno::find($id);
         $persona = Persona::find($alumno->fk_persona);
         $extraescolares = Extraescolares::where('fk_alumno',$alumno->id)->get();
-
-        // echo $alumno->delete();
-        // echo $persona->delete();
-        // echo $extraescolares;
+        
         foreach ($extraescolares as $extraescolar) {
             $count += $extraescolar->delete();
         }
