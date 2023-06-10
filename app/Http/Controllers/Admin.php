@@ -10,6 +10,8 @@ use App\Models\Persona;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
+use function PHPUnit\Framework\assertIsNotInt;
+
 class Admin extends Controller
 {
     /**
@@ -47,12 +49,125 @@ class Admin extends Controller
         $items = Cat_credito::all();
         $datos = Alumno::select('t_alumnos.id as id_alumno', 't_alumnos.*', 't_personas.*')->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')->where('t_alumnos.id', $id)->first();
         $titulo = 'Agregar Evidencias';
-        return view('ADM/agregar_evidencias', compact('titulo', 'datos','items'));
+        return view('ADM/agregar_evidencias', compact('titulo', 'datos', 'items'));
     }
     public function creditosTram()
     {
+        $datos = Alumno::select(
+            't_extraescolares.id as id_extraescolares',
+            't_alumnos.id as id_alumno',
+            't_extraescolares.*',
+            't_alumnos.*',
+            't_personas.*',
+            't_cat_creditos.*',
+            't_cat_estatus.*'
+        )->join('t_extraescolares', 't_extraescolares.fk_alumno', 't_alumnos.id')
+            ->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')
+            ->join('t_cat_creditos', 't_cat_creditos.id', 't_extraescolares.fk_credito')
+            ->join('t_cat_estatus', 't_cat_estatus.id', 't_extraescolares.fk_estatus')->orderBy('t_extraescolares.fk_alumno', 'asc')->get();
+
+        // $datos = Alumno::select(
+        //     't_alumnos.id as id_alumno',
+        //     't_alumnos.*',
+        //     't_personas.*',
+        // )->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')->orderBy('id_alumno', 'desc')->get();
+        $datosExtra = Extraescolares::select(
+            't_extraescolares.id as id_extraescolares',
+            't_extraescolares.*',
+            't_cat_creditos.*',
+            't_cat_estatus.*'
+        )->join('t_cat_creditos', 't_cat_creditos.id', 't_extraescolares.fk_credito')
+            ->join('t_cat_estatus', 't_cat_estatus.id', 't_extraescolares.fk_estatus')->orderBy('t_extraescolares.fk_alumno', 'asc')->get();
+
+        $nuevoDato[] = [];
+        $i = 0;
+        // foreach ($datos as $dato) {
+        //     if ($dato->id_alumno == $dato->fk_alumno) {
+        //         $nuevoDato[$i]['id_alumno'] = $dato['id_alumno'];
+        //         $nuevoDato[$i]['nombre'] = $dato['nombre'] . ' ' . $dato['paterno'] . ' ' . $dato['materno'];
+        //         $nuevoDato[$i]['num_control'] = $dato['num_control'];
+        //         $nuevoDato[$i]['carrera'] = $dato['carrera'];
+        //         // foreach ($datosExtra as $extra) {
+        //         $nuevoDato[$i]['estatus'] = $dato['estatus'];
+        //         $nuevoDato[$i]['id_extraescolares'] = $dato['id_extraescolares'];
+        //         if ($dato['id_alumno'] == $dato['fk_alumno']) {
+        //             if ($dato['credito'] == 'Civico') {
+        //                 $nuevoDato[$i]['credito_civico'] = $dato['credito'];
+        //                 $nuevoDato[$i]['evidencia_civico'] = $dato['evidencia'];
+        //                 $nuevoDato[$i]['tramitadas_civico'] = $dato['horas_liberadas'];
+        //             } else if ($dato['credito'] == 'Deportivo') {
+        //                 $nuevoDato[$i]['credito_deportivo'] = $dato['credito'];
+        //                 $nuevoDato[$i]['evidencia_deportivo'] = $dato['evidencia'];
+        //                 $nuevoDato[$i]['tramitadas_deportivo'] = $dato['horas_liberadas'];
+        //             } else if ($dato['credito'] == 'Cultural') {
+        //                 $nuevoDato[$i]['credito_cultural'] = $dato['credito'];
+        //                 $nuevoDato[$i]['evidencia_cultural'] = $dato['evidencia'];
+        //                 $nuevoDato[$i]['tramitadas_cultural'] = $dato['horas_liberadas'];
+        //             }
+        //         } else {
+        //             $i++;
+        //         }
+        //         // }
+        //         // $nuevoDato[$i]['id_extraescolares'] = $extra['id_extraescolares'];
+        //         // $nuevoDato[$i]['evidencia'] = $extra['evidencia'];
+        //         // $nuevoDato[$i]['credito'] = $extra['credito'];
+        //         // $nuevoDato[$i]['horas_tramitadas'] = $extra['horas_liberadas'];
+        //         // if ($nuevoDato[$i]['id_alumno'] == $dato['fk_alumno']) {
+        //         //     $nuevoDato[$i]['evidencia'] = $extra['evidencia'];
+        //         //     $nuevoDato[$i]['credito'] = $extra['credito'];
+        //         //     $nuevoDato[$i]['horas_tramitadas'] = $extra['horas_liberadas'];
+        //         // $i++;
+        //         // }
+        //     }
+        // }
+        // foreach ($datosExtra as $extra) {
+        //     foreach ($datos as $dato) {
+        //         if ($dato->id_alumno == $extra->fk_alumno) {
+        //         $nuevoDato[$i]['id_alumno'] = $dato->id_alumno;
+        //         $nuevoDato[$i]['nombre'] = $dato->nombre . ' ' . $dato->paterno . ' ' . $dato->materno;
+        //         $nuevoDato[$i]['num_control'] = $dato['num_control'];
+        //         $nuevoDato[$i]['carrera'] = $dato['carrera'];
+        //         echo $nuevoDato[$i]['id_alumno'];
+        //         // echo $extra->fk_alumno;
+        //         if ($dato->fk_alumno == $nuevoDato[$i]['id_alumno']) {
+        //             // echo 'entrando';
+        //             $nuevoDato[$i]['estatus'] = $extra['estatus'];
+        //             $nuevoDato[$i]['id_extraescolares'] = $extra['id_extraescolares'];
+        //             if ($extra->credito == 'Civico') {
+        //                 $nuevoDato[$i]['credito_civico'] = $extra['credito'];
+        //                 $nuevoDato[$i]['evidencia_civico'] = $extra['evidencia'];
+        //                 $nuevoDato[$i]['tramitadas_civico'] = $extra['horas_liberadas'];
+        //             } else if ($extra->credito == 'Deportivo') {
+        //                 $nuevoDato[$i]['credito_deportivo'] = $extra['credito'];
+        //                 $nuevoDato[$i]['evidencia_deportivo'] = $extra['evidencia'];
+        //                 $nuevoDato[$i]['tramitadas_deportivo'] = $extra['horas_liberadas'];
+        //             } else if ($extra->credito == 'Cultural') {
+        //                 $nuevoDato[$i]['credito_cultural'] = $extra['credito'];
+        //                 $nuevoDato[$i]['evidencia_cultural'] = $extra['evidencia'];
+        //                 $nuevoDato[$i]['tramitadas_cultural'] = $extra['horas_liberadas'];
+        //             }
+        //         } else {
+        //         //     $i++;
+        //         }
+        //         // }
+        //         // $nuevoDato[$i]['id_extraescolares'] = $extra['id_extraescolares'];
+        //         // $nuevoDato[$i]['evidencia'] = $extra['evidencia'];
+        //         // $nuevoDato[$i]['credito'] = $extra['credito'];
+        //         // $nuevoDato[$i]['horas_tramitadas'] = $extra['horas_liberadas'];
+        //         // if ($nuevoDato[$i]['id_alumno'] == $dato['fk_alumno']) {
+        //         //     $nuevoDato[$i]['evidencia'] = $extra['evidencia'];
+        //         //     $nuevoDato[$i]['credito'] = $extra['credito'];
+        //         //     $nuevoDato[$i]['horas_tramitadas'] = $extra['horas_liberadas'];
+        //         // $i++;
+        //         // }
+        //         // }else{
+
+        //         }
+        //     }
+        // }
+        // echo json_encode($nuevoDato);
         $titulo = 'Creditos en tramite';
-        return view('ADM/tramite', compact('titulo'));
+        return view('ADM/tramite', compact('titulo', 'datos', 'datosExtra'));
     }
     public function registrarAlum()
     {
@@ -72,16 +187,16 @@ class Admin extends Controller
         $persona = new Persona();
         $alumno = new Alumno();
         $this->validate($request, [
-            'nombre'=>'required|max:50|string',
+            'nombre' => 'required|max:50|string',
             'paterno' => ['required', 'max:50', 'string'],
             'materno' => 'required|max:50|string',
             'genero' => 'required',
             'numeroCelular' => 'required|min:10',
             'fechaNac' => 'required|date',
-            'numControl'=>'required|string|min:9',
-            'carrera'=>'required',
-            'procedencia'=>'required',
-            'fechaTec'=>'required|date'
+            'numControl' => 'required|string|min:9',
+            'carrera' => 'required',
+            'procedencia' => 'required',
+            'fechaTec' => 'required|date'
         ]);
         $persona->nombre = $request->nombre;
         $persona->paterno = $request->paterno;
@@ -131,12 +246,12 @@ class Admin extends Controller
     public function agregarEvidencia(Request $request, $id)
     {
         $extra = new Extraescolares();
-        $this->validate($request,[
-            'actividad'=>'required',
-            'credito'=>'required',
+        $this->validate($request, [
+            'actividad' => 'required',
+            'credito' => 'required',
             'nombre_evento' => 'required|string|max:15',
-            'archivo'=>'required|file:600',
-            'horas'=>'required'
+            'archivo' => 'required|file:600',
+            'horas' => 'required'
         ]);
         $extra->fk_alumno = $id;
         $extra->fk_estatus = 2;
@@ -145,7 +260,7 @@ class Admin extends Controller
         $formato = strtolower(pathinfo($request->file('archivo')->getClientOriginalName(), PATHINFO_EXTENSION));
         // $extra->evidencia = $request->nombre_evento;
         $extra->evidencia = $request->nombre_evento;
-        $ruta = 'Personas/' . $request->num_control . '/' . $request->actividad.'/'.$request->credito.'_'.$archivoG.'.'.$formato;
+        $ruta = 'Personas/' . $request->num_control . '/' . $request->actividad . '/' . $request->credito . '_' . $archivoG . '.' . $formato;
         $extra->ruta = $ruta;
         $extra->fk_credito = $request->credito;
         $extra->horas_liberadas = $request->horas;
@@ -203,16 +318,16 @@ class Admin extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'nombre'=>'required|max:50|string',
+            'nombre' => 'required|max:50|string',
             'paterno' => ['required', 'max:50', 'string'],
             'materno' => 'required|max:50|string',
             'genero' => 'required',
             'numeroCelular' => 'required|min:10|numeric',
             'fechaNac' => 'required|date',
-            'numControl'=>'required|string1|min:9',
-            'carrera'=>'required',
-            'procedencia'=>'required',
-            'fechaTec'=>'required|date'
+            'numControl' => 'required|string1|min:9',
+            'carrera' => 'required',
+            'procedencia' => 'required',
+            'fechaTec' => 'required|date'
         ]);
         $alumno = Alumno::find($id);
         echo $alumno;

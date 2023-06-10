@@ -42,9 +42,6 @@ class DatabaseSeeder extends Seeder
 
         $dEstatus = [
             [
-                'estatus' => 'Proceso',
-                'descripcion' => 'El estudiante aun no inicia su tramite'
-            ],[
                 'estatus' => 'Tramite',
                 'descripcion' => 'El estudiante esta tramitando'
             ],[
@@ -58,23 +55,18 @@ class DatabaseSeeder extends Seeder
             [
                 'credito' => 'Civico',
                 'descripcion' => 'Desfiles, Banda de guerra, Escolta',
-                'horas_liberar' => 5,
+                'horas_liberar' => 20,
                 'valor_credito' => 1,
             ],[
                 'credito' => 'Deportivo',
                 'descripcion' => 'Futbol, Basquetbol',
-                'horas_liberar' => 5,
+                'horas_liberar' => 20,
                 'valor_credito' => 1,
             ],[
                 'credito' => 'Cultural',
                 'descripcion' => 'Arte, Musica',
-                'horas_liberar' => 5,
+                'horas_liberar' => 20,
                 'valor_credito' => 1,
-            ],[
-                'credito' => 'Académicas',
-                'descripcion' => 'Enseñanza',
-                'horas_liberar' => 10,
-                'valor_credito' => 2,
             ]
         ];
         DB::table('t_cat_creditos')->insert($dCreditos);
