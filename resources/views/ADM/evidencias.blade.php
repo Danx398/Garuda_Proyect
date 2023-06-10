@@ -11,14 +11,16 @@
             <div class="col">
                 <table class="table table-responsive mt-4 table-striped" id="evidencias">
                     <thead class="bg-primary text-light text-center">
-                        <th>Nombre</th>
-                        <th>Numero de control</th>
                         <th>Evento (act o mooc)</th>
-                        <th>Evidencias</th>
-                        <th>Documentos</th>
+                        <th>Credito</th>
+                        <th>Horas liberadas</th>
+                        <th>Estatus</th>
+                        <th>Ruta fisica</th>
+                        <th>Acciones</th>
                         <th>Fecha de modificación</th>
                     </thead>
                     <tbody class="text-center">
+                        <td>D</td>
                         <td>D</td>
                         <td>D</td>
                         <td>D</td>
