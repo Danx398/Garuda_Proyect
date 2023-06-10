@@ -37,7 +37,8 @@ class Admin extends Controller
         // echo($datos);
         $items = Cat_escuela_procedencia::all();
         $titulo = 'Editar Alumno';
-        return view('ADM/editalumno', compact('titulo', 'items', 'datos'));
+        $ruta = 'admin';
+        return view('ADM/editalumno', compact('titulo', 'items', 'datos','ruta'));
     }
     public function creditosLib()
     {
@@ -368,15 +369,14 @@ class Admin extends Controller
             'paterno' => ['required', 'max:50', 'string'],
             'materno' => 'required|max:50|string',
             'genero' => 'required',
-            'numeroCelular' => 'required|min:10|numeric',
+            'numeroCelular' => 'required|min:10|string',
             'fechaNac' => 'required|date',
-            'numControl' => 'required|string1|min:9',
+            'numControl' => 'required|string|min:9',
             'carrera' => 'required',
             'procedencia' => 'required',
             'fechaTec' => 'required|date'
         ]);
         $alumno = Alumno::find($id);
-        echo $alumno;
         $persona = Persona::find($alumno->fk_persona);
         echo $persona;
         $alumno->num_control = $request->numControl;
@@ -387,7 +387,7 @@ class Admin extends Controller
             $persona->nombre = $request->nombre;
             $persona->paterno = $request->paterno;
             $persona->materno = $request->materno;
-            $persona->num_celular = $request->celular;
+            $persona->num_celular = $request->numeroCelular;
             $persona->genero = $request->genero;
             if ($persona->save()) {
                 Alert::success('Se ha actualizado el Alumno!', 'Registro exitoso');

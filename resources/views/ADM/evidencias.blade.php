@@ -20,17 +20,17 @@
                         <th>Fecha de modificación</th>
                     </thead>
                     <tbody class="text-center">
-                        <td>D</td>
-                        <td>D</td>
-                        <td>D</td>
-                        <td>D</td>
-                        <td>D</td>
+                        <td>Banda de guerra</td>
+                        <td>Civico</td>
+                        <td>10</td>
+                        <td>Liberado</td>
+                        <td>Cajon Derecho</td>
                         <td>
                             <button class="btn btn-primary "><i class="fa-solid fa-eye"></i></button>
-                            <button class="btn btn-primary "><i class="fa-solid fa-download"></i></button>
+                            <a class="btn btn-primary" href="{{ asset('') }}" download=""><i class="fa-solid fa-download"></i></a>
                             <button class="btn btn-primary "><i class="fa-solid fa-trash"></i></button>
                         </td>
-                        <td>D</td>
+                        <td>2023-06-9</td>
                     </tbody>
                 </table>
             </div>

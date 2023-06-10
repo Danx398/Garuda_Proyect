@@ -102,12 +102,12 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="{{ route('editar-sadmin', $dato->id_user) }}" class="btn btn-primary">
+                                    <a href="{{ route('editar-sadmin', $dato->id_user) }}" class="btn btn-warning">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                 </td>
                                 <td>
-                                    <div class="btn btn-primary" data-bs-toggle="modal"
+                                    <div class="btn btn-danger" data-bs-toggle="modal"
                                         data-bs-target="#eliminarModal{{ $dato->id }}">
                                         <i class="fa-solid fa-trash"></i>
                                         <div class="modal fade" id="eliminarModal{{ $dato->id }}" tabindex="-1"

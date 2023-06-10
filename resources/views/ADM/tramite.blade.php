@@ -6,7 +6,7 @@
 @section('contenido')
     @include('shared/nav')
     <div class="container">
-        <H1 class="text-center mt-3">Créditos en tramite</H1>
+        <H1 class="text-center mt-3">Créditos</H1>
         <div class="row">
             <div class="col">
                 <table class="table text-primary text-center mt-5 table-striped" id="tramite">

@@ -27,13 +27,13 @@
                     </div>
                     <div class="col-2 mt-5">
                         <a href="{{ route('tramite-admin') }}" class="btn btn-primary container-fluid pt-4 pb-4">
-                            <div class="row mb-3">
+                            <div class="row mb-3 mt-1">
                                 <div class="col">
                                     <i class="fa-solid fa-list-ul fa-2xl"></i>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col">
+                                <div class="col mt-3">
                                     Creditos
                                 </div>
                             </div>

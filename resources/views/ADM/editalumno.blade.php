@@ -27,7 +27,7 @@
                         <div class="col-1"></div> 
                         <div class="col-5">
                             <label for="" class="">Numero celular</label>
-                            <input type="text" class="form-control" name="celular" id="celular" value="{{$datos->num_celular}}">
+                            <input type="text" class="form-control" name="numeroCelular" id="numeroCelular" value="{{$datos->num_celular}}">
                             <label for="" class="mt-2">Fecha de nacimiento</label>
                             <input type="date" class="form-control" name="fechaNac" id="fechaNac" value="{{$datos->fechaNac}}">
                             <label for="" class="mt-2">Carrera</label>
