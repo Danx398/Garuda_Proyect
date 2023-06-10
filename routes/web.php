@@ -40,5 +40,5 @@ Route::controller(Admin::class)->group(function () {
     Route::put('/update/{id}','update')->name('update-admin');
     Route::delete('/eliminarAdmin/{id}', 'destroy')->name('destroy-admin');
     Route::post('/agregarEvidencia/{id}','agregarEvidencia')->name('agregarEvidencia-admin');
-    Route::get('/liberar/{id}','liberar')->name('liberar-admin');
+    Route::get('/liberar/{id}/{id_alumno}','liberar')->name('liberar-admin');
 });

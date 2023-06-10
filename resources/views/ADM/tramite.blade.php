@@ -74,7 +74,7 @@
                                                                         {{ $extraescolares->horas_liberadas }} horas.</div>
                                                                 </div>
                                                                 <div class="col-3 mt-5">
-                                                                    <a href="{{ route('liberar-admin', $extraescolares->id_extraescolares) }}"
+                                                                    <a href="{{ route('liberar-admin', [$extraescolares->id_extraescolares,$dato->id_alumno]) }}"
                                                                         class="btn btn-light">Liberar</a>
                                                                 </div>
                                                             </div>

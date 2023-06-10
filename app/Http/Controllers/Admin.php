@@ -9,6 +9,7 @@ use App\Models\Extraescolares;
 use App\Models\Persona;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use PDF;
 
 use function PHPUnit\Framework\assertIsNotInt;
 
@@ -245,16 +246,66 @@ class Admin extends Controller
         //
     }
 
+    public function generarPdf($numeroControl, $nombre, $paterno, $materno, $actividad, $carrera, $horas)
+    {
+        /* $profesor = 'Aquino Segura Roldan';
+        $rol = 'JEFE DEL DEPARTAMENTO DE ACTIVIDADES';
+        $ambito = 'EXTRAESCOLARES'; */
+        // dd($numeroControl,$nombre,$paterno,$materno,$actividad,$carrera,$horas);
+        $data = [
+            'num_control'=>$numeroControl,
+            'anio_actual'=> date('Y'),
+            'nombre' =>$nombre,
+            'actividad' =>$actividad,
+            'fecha' => date('Y-m-d'),
+            'carrera' => $carrera,
+            'horas' => $horas,
+            'profesor' => ' ing. Aquino Segura Roldan',
+            'rol' => 'JEFE DEL DEPARTAMENTO DE ACTIVIDADES',
+            'ambito' => 'EXTRAESCOLARES',
+            'firma' => '________________________________'
+        ];
+        $pdf = PDF::loadView('pdf', $data);
+        // compact('profesor', 'rol', 'ambito')
+
+        return $pdf->stream('ejemplo.pdf');
+    }
+
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function liberar($id)
+    public function liberar($id_extraescolar,$id_alumno)
     {
-        $extraescolares = Extraescolares::find($id);
-        echo $extraescolares;
+        $extraescolares = Extraescolares::find($id_extraescolar);
+        $alumno = Alumno::find($id_alumno);
+        $persona = Persona::find($alumno->fk_persona);
+
+        // echo $extraescolares;
+        // echo $alumno;
+        // echo $persona;
+
+        // $this->generarPdf($alumno->num_control, $persona->nombre, $persona->paterno, $persona->materno, $extraescolares->evidencia, $alumno->carrera, $extraescolares->horas_liberadas);
+        $data = [
+            'num_control'=>$alumno->num_control,
+            'anio_actual'=> date('Y'),
+            'nombre' =>$persona->nombre.' '.$persona->paterno.' '.$persona->materno,
+            'actividad' =>$extraescolares->evidencia,
+            'credito' =>$extraescolares->fk_credito == 1 ? 'Civico' :($extraescolares->fk_credito == 2 ? 'Deportivo': 'Cultural'),
+            'fecha' => date('Y-m-d'),
+            'carrera' => $alumno->carrera,
+            'horas' => $extraescolares->horas_liberadas,
+            'profesor' => ' ing. Aquino Segura Roldan',
+            'rol' => 'JEFE DEL DEPARTAMENTO DE ACTIVIDADES',
+            'ambito' => 'EXTRAESCOLARES',
+            'firma' => '________________________________'
+        ];
+        $pdf = PDF::loadView('pdf', $data);
+        // compact('profesor', 'rol', 'ambito')
+
+        return $pdf->download('ejemplo.pdf');
     }
     /**
      * Update the specified resource in storage.
@@ -311,13 +362,26 @@ class Admin extends Controller
      */
     public function destroy($id)
     {
+        $count = 0;
         $alumno = Alumno::find($id);
         $persona = Persona::find($alumno->fk_persona);
-        // falta para eliminar los creditos de los alumnos
-        if ($alumno->delete() && $persona->delete()) {
-            Alert::success('Se elimino con exito', 'Se elimino al estudiante');
-            return redirect()->route('admin');
-        } else {
+        $extraescolares = Extraescolares::where('fk_alumno',$alumno->id)->get();
+
+        // echo $alumno->delete();
+        // echo $persona->delete();
+        // echo $extraescolares;
+        foreach ($extraescolares as $extraescolar) {
+            $count += $extraescolar->delete();
+        }
+        if($count > 0){
+            if ($alumno->delete() && $persona->delete()) {
+                Alert::success('Se elimino con exito', 'Se elimino al estudiante');
+                return redirect()->route('admin');
+            } else {
+                Alert::danger('Error', 'No se pudo eliminar al estudiante');
+                return back();
+            }
+        }else{
             Alert::danger('Error', 'No se pudo eliminar al estudiante');
             return back();
         }

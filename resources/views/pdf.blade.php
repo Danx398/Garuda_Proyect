@@ -83,26 +83,26 @@
         <tbody>
             <tr>
                 <td>Numero de control</td>
-                <td colspan="2">191190052</td>
+                <td colspan="2">{{$num_control}}</td>
                 <td>{{$anio_actual}}</td>
             </tr>
             <tr>
                 <td>Nombre</td>
-                <td colspan="3">Daniel Blancas Aguilar</td>
+                <td colspan="3">{{$nombre}}</td>
             </tr>
             <tr>
                 <td rowspan="2">Actividad</td>
-                <td rowspan="2">Participación como trovador en evento 14 de febrero</td>
+                <td rowspan="2">{{$actividad}}</td>
                 <td>Fecha</td>
                 <td>{{$fecha}}</td>
             </tr>
             <tr>
                 <td>Carrera</td>
-                <td>Sistemas Computacionales</td>
+                <td>{{$carrera}}</td>
             </tr>
             <tr>
                 <td colspan="2">Hrs Acreditadas</td>
-                <td colspan="2">5 horas civicas</td>
+                <td colspan="2">{{$horas}} Horas {{$credito}}</td>
             </tr>
         </tbody>
     </Table>
