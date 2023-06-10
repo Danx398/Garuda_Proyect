@@ -145,9 +145,16 @@ class Admin extends Controller
     }
     public function evidencias($id)
     {
+        $datosExtra = Extraescolares::select(
+            't_extraescolares.id as id_extraescolares',
+            't_extraescolares.*',
+            't_cat_creditos.*',
+            't_cat_estatus.*'
+        )->join('t_cat_creditos', 't_cat_creditos.id', 't_extraescolares.fk_credito')
+            ->join('t_cat_estatus', 't_cat_estatus.id', 't_extraescolares.fk_estatus')->orderBy('t_extraescolares.fk_alumno', 'asc')->get();
         $titulo = 'Evidencias';
         $ruta = 'tramite-admin';
-        return view('ADM/evidencias', compact('titulo','ruta'));
+        return view('ADM/evidencias', compact('titulo','ruta','datosExtra'));
     }
     public function guardarFile($nombreGeneral, $nombreActividad, $numControl, $archivo, $nombreCredito)
     {
@@ -167,23 +174,23 @@ class Admin extends Controller
             'archivo' => 'required|file:600',
             'horas' => 'required'
         ]);
-       // dd('credito: ' . $request->credito, 'civicas' . $request->horasCivicas, 'deportivas' . $request->horasDeportivas, 'culturales' . $request->horasCulturales, 'horas' . $request->horas);
+    // dd('credito: ' . $request->credito, 'civicas' . $request->horasCivicas, 'deportivas' . $request->horasDeportivas, 'culturales' . $request->horasCulturales, 'horas' . $request->horas);
         if ($request->credito == 1) {
-            if ($request->horas > $request->horasCivicas) {
+            if ($request->horas >= $request->horasCivicas && $request->horas != $request->horasCivicas) {
                 echo ('civicas');
                 Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
                 return back()->withInput();
             }
         } else if ($request->credito == 2) {
-            if ($request->horas > $request->horasDeportivas) {
+            if ($request->horas >= $request->horasDeportivas && $request->horas != $request->horasDeportivas) {
                 echo ('deportivas');
-                Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
+                Alert::error('El numero de horas Deportivas es mayor al maximo de horas', 'Vuelva a intentarlo');
                 return back()->withInput();
             }
         } else if ($request->credito == 3) {
-            if ($request->horas > $request->horasCulturales) {
+            if ($request->horas >= $request->horasCulturales && $request->horas != $request->horasCulturales) {
                 echo ('culturales');
-                Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
+                Alert::error('El numero de horas Culturales es mayor al maximo de horas', 'Vuelva a intentarlo');
                 return back()->withInput();
             }
         }
@@ -246,30 +253,30 @@ class Admin extends Controller
         //
     }
 
-    public function generarPdf($numeroControl, $nombre, $paterno, $materno, $actividad, $carrera, $horas)
-    {
-        /* $profesor = 'Aquino Segura Roldan';
-        $rol = 'JEFE DEL DEPARTAMENTO DE ACTIVIDADES';
-        $ambito = 'EXTRAESCOLARES'; */
-        // dd($numeroControl,$nombre,$paterno,$materno,$actividad,$carrera,$horas);
-        $data = [
-            'num_control'=>$numeroControl,
-            'anio_actual'=> date('Y'),
-            'nombre' =>$nombre,
-            'actividad' =>$actividad,
-            'fecha' => date('Y-m-d'),
-            'carrera' => $carrera,
-            'horas' => $horas,
-            'profesor' => ' ing. Aquino Segura Roldan',
-            'rol' => 'JEFE DEL DEPARTAMENTO DE ACTIVIDADES',
-            'ambito' => 'EXTRAESCOLARES',
-            'firma' => '________________________________'
-        ];
-        $pdf = PDF::loadView('pdf', $data);
-        // compact('profesor', 'rol', 'ambito')
+    // public function generarPdf($numeroControl, $nombre, $paterno, $materno, $actividad, $carrera, $horas)
+    // {
+    //     /* $profesor = 'Aquino Segura Roldan';
+    //     $rol = 'JEFE DEL DEPARTAMENTO DE ACTIVIDADES';
+    //     $ambito = 'EXTRAESCOLARES'; */
+    //     // dd($numeroControl,$nombre,$paterno,$materno,$actividad,$carrera,$horas);
+    //     $data = [
+    //         'num_control'=>$numeroControl,
+    //         'anio_actual'=> date('Y'),
+    //         'nombre' =>$nombre,
+    //         'actividad' =>$actividad,
+    //         'fecha' => date('Y-m-d'),
+    //         'carrera' => $carrera,
+    //         'horas' => $horas,
+    //         'profesor' => ' ing. Aquino Segura Roldan',
+    //         'rol' => 'JEFE DEL DEPARTAMENTO DE ACTIVIDADES',
+    //         'ambito' => 'EXTRAESCOLARES',
+    //         'firma' => '________________________________'
+    //     ];
+    //     $pdf = PDF::loadView('pdf', $data);
+    //     // compact('profesor', 'rol', 'ambito')
 
-        return $pdf->stream('ejemplo.pdf');
-    }
+    //     return $pdf->stream('ejemplo.pdf');
+    // }
 
     /**
      * Display the specified resource.
@@ -288,6 +295,8 @@ class Admin extends Controller
         // echo $persona;
 
         // $this->generarPdf($alumno->num_control, $persona->nombre, $persona->paterno, $persona->materno, $extraescolares->evidencia, $alumno->carrera, $extraescolares->horas_liberadas);
+        $extraescolares->constancia_liberada = 1;
+        $extraescolares->save();
         $data = [
             'num_control'=>$alumno->num_control,
             'anio_actual'=> date('Y'),

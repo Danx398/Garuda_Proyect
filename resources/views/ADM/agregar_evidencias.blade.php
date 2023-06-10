@@ -86,8 +86,8 @@
                                 <div class="col fs-3" id="deportivos" hidden>Horas Deportivos Liberados {{$horasDeportivas}}, Horas faltantes: {{20-$horasDeportivas < 0 ?'0':20-$horasDeportivas}}</div>
                                 {{-- <div class="" id="horasCivicas">{{20-$horasCivicas <0 ?'0':20-$horasCivicas}}</div> --}}
                                     <input hidden type="text" id="horasCivicas" name='horasCivicas' value="{{20-$horasCivicas <0 ?0:20-$horasCivicas}}" disabled>
-                                        <input hidden type="text" id="horasDeportivas" value="{{20-$horasDeportivas <0 ?0:20-$horasDeportivas}}" disabled>
-                                        <input hidden type="text" id="horasCulturales" value="{{20-$horasCulturales <0 ?0:20-$horasCulturales}}" disabled>
+                                        <input hidden type="text" id="horasDeportivas" name="horasDeportivas" value="{{20-$horasDeportivas <0 ?0:20-$horasDeportivas}}" disabled>
+                                        <input hidden type="text" id="horasCulturales" name="horasCulturales" value="{{20-$horasCulturales <0 ?0:20-$horasCulturales}}" disabled>
                                 <div class="col fs-3" id="culturales" hidden>Horas Culturales Liberados {{$horasCulturales}}, Horas faltantes: {{20-$horasCulturales < 0 ?'0':20-$horasCulturales}}</div>
                             </div>
                         </div>
