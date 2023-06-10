@@ -44,17 +44,17 @@ class Admin extends Controller
     }
     public function agregarEvidencias($id)
     {
-        
+
         $items = Cat_credito::all();
         //civicas
-        $horasCivicas = Extraescolares::where('fk_alumno',$id)->where('fk_credito',1)->sum('horas_liberadas');
+        $horasCivicas = Extraescolares::where('fk_alumno', $id)->where('fk_credito', 1)->sum('horas_liberadas');
         //deportivas
-        $horasDeportivas = Extraescolares::where('fk_alumno',$id)->where('fk_credito',2)->sum('horas_liberadas');
+        $horasDeportivas = Extraescolares::where('fk_alumno', $id)->where('fk_credito', 2)->sum('horas_liberadas');
         //culturales
-        $horasCulturales = Extraescolares::where('fk_alumno',$id)->where('fk_credito',3)->sum('horas_liberadas');
+        $horasCulturales = Extraescolares::where('fk_alumno', $id)->where('fk_credito', 3)->sum('horas_liberadas');
         $datos = Alumno::select('t_alumnos.id as id_alumno', 't_alumnos.*', 't_personas.*')->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')->where('t_alumnos.id', $id)->first();
         $titulo = 'Agregar Evidencias';
-        return view('ADM/agregar_evidencias', compact('titulo', 'datos','items','horasCivicas','horasDeportivas','horasCulturales'));
+        return view('ADM/agregar_evidencias', compact('titulo', 'datos', 'items', 'horasCivicas', 'horasDeportivas', 'horasCulturales'));
     }
     public function creditosTram()
     {
@@ -79,16 +79,16 @@ class Admin extends Controller
         $persona = new Persona();
         $alumno = new Alumno();
         $this->validate($request, [
-            'nombre'=>'required|max:50|string',
+            'nombre' => 'required|max:50|string',
             'paterno' => ['required', 'max:50', 'string'],
             'materno' => 'required|max:50|string',
             'genero' => 'required',
             'numeroCelular' => 'required|min:10',
             'fechaNac' => 'required|date',
-            'numControl'=>'required|string|min:9',
-            'carrera'=>'required',
-            'procedencia'=>'required',
-            'fechaTec'=>'required|date'
+            'numControl' => 'required|string|min:9',
+            'carrera' => 'required',
+            'procedencia' => 'required',
+            'fechaTec' => 'required|date'
         ]);
         $persona->nombre = $request->nombre;
         $persona->paterno = $request->paterno;
@@ -138,13 +138,46 @@ class Admin extends Controller
     public function agregarEvidencia(Request $request, $id)
     {
         $extra = new Extraescolares();
-        $this->validate($request,[
-            'actividad'=>'required',
-            'credito'=>'required',
+        $this->validate($request, [
+            'actividad' => 'required',
+            'credito' => 'required',
             'nombre_evento' => 'required|string|max:15',
-            'archivo'=>'required|file:600',
-            'horas'=>'required'
+            'archivo' => 'required|file:600',
+            'horas' => 'required'
         ]);
+        // dd('credito: ' . $request->credito, 'civicas' . $request->horasCivicas, 'deportivas' . $request->horasDeportivas, 'culturales' . $request->horasCulturales, 'horas' . $request->horas);
+        if ($request->credito == 1) {
+            if (!$request->horas < $request->horasCivicas) {
+                echo ('civicas');
+                Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
+                return back();
+            }
+        } else if ($request->credito == 2) {
+            if (!$request->horas < $request->horasDeportivas) {
+                echo ('deportivas');
+                Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
+                return back();
+            }
+        } else if ($request->credito == 3) {
+            if (!$request->horas < $request->horasCulturales) {
+                echo ('culturales');
+                Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
+                return back();
+            }
+        }
+        if (!$request->horas < $request->horasCivicas) {
+            echo ('civicas');
+            Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
+            return back();
+        } else if (!$request->horas < $request->horasDeportivas) {
+            echo ('deporivas');
+            Alert::error('El numero de horas Deportivas es mayor al maximo de horas', 'Vuelva a intentarlo');
+            return back();
+        } else if (!$request->horas < $request->horasCulturales) {
+            echo ('culturales');
+            Alert::error('El numero de horas Culturales es mayor al maximo de horas', 'Vuelva a intentarlo');
+            return back();
+        }
         $extra->fk_alumno = $id;
         $extra->fk_estatus = 2;
         $fecha = date('Y-m-d');
@@ -152,7 +185,7 @@ class Admin extends Controller
         $formato = strtolower(pathinfo($request->file('archivo')->getClientOriginalName(), PATHINFO_EXTENSION));
         // $extra->evidencia = $request->nombre_evento;
         $extra->evidencia = $request->nombre_evento;
-        $ruta = 'Personas/' . $request->num_control . '/' . $request->actividad.'/'.$request->credito.'_'.$archivoG.'.'.$formato;
+        $ruta = 'Personas/' . $request->num_control . '/' . $request->actividad . '/' . $request->credito . '_' . $archivoG . '.' . $formato;
         $extra->ruta = $ruta;
         $extra->fk_credito = $request->credito;
         $extra->horas_liberadas = $request->horas;
@@ -210,16 +243,16 @@ class Admin extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'nombre'=>'required|max:50|string',
+            'nombre' => 'required|max:50|string',
             'paterno' => ['required', 'max:50', 'string'],
             'materno' => 'required|max:50|string',
             'genero' => 'required',
             'numeroCelular' => 'required|min:10|numeric',
             'fechaNac' => 'required|date',
-            'numControl'=>'required|string1|min:9',
-            'carrera'=>'required',
-            'procedencia'=>'required',
-            'fechaTec'=>'required|date'
+            'numControl' => 'required|string1|min:9',
+            'carrera' => 'required',
+            'procedencia' => 'required',
+            'fechaTec' => 'required|date'
         ]);
         $alumno = Alumno::find($id);
         echo $alumno;

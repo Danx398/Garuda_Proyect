@@ -50,7 +50,7 @@
                                 @endphp
                             @enderror
                             <label for="" class="mt-3">Subir evidencia</label>
-                            <input type="file" name="archivo" id="archivo" class="form-control mt-2 @error('archivo') is-invalid @enderror" disabled>
+                            <input type="file" name="archivo" id="archivo" class="form-control mt-2 @error('archivo') is-invalid @enderror" disabled accept=".pdf">
                             @error('archivo')
                                 @php
                                     Alert::error($message);
@@ -85,9 +85,9 @@
                                 <div class="col fs-3" id="civicos" hidden>Horas Civicos Liberados {{$horasCivicas}}, Horas faltantes: {{20-$horasCivicas < 0 ?'0':20-$horasCivicas}}</div>
                                 <div class="col fs-3" id="deportivos" hidden>Horas Deportivos Liberados {{$horasDeportivas}}, Horas faltantes: {{20-$horasDeportivas < 0 ?'0':20-$horasDeportivas}}</div>
                                 {{-- <div class="" id="horasCivicas">{{20-$horasCivicas <0 ?'0':20-$horasCivicas}}</div> --}}
-                                    <input type="text" id="horasCivicas" hidden value="{{20-$horasCivicas <0 ?0:20-$horasCivicas}}">
-                                        <input type="text" id="horasDeportivas" hidden value="{{20-$horasDeportivas <0 ?0:20-$horasDeportivas}}">
-                                        <input type="text" id="horasCulturales" hidden value="{{20-$horasCulturales <0 ?0:20-$horasCulturales}}">
+                                    <input type="text" id="horasCivicas" name='horasCivicas' value="{{20-$horasCivicas <0 ?0:20-$horasCivicas}}" disabled>
+                                        <input type="text" id="horasDeportivas" value="{{20-$horasDeportivas <0 ?0:20-$horasDeportivas}}" disabled>
+                                        <input type="text" id="horasCulturales" value="{{20-$horasCulturales <0 ?0:20-$horasCulturales}}" disabled>
                                 <div class="col fs-3" id="culturales" hidden>Horas Culturales Liberados {{$horasCulturales}}, Horas faltantes: {{20-$horasCulturales < 0 ?'0':20-$horasCulturales}}</div>
                             </div>
                         </div>
