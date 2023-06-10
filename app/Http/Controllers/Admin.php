@@ -46,10 +46,17 @@ class Admin extends Controller
     }
     public function agregarEvidencias($id)
     {
+        
         $items = Cat_credito::all();
+        //civicas
+        $horasCivicas = Extraescolares::where('fk_alumno',$id)->where('fk_credito',1)->sum('horas_liberadas');
+        //deportivas
+        $horasDeportivas = Extraescolares::where('fk_alumno',$id)->where('fk_credito',2)->sum('horas_liberadas');
+        //culturales
+        $horasCulturales = Extraescolares::where('fk_alumno',$id)->where('fk_credito',3)->sum('horas_liberadas');
         $datos = Alumno::select('t_alumnos.id as id_alumno', 't_alumnos.*', 't_personas.*')->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')->where('t_alumnos.id', $id)->first();
         $titulo = 'Agregar Evidencias';
-        return view('ADM/agregar_evidencias', compact('titulo', 'datos', 'items'));
+        return view('ADM/agregar_evidencias', compact('titulo', 'datos','items','horasCivicas','horasDeportivas','horasCulturales'));
     }
     public function creditosTram()
     {

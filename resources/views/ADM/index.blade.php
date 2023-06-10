@@ -77,7 +77,7 @@
                                 <a href="{{ route('evidencias-admin', $item->id_alumno) }}" class="btn btn-primary"><i
                                         class="fa-solid fa-users-gear"></i></a>
                                 <a href="{{ route('editar-admin', $item->id_alumno) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
-                                <div class="btn btn-primary" data-bs-toggle="modal"
+                                <div class="btn btn-danger" data-bs-toggle="modal"
                                     data-bs-target="#eliminarModal{{ $item->id_alumno }}">
                                     <i class="fa-solid fa-trash"></i>
                                     <div class="modal fade" id="eliminarModal{{ $item->id_alumno }}" tabindex="-1"
