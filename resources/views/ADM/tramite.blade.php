@@ -6,7 +6,7 @@
 @section('contenido')
     @include('shared/nav')
     <div class="container">
-        <H1 class="text-center mt-3">Créditos en tramite</H1>
+        <H1 class="text-center mt-3">Créditos</H1>
         <div class="row">
             <div class="col">
                 <table class="table text-primary text-center mt-5 table-striped" id="tramite">
@@ -17,7 +17,7 @@
                         <th>Evidencias</th>
                         <th>ver mas</th>
                     </thead>
-                    <tbody class="text-center">
+                    <tbody>
                         @foreach ($datos as $dato)
                             <tr>
                                 <td>{{ $dato->nombre }} {{ $dato->paterno }} {{ $dato->materno }}</td>
@@ -35,32 +35,49 @@
                                     <div class="modal fade" id="verMas{{ $dato->id_alumno }}" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content bg-primary text-light">
+                                            <div class="modal-content bg-primary text-light ">
                                                 <div class="modal-header">
                                                     <h1 class="modal-title fs-5" id="exampleModalLabel">Mas informacion</h1>
                                                     <button type="button" class="btn-close bg-light"
                                                         data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <div class="row">
+                                                    <div class="row px-3">
                                                         <div class="col">
                                                             <div>Nombre del estudiante:</div>
-                                                            <div>{{ $dato->nombre }} {{ $dato->paterno }} {{ $dato->materno }}</div>
+                                                            <div>{{ $dato->nombre }} {{ $dato->paterno }}
+                                                                {{ $dato->materno }}</div>
                                                         </div>
                                                         <div class="col">
                                                             <div>numero de control:</div>
-                                                            <div>{{$dato->num_control}}</div>
+                                                            <div>{{ $dato->num_control }}</div>
                                                         </div>
                                                     </div>
                                                     @foreach ($datosExtra as $extraescolares)
                                                         @if ($extraescolares->fk_alumno == $dato->id_alumno)
-                                                            {{-- {{$extraescolares}} --}}
-                                                            <div class="fs-4">Credito: {{$extraescolares->credito}}</div>
-                                                            <div>Tipo de evidencia: {{$extraescolares->credito}}</div>
-                                                            <div>Evento o actividad: {{$extraescolares->evidencia}}</div>
-                                                            <div>Ruta fisica: {{$extraescolares->ruta_fisica}}</div>
-                                                            <div>Horas liberadas: {{$extraescolares->horas_liberadas}} horas.</div>
-                                                            {{-- <a href="{{route('liberar',$)}}"></a> --}}
+                                                            <div class="row mt-3">
+                                                                <div class="col">
+                                                                    <div class="fs-4"><b>Credito:</b>
+                                                                        {{ $extraescolares->credito }}</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row px-3">
+                                                                <div class="col-9">
+                                                                    <div><b>Tipo de evidencia:</b>
+                                                                        {{ $extraescolares->tipo_evidencia }}</div>
+                                                                    <div><b>Evento o actividad:</b>
+                                                                        {{ $extraescolares->evidencia }}</div>
+                                                                    <div><b>Ruta fisica:</b>
+                                                                        {{ $extraescolares->ruta_fisica }}
+                                                                    </div>
+                                                                    <div><b>Horas liberadas:</b>
+                                                                        {{ $extraescolares->horas_liberadas }} horas.</div>
+                                                                </div>
+                                                                <div class="col-3 mt-5">
+                                                                    <a href="{{ route('liberar-admin', $extraescolares->id_extraescolares) }}"
+                                                                        class="btn btn-light">Liberar</a>
+                                                                </div>
+                                                            </div>
                                                         @endif
                                                     @endforeach
                                                 </div>

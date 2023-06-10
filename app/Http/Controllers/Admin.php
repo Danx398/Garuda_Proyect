@@ -285,19 +285,6 @@ class Admin extends Controller
                 return back();
             }
         }
-        if (!$request->horas < $request->horasCivicas) {
-            echo ('civicas');
-            Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
-            return back();
-        } else if (!$request->horas < $request->horasDeportivas) {
-            echo ('deporivas');
-            Alert::error('El numero de horas Deportivas es mayor al maximo de horas', 'Vuelva a intentarlo');
-            return back();
-        } else if (!$request->horas < $request->horasCulturales) {
-            echo ('culturales');
-            Alert::error('El numero de horas Culturales es mayor al maximo de horas', 'Vuelva a intentarlo');
-            return back();
-        }
         $extra->fk_alumno = $id;
         $extra->fk_estatus = 2;
         $fecha = date('Y-m-d');
@@ -350,9 +337,10 @@ class Admin extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function liberar($id,)
+    public function liberar($id)
     {
-        //
+        $extraescolares = Extraescolares::find($id);
+        echo $extraescolares;
     }
     /**
      * Update the specified resource in storage.
