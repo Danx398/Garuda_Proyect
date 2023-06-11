@@ -29,7 +29,7 @@
                                             class="fa-solid fa-eye"></i></a>
                                 </td>
                                 <td>
-                                    <a href="{{route('constancias-liberadas')}}" class="btn btn-primary">
+                                    <a href="{{route('constancias-liberadas',$dato->id_alumno)}}" class="btn btn-primary">
                                         <i class="fa-solid fa-eye"></i>
                                     </a>
                                 </td>
@@ -79,7 +79,7 @@
                                                                     <div><b>Horas liberadas:</b>
                                                                         {{ $extraescolares->horas_liberadas }} horas.</div>
                                                                 </div>
-                                                                <div class="col-3 mt-5">
+                                                                <div class="col-3 mt-4">
                                                                     <a href="{{ route('liberar-admin', [$extraescolares->id_extraescolares,$dato->id_alumno]) }}"
                                                                         class="btn btn-light">Liberar</a>
                                                                 </div>

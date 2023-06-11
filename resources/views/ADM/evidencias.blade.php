@@ -26,9 +26,7 @@
                                 <td>{{ $items->credito }}</td>
                                 <td>{{ $items->horas_liberadas }}</td>
                                 <td>{{ $items->estatus }}</td>
-                                <td>{{ $items->ruta_fisica }}
-                                    {{$fecha}}
-                                </td>
+                                <td>{{ $items->ruta_fisica }}</td>
                                 <td>
                                     <div class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#derDocModal{{ $items->id_extraescolares }}">
@@ -39,13 +37,13 @@
                                                 <div class="modal-content bg-primary">
                                                     <div class="modal-body">
                                                         <iframe width="1100" height="650"
-                                                            src="{{ asset($items->ruta) }}" frameborder="0"></iframe>
+                                                            src="{{ asset('storage/'.$items->ruta) }}" frameborder="0"></iframe>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <a class="btn btn-primary" href="{{ asset($items->ruta) }}"
+                                    <a class="btn btn-primary" href="{{ asset('storage/'.$items->ruta) }}"
                                         download="{{ $datos->num_control . '_' . $items->fk_credito . '_' . $items->evidencia . '_' . $fecha }}"><i
                                             class="fa-solid fa-download"></i></a>
                                     <div class="btn btn-primary" data-bs-toggle="modal"

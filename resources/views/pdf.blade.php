@@ -70,8 +70,10 @@
     ?>
     <Table class="table">
         <thead>
-            <th><img src="<?=$base64?>" alt=""
-                    style="width: 70%; margin-top: 8%"></th>
+            <th>
+                <img src="<?=$base64?>" alt=""
+                    style="width: 70%; margin-top: 8%">
+                </th>
             <th colspan="2">
                 <h3>Instituto Tecnologico de Milpa alta II</h3>
                 <hr>

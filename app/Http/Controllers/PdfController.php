@@ -18,6 +18,8 @@ class PdfController extends Controller
             'nombre' =>$request->nombre,
             'actividad' =>$request->actividad,
             'fecha' => date('Y-m-d'),
+            'horas' => date('H'),
+            'credito' => 'Civico',
             'carrera' => $request->carrera,
             'profesor' => ' ing. Aquino Segura Roldan',
             'rol' => 'JEFE DEL DEPARTAMENTO DE ACTIVIDADES',

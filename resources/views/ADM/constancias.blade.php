@@ -6,29 +6,27 @@
 @section('contenido')
     @include('shared/nav')
     <div class="container">
-        <h1 class="text-center mt-3">Constancias Liberadas de {{2}}</h1>
+        <h1 class="text-center mt-3">Constancias Liberadas de {{ $alumno->num_control }}</h1>
         <div class="row">
             <div class="col">
                 <table class="table table-responsive mt-4 table-striped" id="constancias">
                     <thead class="bg-primary text-light text-center">
-                        <th>Nombre</th>
-                        <th>Numero de control</th>
                         <th>Evento (act o mooc)</th>
-                        <th>Evidencias</th>
-                        <th>Documentos</th>
+                        <th>Credito</th>
+                        <th>Estatus</th>
+                        <th>Ruta fisica</th>
                         <th>Fecha de modificación</th>
                     </thead>
                     <tbody class="text-center">
-                        <td>D</td>
-                        <td>D</td>
-                        <td>D</td>
-                        <td>D</td>
-                        <td>
-                            <button class="btn btn-primary "><i class="fa-solid fa-eye"></i></button>
-                            <button class="btn btn-primary "><i class="fa-solid fa-download"></i></button>
-                            <button class="btn btn-primary "><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                        <td>D</td>
+                        @foreach ($extraescolar as $item)
+                        <tr>
+                            <td>{{$item->tipo_evidencia}}</td>
+                            <td>{{$item->credito}}</td>
+                            <td>{{$item->estatus}}</td>
+                            <td>{{$item->ruta_fisica}}</td>
+                            <td>{{$item->created_at}}</td>
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

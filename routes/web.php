@@ -31,7 +31,7 @@ Route::controller(Admin::class)->group(function () {
     Route::get('/agregarEvidencias/{id}', 'agregarEvidencias')->name('evidencias-admin');
     Route::get('/creditosTram', 'creditosTram')->name('tramite-admin');
     Route::get('/registrarAlum', 'registrarAlum')->name('registrar-admin');
-    Route::get('/constanciasLibe', 'constanciasLib')->name('constancias-liberadas');
+    Route::get('/constanciasLibe/{id}', 'constanciasLib')->name('constancias-liberadas');
     Route::get('/evidencias/{id}', 'evidencias')->name('evidencias');
     Route::post('/darAlta','darAlta')->name('darAlta');
     Route::get('/editarAlumno/{id}','editAlumno')->name('editar-admin');

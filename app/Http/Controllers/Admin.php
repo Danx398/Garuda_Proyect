@@ -9,6 +9,7 @@ use App\Models\Extraescolares;
 use App\Models\Persona;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 use PDF;
 
@@ -41,15 +42,8 @@ class Admin extends Controller
         $ruta = 'admin';
         return view('ADM/editalumno', compact('titulo', 'items', 'datos','ruta'));
     }
-    public function creditosLib()
-    {
-        $titulo = 'Creditos liberados';
-        $ruta = 'admin';
-        return view('ADM/liberados', compact('titulo','ruta'));
-    }
     public function agregarEvidencias($id)
     {
-
         $items = Cat_credito::all();
         //civicas
         $horasCivicas = Extraescolares::where('fk_alumno', $id)->where('fk_credito', 1)->sum('horas_liberadas');
@@ -75,18 +69,18 @@ class Admin extends Controller
             't_cat_creditos.*',
             't_cat_estatus.*'
         )->join('t_cat_creditos', 't_cat_creditos.id', 't_extraescolares.fk_credito')
-            ->join('t_cat_estatus', 't_cat_estatus.id', 't_extraescolares.fk_estatus')->orderBy('t_extraescolares.fk_alumno', 'asc')->where('t_extraescolares.fk_estatus',2)->get();
+            ->join('t_cat_estatus', 't_cat_estatus.id', 't_extraescolares.fk_estatus')->orderBy('t_extraescolares.fk_alumno', 'asc')->where('t_extraescolares.fk_estatus',1)->get();
         $titulo = 'Creditos en tramite';
         $ruta = 'admin';
         return view('ADM/tramite', compact('ruta','titulo', 'datos', 'datos','datosExtra'));
     }
     public function eliminarExtraescolar($id){
         $extraescolar = Extraescolares::find($id);
-        if ($extraescolar->delete()) {
+        if ($extraescolar->delete() && Storage::delete('public/'.$extraescolar->ruta)) {
             Alert::success('Se elimino con exito', 'Se elimino la evidencia');
             return back();
         } else {
-            Alert::danger('Error', 'No se pudo eliminar la evidencia');
+            Alert::error('Error', 'No se pudo eliminar la evidencia');
             return back();
         }
     }
@@ -100,8 +94,8 @@ class Admin extends Controller
 
     public function crearCarpeta($nombreCarpeta)
     {
-        if (!file_exists(public_path('Personas/' . $nombreCarpeta))) {
-            mkdir(public_path('Personas/' . $nombreCarpeta), 0777, true);
+        if (!file_exists(public_path('storage/'.'Personas/' . $nombreCarpeta))) {
+            mkdir(public_path('storage/'.'Personas/' . $nombreCarpeta));
         }
     }
     public function darAlta(Request $request)
@@ -147,11 +141,20 @@ class Admin extends Controller
             return back();
         }
     }
-    public function constanciasLib()
+    public function constanciasLib($id)
     {
+        $alumno = Alumno::find($id);
+        $extraescolar = Extraescolares::select(
+            't_extraescolares.id as id_extraescolares',
+            't_extraescolares.*',
+            't_cat_creditos.credito',
+            't_cat_estatus.estatus'
+        )->join('t_cat_creditos', 't_cat_creditos.id', 't_extraescolares.fk_credito')
+            ->join('t_cat_estatus', 't_cat_estatus.id', 't_extraescolares.fk_estatus')
+            ->where('fk_alumno',$id)->where('t_extraescolares.fk_estatus',2)->get();
         $titulo = 'Constancias Liberadas';
         $ruta = 'tramite-admin';
-        return view('ADM/constancias', compact('titulo','ruta'));
+        return view('ADM/constancias', compact('titulo','ruta','alumno','extraescolar'));
     }
     public function evidencias($id)
     {
@@ -166,7 +169,7 @@ class Admin extends Controller
             'credito',
             'estatus'
         )->join('t_cat_creditos', 't_cat_creditos.id', 't_extraescolares.fk_credito')
-            ->join('t_cat_estatus', 't_cat_estatus.id', 't_extraescolares.fk_estatus')->where('fk_alumno',$id)->get();
+            ->join('t_cat_estatus', 't_cat_estatus.id', 't_extraescolares.fk_estatus')->where('fk_alumno',$id)->where('t_extraescolares.fk_estatus',1)->get();
         $fecha = Carbon::now();
         $fecha = $fecha->format('d-m-Y');
         $titulo = 'Evidencias';
@@ -175,7 +178,7 @@ class Admin extends Controller
     }
     public function guardarFile($nombreGeneral, $nombreActividad, $numControl, $archivo, $nombreCredito)
     {
-        $ruta = public_path('Personas/' . $numControl . '/' . $nombreActividad);
+        $ruta = public_path('storage/'.'Personas/' . $numControl . '/' . $nombreActividad);
         $formato = strtolower(pathinfo($archivo->getClientOriginalName(), PATHINFO_EXTENSION));
         // $nombreGeneral.=$nombreCredito.'.'.$formato;
         $nombreCredito .= '_' . $nombreGeneral . '.' . $formato;
@@ -210,8 +213,16 @@ class Admin extends Controller
                 return back()->withInput();
             }
         }
+        $credito = '';
+        if($request->credito == 1){
+            $credito = 'Civico';
+        }else if($request->credito == 2){
+            $credito = 'Deportivo';
+        }else if($request->credito == 3){
+            $credito = 'Cultural';
+        }
         $extra->fk_alumno = $id;
-        $extra->fk_estatus = 2;
+        $extra->fk_estatus = 1;
         $fecha = date('Y-m-d');
         $archivoG = $request->nombre_evento . '_' . $fecha;
         $formato = strtolower(pathinfo($request->file('archivo')->getClientOriginalName(), PATHINFO_EXTENSION));
@@ -221,74 +232,45 @@ class Admin extends Controller
         $extra->ruta = $ruta;
         $extra->fk_credito = $request->credito;
         $extra->horas_liberadas = $request->horas;
-        $extra->ruta_fisica = 'Cajon derecho';
+        $extra->ruta_fisica = $credito.'-'.$request->num_control;
         $extra->constancia_liberada = 0;
         $numeroControl = $request->num_control;
         if ($extra->save()) {
             $this->guardarFile($archivoG, $request->actividad, $numeroControl, $request->file('archivo'), $request->credito);
-            Alert::success('Se ha creado guardado el archivo', 'Registro exitoso');
+            Alert::success('Registro exitoso','Se ha creado y guardado el archivo');
             return redirect()->route('admin');
         } else {
             Alert::error('No se pudo realizar el registro!', 'Vuelva a intentarlo');
             return back();
         }
     }
-    // public function generarPdf($numeroControl, $nombre, $paterno, $materno, $actividad, $carrera, $horas)
-    // {
-    //     /* $profesor = 'Aquino Segura Roldan';
-    //     $rol = 'JEFE DEL DEPARTAMENTO DE ACTIVIDADES';
-    //     $ambito = 'EXTRAESCOLARES'; */
-    //     // dd($numeroControl,$nombre,$paterno,$materno,$actividad,$carrera,$horas);
-    //     $data = [
-    //         'num_control'=>$numeroControl,
-    //         'anio_actual'=> date('Y'),
-    //         'nombre' =>$nombre,
-    //         'actividad' =>$actividad,
-    //         'fecha' => date('Y-m-d'),
-    //         'carrera' => $carrera,
-    //         'horas' => $horas,
-    //         'profesor' => ' ing. Aquino Segura Roldan',
-    //         'rol' => 'JEFE DEL DEPARTAMENTO DE ACTIVIDADES',
-    //         'ambito' => 'EXTRAESCOLARES',
-    //         'firma' => '________________________________'
-    //     ];
-    //     $pdf = PDF::loadView('pdf', $data);
-    //     // compact('profesor', 'rol', 'ambito')
-
-    //     return $pdf->stream('ejemplo.pdf');
-    // }
-
     public function liberar($id_extraescolar,$id_alumno)
     {
         $extraescolares = Extraescolares::find($id_extraescolar);
         $alumno = Alumno::find($id_alumno);
         $persona = Persona::find($alumno->fk_persona);
 
-        // echo $extraescolares;
-        // echo $alumno;
-        // echo $persona;
+        $extraescolares->fk_estatus = 2;
+        $extraescolares->constancia_liberada=1;
+        $extraescolares->ruta_fisica = 'Constancias-'.$alumno->num_control;
+        $extraescolares->save();
 
-        // $this->generarPdf($alumno->num_control, $persona->nombre, $persona->paterno, $persona->materno, $extraescolares->evidencia, $alumno->carrera, $extraescolares->horas_liberadas);
-        // $extraescolares->constancia_liberada = 1;
-        // $extraescolares->save();
-        // $data = [
-        //     'num_control'=>$alumno->num_control,
-        //     'anio_actual'=> date('Y'),
-        //     'nombre' =>$persona->nombre.' '.$persona->paterno.' '.$persona->materno,
-        //     'actividad' =>$extraescolares->evidencia,
-        //     'credito' =>$extraescolares->fk_credito == 1 ? 'Civico' :($extraescolares->fk_credito == 2 ? 'Deportivo': 'Cultural'),
-        //     'fecha' => date('Y-m-d'),
-        //     'carrera' => $alumno->carrera,
-        //     'horas' => $extraescolares->horas_liberadas,
-        //     'profesor' => ' ing. Aquino Segura Roldan',
-        //     'rol' => 'JEFE DEL DEPARTAMENTO DE ACTIVIDADES',
-        //     'ambito' => 'EXTRAESCOLARES',
-        //     'firma' => '________________________________'
-        // ];
-        // $pdf = PDF::loadView('pdf', $data);
-        // // compact('profesor', 'rol', 'ambito')
-
-        // return $pdf->download('ejemplo.pdf');
+        $data = [
+            'num_control'=>$alumno->num_control,
+            'anio_actual'=> date('Y'),
+            'nombre' =>$persona->nombre.' '.$persona->paterno.' '.$persona->materno,
+            'actividad' =>$extraescolares->evidencia,
+            'credito' =>$extraescolares->fk_credito == 1 ? 'Civico' :($extraescolares->fk_credito == 2 ? 'Deportivo': 'Cultural'),
+            'fecha' => date('Y-m-d'),
+            'carrera' => $alumno->carrera,
+            'horas' => $extraescolares->horas_liberadas,
+            'profesor' => ' ing. Aquino Segura Roldan',
+            'rol' => 'JEFE DEL DEPARTAMENTO DE ACTIVIDADES',
+            'ambito' => 'EXTRAESCOLARES',
+            'firma' => '________________________________'
+        ];
+        $pdf = PDF::loadView('pdf', $data);
+        return $pdf->stream('Constancia-'.$alumno->num_control);
     }
     /**
      * Update the specified resource in storage.
@@ -346,24 +328,31 @@ class Admin extends Controller
     public function destroy($id)
     {
         $count = 0;
+        $countDoc = 0;
         $alumno = Alumno::find($id);
         $persona = Persona::find($alumno->fk_persona);
         $extraescolares = Extraescolares::where('fk_alumno',$alumno->id)->get();
         
         foreach ($extraescolares as $extraescolar) {
+            $countDoc += Storage::delete('public/'.$extraescolar->ruta);
             $count += $extraescolar->delete();
         }
-        if($count > 0){
+        if($count > 0 && $countDoc > 0){
             if ($alumno->delete() && $persona->delete()) {
                 Alert::success('Se elimino con exito', 'Se elimino al estudiante');
                 return redirect()->route('admin');
             } else {
-                Alert::danger('Error', 'No se pudo eliminar al estudiante');
+                Alert::error('Error', 'No se pudo eliminar al estudiante');
                 return back();
             }
         }else{
-            Alert::danger('Error', 'No se pudo eliminar al estudiante');
-            return back();
+            if ($alumno->delete() && $persona->delete()) {
+                Alert::success('Se elimino con exito', 'Se elimino al estudiante');
+                return redirect()->route('admin');
+            } else {
+                Alert::error('Error', 'No se pudo eliminar al estudiante');
+                return back();
+            }
         }
     }
 }
