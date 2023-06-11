@@ -12,7 +12,6 @@ class AuthLogin extends Controller
 {
     public function __construct()
     {
-        // $this->middleware(['guest'])->only(['index','loguear']);
         $this->middleware(['guest','nocache'])->only(['index']);
     }
     public function index()
@@ -26,7 +25,6 @@ class AuthLogin extends Controller
         Session::flush();
         Alert::success('Ah cerrado su sesion!','Hasta luego');
         return redirect()->route('login');
-        // ->with('success','Ah cerrado su sesion!','Hasta luego');
     }
     public function logear(Request $request) {
         $credenciales = $request->only("name", "password");
@@ -43,14 +41,12 @@ class AuthLogin extends Controller
             } else if(auth()->user()->rol == 'admin') {
                 Alert::success('Ah iniciado sesion!','Bienvenido');
                 return redirect()->route('admin');
-                // ->withSuccess('Ah iniciado sesion!','Bienvenido');
             } else {
                 return $this->logout();
             }
         } else {
             Alert::error('No existe este usuario');
             return back()->withInput($credenciales);
-            // ->with('errors','No existe este usuario');
         }
     }
 

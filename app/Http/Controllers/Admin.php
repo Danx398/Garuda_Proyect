@@ -17,11 +17,6 @@ use function PHPUnit\Framework\assertIsNotInt;
 
 class Admin extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function __construct()
     {
         $this->middleware(['auth', 'nocache'])->only(['index']);
@@ -36,7 +31,6 @@ class Admin extends Controller
     public function editAlumno($id)
     {
         $datos = Alumno::select('t_alumnos.id as id_alumno', 't_alumnos.*', 't_personas.*')->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')->where('t_alumnos.id', $id)->first();
-        // echo($datos);
         $items = Cat_escuela_procedencia::all();
         $titulo = 'Editar Alumno';
         $ruta = 'admin';
@@ -272,13 +266,6 @@ class Admin extends Controller
         $pdf = PDF::loadView('pdf', $data);
         return $pdf->stream('Constancia-'.$alumno->num_control);
     }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -318,13 +305,6 @@ class Admin extends Controller
             return back();
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $count = 0;
