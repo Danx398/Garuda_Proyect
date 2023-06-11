@@ -45,6 +45,10 @@ primer_mayuscula('paterno');
 caracter_letras('paterno');
 primer_mayuscula('materno');
 caracter_letras('materno');
+primer_mayuscula('nombre_evento');
+caracter_letras('nombre_evento');
+caracter_numeros('horas');
+caracter_numeros('numControl');
 
 
 // $('.disabledCheckboxes').removeAttr("disabled");
@@ -99,8 +103,5 @@ $('#credito').on('change', () => {
             $('#archivo').prop("disabled", true);
         }
     }
-
-});
-$('#horas').on('input', () => {
 
 });
