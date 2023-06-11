@@ -42,23 +42,11 @@ class SuperAdmin extends Controller
         $titulo = 'cambiar';
         return view('SADM/cambio', compact('titulo', 'datos'));
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function crearNuevoAdmin()
     {
         $titulo = 'Crear nuevo admin';
         return view('SADM/nadmin', compact('titulo'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $persona = new Persona();
@@ -66,7 +54,6 @@ class SuperAdmin extends Controller
         $this->validate($request, [
             'usuario' => 'required|max:50|string',
             'password' => ['required', Password::min(8)],
-            // ->letters()->mixedCase()->numbers()->symbols()->uncompromised()],
             'nombre' => 'required|string|max:50',
             'paterno' => ['required', 'max:50', 'string'],
             'materno' => 'required|max:50|string',
@@ -101,24 +88,6 @@ class SuperAdmin extends Controller
             return back();
         }
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //    
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function cambioContrasenia(Request $request, $id){
         $this->validate($request,[
             'ContraseniaNueva' => ['required',Password::min(8)],
@@ -153,14 +122,6 @@ class SuperAdmin extends Controller
         $titulo = 'Editar admin';
         return view('SADM/eadmin', compact('titulo', 'datos'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function updateAdmin(Request $request, $id)
     {
         $usuario = User::find($id);
@@ -196,13 +157,6 @@ class SuperAdmin extends Controller
             return back();
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $usuario = User::find($id);
