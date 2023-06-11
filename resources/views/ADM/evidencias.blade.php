@@ -5,10 +5,8 @@
 @endsection
 @section('contenido')
     @include('shared/nav')
-    {{$datosExtra}}
-    {{$datos}}
     <div class="container">
-        <h1 class="text-center mt-3">{{ $titulo }}</h1>
+        <h1 class="text-center mt-3">Evidencias de {{ $datos->num_control }}</h1>
         <div class="row">
             <div class="col">
                 <table class="table table-responsive mt-4 table-striped" id="evidencias">
@@ -20,24 +18,93 @@
                         <th>Ruta fisica</th>
                         <th>Acciones</th>
                         <th>Fecha de modificación</th>
-                        <th>prueba</th>
                     </thead>
                     <tbody class="text-center">
                         @foreach ($datosExtra as $items)
-                        <tr>
-                            <td>{{$items->evidencia}}</td>
-                                <td>{{$items->credito}}</td>
-                                <td>{{$items->horas_liberadas}}</td>
-                                <td>{{$items->estatus}}</td>
-                                <td>{{$items->ruta_fisica}}</td>
+                            <tr>
+                                <td>{{ $items->evidencia }}</td>
+                                <td>{{ $items->credito }}</td>
+                                <td>{{ $items->horas_liberadas }}</td>
+                                <td>{{ $items->estatus }}</td>
+                                <td>{{ $items->ruta_fisica }}</td>
                                 <td>
-                                    <button class="btn btn-primary "><i class="fa-solid fa-eye"></i></button>
-                                    <a class="btn btn-primary" href="{{ asset($items->ruta) }}" download="{{$items->ruta}}"><i class="fa-solid fa-download"></i></a>
-                                    <button class="btn btn-primary "><i class="fa-solid fa-trash"></i></button>
+                                    <div class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#derDocModal{{ $items->id_extraescolares }}">
+                                        <i class="fa-solid fa-eye"></i>
+                                        <div class="modal fade" id="derDocModal{{ $items->id_extraescolares }}"
+                                            tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-xl">
+                                                <div class="modal-content bg-primary">
+                                                    <div class="modal-body">
+                                                        <iframe width="1100" height="650" src="{{ asset($items->ruta) }}" frameborder="0"></iframe>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a class="btn btn-primary" href="{{ asset($items->ruta) }}"
+                                        download="{{ $items->ruta }}"><i class="fa-solid fa-download"></i></a>
+                                    <div class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#eliminarModal{{ $items->id_extraescolares }}">
+                                        <i class="fa-solid fa-trash"></i>
+                                        <div class="modal fade" id="eliminarModal{{ $items->id_extraescolares }}"
+                                            tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content bg-primary">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Cuidado !!</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class="col p-2">
+                                                                    ¿Estas seguro de que deseas eliminar esta evidencia?
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col fs-4 mt-2">
+                                                                    <b>Credito:</b> {{ $items->credito }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col mb-2">
+                                                                    Realizando actividad: {{ $items->evidencia }}
+                                                                    <br>
+                                                                    Liberando un total de {{ $items->horas_liberadas }}
+                                                                    hrs.
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col p-2">
+                                                                    Una vez realizado este proceso
+                                                                    ya no se podra recuperar la informacion
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-light"
+                                                            data-bs-dismiss="modal">
+                                                            No, Cancelar
+                                                        </button>
+                                                        <form action="{{ route('eliminar-extraescolar', $items->id_extraescolares) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger">
+                                                                Si, Eliminar
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
-                                <td>{{$items->created_at}}</td>
-                                <td>{{$items->ruta}}</td>
-                        </tr>
+                                <td>{{ $items->created_at }}</td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

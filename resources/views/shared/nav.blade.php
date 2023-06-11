@@ -11,11 +11,11 @@
                       <a class="nav-link active text-light" aria-current="page" href="{{ route('registrar-admin') }}">Registrar Alumno</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link text-light" href="{{route('tramite-admin')}}">Creditos en Tramite</a>
+                      <a class="nav-link text-light" href="{{route('tramite-admin')}}">Creditos</a>
                   </li>
-                  <li class="nav-item">
+                  {{-- <li class="nav-item">
                       <a class="nav-link text-light" href="{{route('liberado-admin')}}">Creditos Liberados</a>
-                  </li>
+                  </li> --}}
               </ul>
               <a href="{{ route('logout') }}" class="btn btn-danger">Cerrar Sesion</a>
           </div>

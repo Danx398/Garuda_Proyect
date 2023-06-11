@@ -76,10 +76,19 @@ class Admin extends Controller
             't_cat_estatus.*'
         )->join('t_cat_creditos', 't_cat_creditos.id', 't_extraescolares.fk_credito')
             ->join('t_cat_estatus', 't_cat_estatus.id', 't_extraescolares.fk_estatus')->orderBy('t_extraescolares.fk_alumno', 'asc')->where('t_extraescolares.fk_estatus',2)->get();
-
         $titulo = 'Creditos en tramite';
         $ruta = 'admin';
         return view('ADM/tramite', compact('ruta','titulo', 'datos', 'datos','datosExtra'));
+    }
+    public function eliminarExtraescolar($id){
+        $extraescolar = Extraescolares::find($id);
+        if ($extraescolar->delete()) {
+            Alert::success('Se elimino con exito', 'Se elimino la evidencia');
+            return back();
+        } else {
+            Alert::danger('Error', 'No se pudo eliminar la evidencia');
+            return back();
+        }
     }
     public function registrarAlum()
     {

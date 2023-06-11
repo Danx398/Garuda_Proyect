@@ -28,7 +28,6 @@ Route::controller(SuperAdmin::class)->group(function () {
 
 Route::controller(Admin::class)->group(function () {
     Route::get('/dashAdm', 'index')->name('admin');
-    // Route::get('/creditosLib', 'creditosLib')->name('liberado-admin');
     Route::get('/agregarEvidencias/{id}', 'agregarEvidencias')->name('evidencias-admin');
     Route::get('/creditosTram', 'creditosTram')->name('tramite-admin');
     Route::get('/registrarAlum', 'registrarAlum')->name('registrar-admin');
@@ -41,4 +40,5 @@ Route::controller(Admin::class)->group(function () {
     Route::delete('/eliminarAdmin/{id}', 'destroy')->name('destroy-admin');
     Route::post('/agregarEvidencia/{id}','agregarEvidencia')->name('agregarEvidencia-admin');
     Route::get('/liberar/{id}/{id_alumno}','liberar')->name('liberar-admin');
+    Route::delete('/eliminarExtraescolar/{id}','eliminarExtraescolar')->name('eliminar-extraescolar');
 });
