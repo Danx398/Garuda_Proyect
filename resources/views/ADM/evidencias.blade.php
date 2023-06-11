@@ -5,6 +5,8 @@
 @endsection
 @section('contenido')
     @include('shared/nav')
+    {{$datosExtra}}
+    {{$datos}}
     <div class="container">
         <h1 class="text-center mt-3">{{ $titulo }}</h1>
         <div class="row">
@@ -14,9 +16,11 @@
                         <th>Evento (act o mooc)</th>
                         <th>Credito</th>
                         <th>Horas liberadas</th>
+                        <th>Estatus</th>
                         <th>Ruta fisica</th>
                         <th>Acciones</th>
                         <th>Fecha de modificación</th>
+                        <th>prueba</th>
                     </thead>
                     <tbody class="text-center">
                         @foreach ($datosExtra as $items)
@@ -24,6 +28,7 @@
                             <td>{{$items->evidencia}}</td>
                                 <td>{{$items->credito}}</td>
                                 <td>{{$items->horas_liberadas}}</td>
+                                <td>{{$items->estatus}}</td>
                                 <td>{{$items->ruta_fisica}}</td>
                                 <td>
                                     <button class="btn btn-primary "><i class="fa-solid fa-eye"></i></button>
@@ -31,6 +36,7 @@
                                     <button class="btn btn-primary "><i class="fa-solid fa-trash"></i></button>
                                 </td>
                                 <td>{{$items->created_at}}</td>
+                                <td>{{$items->ruta}}</td>
                         </tr>
                         @endforeach
                     </tbody>

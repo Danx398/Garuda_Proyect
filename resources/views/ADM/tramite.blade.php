@@ -15,7 +15,7 @@
                         <th>Numero de control</th>
                         <th>Carrera</th>
                         <th>Evidencias</th>
-                        <th>Constancias</th>
+                        <th>Liberados</th>
                         <th>ver mas</th>
                     </thead>
                     <tbody>

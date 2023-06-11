@@ -141,20 +141,26 @@ class Admin extends Controller
     public function constanciasLib()
     {
         $titulo = 'Constancias Liberadas';
-        return view('ADM/constancias', compact('titulo'));
+        $ruta = 'tramite-admin';
+        return view('ADM/constancias', compact('titulo','ruta'));
     }
     public function evidencias($id)
     {
+        $datos = Alumno::select(
+            't_alumnos.id as id_alumno',
+            't_alumnos.*',
+            't_personas.*',
+        )->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')->where('t_alumnos.id',$id)->first();
         $datosExtra = Extraescolares::select(
             't_extraescolares.id as id_extraescolares',
             't_extraescolares.*',
-            't_cat_creditos.*',
-            't_cat_estatus.*'
+            'credito',
+            'estatus'
         )->join('t_cat_creditos', 't_cat_creditos.id', 't_extraescolares.fk_credito')
-            ->join('t_cat_estatus', 't_cat_estatus.id', 't_extraescolares.fk_estatus')->orderBy('t_extraescolares.fk_alumno', 'asc')->get();
+            ->join('t_cat_estatus', 't_cat_estatus.id', 't_extraescolares.fk_estatus')->where('fk_alumno',$id)->get();
         $titulo = 'Evidencias';
         $ruta = 'tramite-admin';
-        return view('ADM/evidencias', compact('titulo','ruta','datosExtra'));
+        return view('ADM/evidencias', compact('titulo','ruta','datosExtra','datos'));
     }
     public function guardarFile($nombreGeneral, $nombreActividad, $numControl, $archivo, $nombreCredito)
     {
@@ -174,7 +180,6 @@ class Admin extends Controller
             'archivo' => 'required|file:600',
             'horas' => 'required'
         ]);
-    // dd('credito: ' . $request->credito, 'civicas' . $request->horasCivicas, 'deportivas' . $request->horasDeportivas, 'culturales' . $request->horasCulturales, 'horas' . $request->horas);
         if ($request->credito == 1) {
             if ($request->horas >= $request->horasCivicas && $request->horas != $request->horasCivicas) {
                 echo ('civicas');
@@ -194,25 +199,11 @@ class Admin extends Controller
                 return back()->withInput();
             }
         }
-        // if (!$request->horas < $request->horasCivicas) {
-        //     echo ('civicas');
-        //     Alert::error('El numero de horas Civicas es mayor al maximo de horas', 'Vuelva a intentarlo');
-        //     return back();
-        // } else if (!$request->horas < $request->horasDeportivas) {
-        //     echo ('deporivas');
-        //     Alert::error('El numero de horas Deportivas es mayor al maximo de horas', 'Vuelva a intentarlo');
-        //     return back();
-        // } else if (!$request->horas < $request->horasCulturales) {
-        //     echo ('culturales');
-        //     Alert::error('El numero de horas Culturales es mayor al maximo de horas', 'Vuelva a intentarlo');
-        //     return back();
-        // }
         $extra->fk_alumno = $id;
         $extra->fk_estatus = 2;
         $fecha = date('Y-m-d');
         $archivoG = $request->nombre_evento . '_' . $fecha;
         $formato = strtolower(pathinfo($request->file('archivo')->getClientOriginalName(), PATHINFO_EXTENSION));
-        // $extra->evidencia = $request->nombre_evento;
         $extra->evidencia = $request->nombre_evento;
         $extra->tipo_evidencia = $request->actividad;
         $ruta = 'Personas/' . $request->num_control . '/' . $request->actividad . '/' . $request->credito . '_' . $archivoG . '.' . $formato;
@@ -222,7 +213,6 @@ class Admin extends Controller
         $extra->ruta_fisica = 'Cajon derecho';
         $extra->constancia_liberada = 0;
         $numeroControl = $request->num_control;
-        // dd($archivoG);
         if ($extra->save()) {
             $this->guardarFile($archivoG, $request->actividad, $numeroControl, $request->file('archivo'), $request->credito);
             Alert::success('Se ha creado guardado el archivo', 'Registro exitoso');
@@ -232,27 +222,6 @@ class Admin extends Controller
             return back();
         }
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
     // public function generarPdf($numeroControl, $nombre, $paterno, $materno, $actividad, $carrera, $horas)
     // {
     //     /* $profesor = 'Aquino Segura Roldan';
@@ -278,12 +247,6 @@ class Admin extends Controller
     //     return $pdf->stream('ejemplo.pdf');
     // }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function liberar($id_extraescolar,$id_alumno)
     {
         $extraescolares = Extraescolares::find($id_extraescolar);
@@ -295,26 +258,26 @@ class Admin extends Controller
         // echo $persona;
 
         // $this->generarPdf($alumno->num_control, $persona->nombre, $persona->paterno, $persona->materno, $extraescolares->evidencia, $alumno->carrera, $extraescolares->horas_liberadas);
-        $extraescolares->constancia_liberada = 1;
-        $extraescolares->save();
-        $data = [
-            'num_control'=>$alumno->num_control,
-            'anio_actual'=> date('Y'),
-            'nombre' =>$persona->nombre.' '.$persona->paterno.' '.$persona->materno,
-            'actividad' =>$extraescolares->evidencia,
-            'credito' =>$extraescolares->fk_credito == 1 ? 'Civico' :($extraescolares->fk_credito == 2 ? 'Deportivo': 'Cultural'),
-            'fecha' => date('Y-m-d'),
-            'carrera' => $alumno->carrera,
-            'horas' => $extraescolares->horas_liberadas,
-            'profesor' => ' ing. Aquino Segura Roldan',
-            'rol' => 'JEFE DEL DEPARTAMENTO DE ACTIVIDADES',
-            'ambito' => 'EXTRAESCOLARES',
-            'firma' => '________________________________'
-        ];
-        $pdf = PDF::loadView('pdf', $data);
-        // compact('profesor', 'rol', 'ambito')
+        // $extraescolares->constancia_liberada = 1;
+        // $extraescolares->save();
+        // $data = [
+        //     'num_control'=>$alumno->num_control,
+        //     'anio_actual'=> date('Y'),
+        //     'nombre' =>$persona->nombre.' '.$persona->paterno.' '.$persona->materno,
+        //     'actividad' =>$extraescolares->evidencia,
+        //     'credito' =>$extraescolares->fk_credito == 1 ? 'Civico' :($extraescolares->fk_credito == 2 ? 'Deportivo': 'Cultural'),
+        //     'fecha' => date('Y-m-d'),
+        //     'carrera' => $alumno->carrera,
+        //     'horas' => $extraescolares->horas_liberadas,
+        //     'profesor' => ' ing. Aquino Segura Roldan',
+        //     'rol' => 'JEFE DEL DEPARTAMENTO DE ACTIVIDADES',
+        //     'ambito' => 'EXTRAESCOLARES',
+        //     'firma' => '________________________________'
+        // ];
+        // $pdf = PDF::loadView('pdf', $data);
+        // // compact('profesor', 'rol', 'ambito')
 
-        return $pdf->download('ejemplo.pdf');
+        // return $pdf->download('ejemplo.pdf');
     }
     /**
      * Update the specified resource in storage.

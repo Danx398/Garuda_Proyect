@@ -35,6 +35,7 @@
         </div>
     </div>
     @include('shared/footer')
+    @include('shared/flotanteAdmin')
 @endsection
 @section('js')
     <script src="{{ asset('js/bootstrapDT.min.js') }}"></script>
