@@ -26,7 +26,9 @@
                                 <td>{{ $items->credito }}</td>
                                 <td>{{ $items->horas_liberadas }}</td>
                                 <td>{{ $items->estatus }}</td>
-                                <td>{{ $items->ruta_fisica }}</td>
+                                <td>{{ $items->ruta_fisica }}
+                                    {{$fecha}}
+                                </td>
                                 <td>
                                     <div class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#derDocModal{{ $items->id_extraescolares }}">
@@ -36,14 +38,16 @@
                                             <div class="modal-dialog modal-xl">
                                                 <div class="modal-content bg-primary">
                                                     <div class="modal-body">
-                                                        <iframe width="1100" height="650" src="{{ asset($items->ruta) }}" frameborder="0"></iframe>
+                                                        <iframe width="1100" height="650"
+                                                            src="{{ asset($items->ruta) }}" frameborder="0"></iframe>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <a class="btn btn-primary" href="{{ asset($items->ruta) }}"
-                                        download="{{ $items->ruta }}"><i class="fa-solid fa-download"></i></a>
+                                        download="{{ $datos->num_control . '_' . $items->fk_credito . '_' . $items->evidencia . '_' . $fecha }}"><i
+                                            class="fa-solid fa-download"></i></a>
                                     <div class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#eliminarModal{{ $items->id_extraescolares }}">
                                         <i class="fa-solid fa-trash"></i>
@@ -89,7 +93,8 @@
                                                             data-bs-dismiss="modal">
                                                             No, Cancelar
                                                         </button>
-                                                        <form action="{{ route('eliminar-extraescolar', $items->id_extraescolares) }}"
+                                                        <form
+                                                            action="{{ route('eliminar-extraescolar', $items->id_extraescolares) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')

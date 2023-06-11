@@ -7,6 +7,7 @@ use App\Models\Cat_credito;
 use App\Models\Cat_escuela_procedencia;
 use App\Models\Extraescolares;
 use App\Models\Persona;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use PDF;
@@ -33,7 +34,6 @@ class Admin extends Controller
     }
     public function editAlumno($id)
     {
-
         $datos = Alumno::select('t_alumnos.id as id_alumno', 't_alumnos.*', 't_personas.*')->join('t_personas', 't_personas.id', 't_alumnos.fk_persona')->where('t_alumnos.id', $id)->first();
         // echo($datos);
         $items = Cat_escuela_procedencia::all();
@@ -167,9 +167,11 @@ class Admin extends Controller
             'estatus'
         )->join('t_cat_creditos', 't_cat_creditos.id', 't_extraescolares.fk_credito')
             ->join('t_cat_estatus', 't_cat_estatus.id', 't_extraescolares.fk_estatus')->where('fk_alumno',$id)->get();
+        $fecha = Carbon::now();
+        $fecha = $fecha->format('d-m-Y');
         $titulo = 'Evidencias';
         $ruta = 'tramite-admin';
-        return view('ADM/evidencias', compact('titulo','ruta','datosExtra','datos'));
+        return view('ADM/evidencias', compact('titulo','ruta','datosExtra','datos','fecha'));
     }
     public function guardarFile($nombreGeneral, $nombreActividad, $numControl, $archivo, $nombreCredito)
     {

@@ -6,7 +6,7 @@
 @section('contenido')
     @include('shared/nav')
     <div class="container">
-        <h1 class="text-center mt-3">{{ $titulo }}</h1>
+        <h1 class="text-center mt-3">Constancias Liberadas de {{2}}</h1>
         <div class="row">
             <div class="col">
                 <table class="table table-responsive mt-4 table-striped" id="constancias">
