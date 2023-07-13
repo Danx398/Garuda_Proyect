@@ -20,7 +20,7 @@
                     <tbody class="text-center">
                         @foreach ($extraescolar as $item)
                         <tr>
-                            <td>{{$item->tipo_evidencia}}</td>
+                            <td>{{$item->evidencia}}</td>
                             <td>{{$item->credito}}</td>
                             <td>{{$item->estatus}}</td>
                             <td>{{$item->ruta_fisica}}</td>

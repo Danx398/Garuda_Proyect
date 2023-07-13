@@ -89,7 +89,7 @@ class Admin extends Controller
     public function crearCarpeta($nombreCarpeta)
     {
         if (!file_exists(public_path('storage/'.'Personas/' . $nombreCarpeta))) {
-            mkdir(public_path('storage/'.'Personas/' . $nombreCarpeta));
+            mkdir(public_path('storage/'.'Personas/' . $nombreCarpeta),0777,true);
         }
     }
     public function darAlta(Request $request)
